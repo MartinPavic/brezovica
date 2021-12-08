@@ -7,6 +7,7 @@
 // amber. The `_onItemTapped` function changes the selected item's index
 // and displays a corresponding message in the center of the [Scaffold].
 
+import 'package:brezovica/screen/bus.dart';
 import 'package:flutter/material.dart';
 import 'package:brezovica/constants.dart';
 
@@ -42,10 +43,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Tu će bit busevi',
-      style: optionStyle,
-    ),
+    BusScreen(),
     Text(
       'Tu će bit neke obavijesti/informacije',
       style: optionStyle,
@@ -96,6 +94,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
+
       ),
     );
   }

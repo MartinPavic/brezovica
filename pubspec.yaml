@@ -39,6 +39,8 @@ dependencies:
   hooks_riverpod:
   freezed:
   uuid:
+  flutter_pdfview:
+  glassmorphism:
 
 dev_dependencies:
   flutter_test:

@@ -209,6 +209,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  flutter_pdfview:
+    dependency: "direct main"
+    description:
+      name: flutter_pdfview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.1"
   flutter_riverpod:
     dependency: transitive
     description:
@@ -249,6 +256,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  glassmorphism:
+    dependency: "direct main"
+    description:
+      name: glassmorphism
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   glob:
     dependency: transitive
     description:
@@ -515,4 +529,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.14.0 <3.0.0"
-  flutter: ">=1.20.0"
+  flutter: ">=2.2.0"
