@@ -1,17 +1,11 @@
-/// Flutter code sample for BottomNavigationBar
-
-// This example shows a [BottomNavigationBar] as it is used within a [Scaffold]
-// widget. The [BottomNavigationBar] has three [BottomNavigationBarItem]
-// widgets, which means it defaults to [BottomNavigationBarType.fixed], and
-// the [currentIndex] is set to index 0. The selected item is
-// amber. The `_onItemTapped` function changes the selected item's index
-// and displays a corresponding message in the center of the [Scaffold].
-
 import 'package:brezovica/screen/bus.dart';
+import 'package:brezovica/screen/info.dart';
+import 'package:brezovica/screen/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:brezovica/constants.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const ProviderScope(child: MyApp()));
 
 /// This is the main application widget.
 class MyApp extends StatelessWidget {
@@ -44,14 +38,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     BusScreen(),
-    Text(
-      'Tu će bit neke obavijesti/informacije',
-      style: optionStyle,
-    ),
-    Text(
-      'Tu ćemo vidit šta ćemo',
-      style: optionStyle,
-    ),
+    InfoScreen(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -94,7 +82,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
-
       ),
     );
   }
