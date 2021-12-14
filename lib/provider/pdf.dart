@@ -3,17 +3,23 @@ import 'dart:io';
 import 'package:brezovica/provider/pdf_state.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PdfProvider extends StateNotifier<PdfState> {
-  PdfProvider() : super(const PdfState(pdfCount: 0, pdfs: []));
+  PdfProvider() : super(const PdfState.initial());
   Future<Unit> update(
     TaskEither<String, List<File>> Function() pdfsTask,
   ) async {
     final pdfs = pdfsTask();
     state = (await pdfs.run()).match(
-      (error) => const PdfState(pdfCount: 0, pdfs: []),
-      (pdfsList) => PdfState(pdfCount: pdfsList.length, pdfs: pdfsList),
+      (error) => PdfState.error([error]),
+      (pdfsList) => PdfState.listPdfs(pdfsList),
     );
+    return unit;
+  }
+
+  Unit showPdf(File file) {
+    state = PdfState.showPdf(SfPdfViewer.file(file));
     return unit;
   }
 }

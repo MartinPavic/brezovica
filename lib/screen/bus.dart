@@ -23,67 +23,71 @@ class BusScreen extends HookConsumerWidget {
     }, []);
     final pdfState = ref.watch(pdfProvider);
     return Container(
-      color: Colors.blue,
-      child: ListView.builder(
-          itemCount: pdfState.pdfCount,
-          itemBuilder: (context, index) {
-            return Card(
-              color: Colors.transparent,
-              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-              elevation: 6,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: GlassmorphicContainer(
-                height: MediaQuery.of(context).size.height / 5,
-                width: MediaQuery.of(context).size.width,
-                borderRadius: 20,
-                blur: 20,
-                alignment: Alignment.centerLeft,
-                border: 2,
-                linearGradient: LinearGradient(
+        color: Colors.blue,
+        child: pdfState.when(
+          initial: () => ListView(),
+          showPdf: (viewer) => viewer,
+          listPdfs: (pdfList) => ListView.builder(
+            itemCount: pdfList.length,
+            itemBuilder: (context, index) {
+              return Card(
+                color: Colors.transparent,
+                margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                elevation: 6,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: GlassmorphicContainer(
+                  height: MediaQuery.of(context).size.height / 5,
+                  width: MediaQuery.of(context).size.width,
+                  borderRadius: 20,
+                  blur: 20,
+                  alignment: Alignment.centerLeft,
+                  border: 2,
+                  linearGradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        const Color(0xFFffffff).withOpacity(0.25),
+                        const Color(0xFFFFFFFF).withOpacity(0.1),
+                      ],
+                      stops: const [
+                        0.1,
+                        1,
+                      ]),
+                  borderGradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      const Color(0xFFffffff).withOpacity(0.25),
-                      const Color(0xFFFFFFFF).withOpacity(0.1),
+                      const Color(0xFFffffff).withOpacity(0.5),
+                      const Color((0xFFFFFFFF)).withOpacity(0.5),
                     ],
-                    stops: const [
-                      0.1,
-                      1,
-                    ]),
-                borderGradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    const Color(0xFFffffff).withOpacity(0.5),
-                    const Color((0xFFFFFFFF)).withOpacity(0.5),
-                  ],
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Text(
-                      Files.getNameFromPath(pdfState.pdfs[index].path),
-                      style: TextStyle(
-                        color: Colors.blue[50],
-                        fontSize: 45,
-                        fontWeight: FontWeight.bold,
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        Files.getNameFromPath(pdfList[index].path),
+                        style: TextStyle(
+                          color: Colors.blue[50],
+                          fontSize: 45,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => SfPdfViewer.file(pdfState.pdfs[index]),
-                      child: const Icon(Icons.download),
-                      style:
-                          ElevatedButton.styleFrom(shape: const CircleBorder()),
-                    )
-                  ],
+                      ElevatedButton(
+                        onPressed: () => ref.read(pdfProvider.notifier).showPdf(pdfList[index]),
+                        child: const Icon(Icons.download),
+                        style:
+                            ElevatedButton.styleFrom(shape: const CircleBorder()),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }),
-    );
+              );
+            }),
+          error: (error) => ErrorWidget(error.join(" ")),
+        ));
   }
 }
