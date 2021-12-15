@@ -18,30 +18,36 @@ Map<String, dynamic> _$$_BusToJson(_$_Bus instance) => <String, dynamic>{
 
 _$BrezovicaBusType _$$BrezovicaBusTypeFromJson(Map<String, dynamic> json) =>
     _$BrezovicaBusType(
+      description: json['description'] as String,
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$BrezovicaBusTypeToJson(_$BrezovicaBusType instance) =>
     <String, dynamic>{
+      'description': instance.description,
       'runtimeType': instance.$type,
     };
 
 _$ObrezBusType _$$ObrezBusTypeFromJson(Map<String, dynamic> json) =>
     _$ObrezBusType(
+      description: json['description'] as String,
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$ObrezBusTypeToJson(_$ObrezBusType instance) =>
     <String, dynamic>{
+      'description': instance.description,
       'runtimeType': instance.$type,
     };
 
 _$BotinecBusType _$$BotinecBusTypeFromJson(Map<String, dynamic> json) =>
     _$BotinecBusType(
+      description: json['description'] as String,
       $type: json['runtimeType'] as String?,
     );
 
 Map<String, dynamic> _$$BotinecBusTypeToJson(_$BotinecBusType instance) =>
     <String, dynamic>{
+      'description': instance.description,
       'runtimeType': instance.$type,
     };

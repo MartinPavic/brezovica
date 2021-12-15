@@ -16,11 +16,10 @@ class Files {
     }, (e, _) => e.toString());
   }
 
-  static TaskEither<String, File> downloadFile(
+  static TaskEither<String, DownloaderCore> downloadFile(
       String url, DownloaderUtils options) {
     return TaskEither.tryCatch(() async {
-      await Flowder.download(url, options);
-      return options.file;
+      return await Flowder.download(url, options);
     }, (e, _) => e.toString());
   }
 

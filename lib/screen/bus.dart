@@ -5,6 +5,7 @@ import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/provider/pdf.dart';
 import 'package:brezovica/util/files.dart';
+import 'package:brezovica/widget/add_bus_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fpdart/fpdart.dart';
@@ -22,25 +23,38 @@ class BusScreen extends HookConsumerWidget {
       ref.read(pdfProvider.notifier).update(Files.getBusPdfs);
     }, []);
     final pdfState = ref.watch(pdfProvider);
-    return Container(
-        color: Colors.blue,
-        child: pdfState.when(
-          initial: () => const Center(),
-          showPdf: (viewer) => viewer,
-          listPdfs: (pdfList) => Column(
-            children: [
-              ElevatedButton(
-                onPressed: null,
-                child: const Icon(Icons.picture_as_pdf),
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                ),
-              ),
-              busList(pdfList, ref),
-            ],
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        backgroundColor: Constants.mainColor,
+        onPressed: () {
+          pdfState.whenOrNull(
+            initial: () => showModalBottomSheet(
+              context: context,
+              builder: addBusBottomSheet([]),
+            ),
+            listPdfs: (pdfs) => showModalBottomSheet(
+              context: context,
+              builder: addBusBottomSheet(pdfs),
+            ),
+          );
+        },
+      ),
+      body: Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/bus_bg.jpeg'),
+              fit: BoxFit.cover,
+            ),
           ),
-          error: (error) => ErrorWidget(error.join(" ")),
-        ));
+          child: pdfState.when(
+            initial: () => const Center(),
+            showPdf: (viewer) => viewer,
+            listPdfs: (pdfList) => busList(pdfList, ref),
+            error: (error) => ErrorWidget(error.join(" ")),
+          )),
+    );
   }
 
   ListView busList(List<File> pdfList, WidgetRef ref) {
@@ -59,7 +73,7 @@ class BusScreen extends HookConsumerWidget {
               height: MediaQuery.of(context).size.height / 5,
               width: MediaQuery.of(context).size.width,
               borderRadius: 20,
-              blur: 20,
+              blur: 2,
               alignment: Alignment.centerLeft,
               border: 2,
               linearGradient: LinearGradient(
@@ -68,9 +82,11 @@ class BusScreen extends HookConsumerWidget {
                   colors: [
                     const Color(0xFFffffff).withOpacity(0.25),
                     const Color(0xFFFFFFFF).withOpacity(0.1),
+                    const Color(0xFFffffff).withOpacity(0.05),
                   ],
                   stops: const [
                     0.1,
+                    0.5,
                     1,
                   ]),
               borderGradient: LinearGradient(
@@ -96,7 +112,7 @@ class BusScreen extends HookConsumerWidget {
                   ElevatedButton(
                     onPressed: () =>
                         ref.read(pdfProvider.notifier).showPdf(pdfList[index]),
-                    child: const Icon(Icons.picture_as_pdf),
+                    child: const Icon(Icons.picture_as_pdf_rounded),
                     style: ElevatedButton.styleFrom(
                       shape: const CircleBorder(),
                     ),

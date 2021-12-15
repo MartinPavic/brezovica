@@ -13,7 +13,13 @@ class PdfProvider extends StateNotifier<PdfState> {
     final pdfs = pdfsTask();
     state = (await pdfs.run()).match(
       (error) => PdfState.error([error]),
-      (pdfsList) => PdfState.listPdfs(pdfsList),
+      (pdfsList) {
+        if (pdfsList.isNotEmpty) {
+          return PdfState.listPdfs(pdfsList);
+        } else {
+          return const PdfState.initial();
+        }
+      },
     );
     return unit;
   }

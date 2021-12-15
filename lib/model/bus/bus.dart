@@ -15,8 +15,8 @@ class Bus with _$Bus {
 
 @freezed
 class BusType with _$BusType {
-  const factory BusType.brezovica() = BrezovicaBusType;
-  const factory BusType.obrez() = ObrezBusType;
-  const factory BusType.botinec() = BotinecBusType;
+  const factory BusType.brezovica({required String description}) = BrezovicaBusType;
+  const factory BusType.obrez({required String description}) = ObrezBusType;
+  const factory BusType.botinec({required String description}) = BotinecBusType;
   factory BusType.fromJson(Map<String, dynamic> json) => _$BusTypeFromJson(json);
 }

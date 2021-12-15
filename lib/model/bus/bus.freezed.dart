@@ -211,16 +211,22 @@ BusType _$BusTypeFromJson(Map<String, dynamic> json) {
 class _$BusTypeTearOff {
   const _$BusTypeTearOff();
 
-  BrezovicaBusType brezovica() {
-    return const BrezovicaBusType();
+  BrezovicaBusType brezovica({required String description}) {
+    return BrezovicaBusType(
+      description: description,
+    );
   }
 
-  ObrezBusType obrez() {
-    return const ObrezBusType();
+  ObrezBusType obrez({required String description}) {
+    return ObrezBusType(
+      description: description,
+    );
   }
 
-  BotinecBusType botinec() {
-    return const BotinecBusType();
+  BotinecBusType botinec({required String description}) {
+    return BotinecBusType(
+      description: description,
+    );
   }
 
   BusType fromJson(Map<String, Object?> json) {
@@ -233,25 +239,27 @@ const $BusType = _$BusTypeTearOff();
 
 /// @nodoc
 mixin _$BusType {
+  String get description => throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() brezovica,
-    required TResult Function() obrez,
-    required TResult Function() botinec,
+    required TResult Function(String description) brezovica,
+    required TResult Function(String description) obrez,
+    required TResult Function(String description) botinec,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? brezovica,
-    TResult Function()? obrez,
-    TResult Function()? botinec,
+    TResult Function(String description)? brezovica,
+    TResult Function(String description)? obrez,
+    TResult Function(String description)? botinec,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? brezovica,
-    TResult Function()? obrez,
-    TResult Function()? botinec,
+    TResult Function(String description)? brezovica,
+    TResult Function(String description)? obrez,
+    TResult Function(String description)? botinec,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -278,12 +286,15 @@ mixin _$BusType {
   }) =>
       throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $BusTypeCopyWith<BusType> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $BusTypeCopyWith<$Res> {
   factory $BusTypeCopyWith(BusType value, $Res Function(BusType) then) =
       _$BusTypeCopyWithImpl<$Res>;
+  $Res call({String description});
 }
 
 /// @nodoc
@@ -293,13 +304,28 @@ class _$BusTypeCopyWithImpl<$Res> implements $BusTypeCopyWith<$Res> {
   final BusType _value;
   // ignore: unused_field
   final $Res Function(BusType) _then;
+
+  @override
+  $Res call({
+    Object? description = freezed,
+  }) {
+    return _then(_value.copyWith(
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
-abstract class $BrezovicaBusTypeCopyWith<$Res> {
+abstract class $BrezovicaBusTypeCopyWith<$Res>
+    implements $BusTypeCopyWith<$Res> {
   factory $BrezovicaBusTypeCopyWith(
           BrezovicaBusType value, $Res Function(BrezovicaBusType) then) =
       _$BrezovicaBusTypeCopyWithImpl<$Res>;
+  @override
+  $Res call({String description});
 }
 
 /// @nodoc
@@ -311,6 +337,18 @@ class _$BrezovicaBusTypeCopyWithImpl<$Res> extends _$BusTypeCopyWithImpl<$Res>
 
   @override
   BrezovicaBusType get _value => super._value as BrezovicaBusType;
+
+  @override
+  $Res call({
+    Object? description = freezed,
+  }) {
+    return _then(BrezovicaBusType(
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
@@ -318,64 +356,79 @@ class _$BrezovicaBusTypeCopyWithImpl<$Res> extends _$BusTypeCopyWithImpl<$Res>
 class _$BrezovicaBusType
     with DiagnosticableTreeMixin
     implements BrezovicaBusType {
-  const _$BrezovicaBusType({String? $type}) : $type = $type ?? 'brezovica';
+  const _$BrezovicaBusType({required this.description, String? $type})
+      : $type = $type ?? 'brezovica';
 
   factory _$BrezovicaBusType.fromJson(Map<String, dynamic> json) =>
       _$$BrezovicaBusTypeFromJson(json);
+
+  @override
+  final String description;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusType.brezovica()';
+    return 'BusType.brezovica(description: $description)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'BusType.brezovica'));
+    properties
+      ..add(DiagnosticsProperty('type', 'BusType.brezovica'))
+      ..add(DiagnosticsProperty('description', description));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is BrezovicaBusType);
+        (other.runtimeType == runtimeType &&
+            other is BrezovicaBusType &&
+            const DeepCollectionEquality()
+                .equals(other.description, description));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(description));
+
+  @JsonKey(ignore: true)
+  @override
+  $BrezovicaBusTypeCopyWith<BrezovicaBusType> get copyWith =>
+      _$BrezovicaBusTypeCopyWithImpl<BrezovicaBusType>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() brezovica,
-    required TResult Function() obrez,
-    required TResult Function() botinec,
+    required TResult Function(String description) brezovica,
+    required TResult Function(String description) obrez,
+    required TResult Function(String description) botinec,
   }) {
-    return brezovica();
+    return brezovica(description);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? brezovica,
-    TResult Function()? obrez,
-    TResult Function()? botinec,
+    TResult Function(String description)? brezovica,
+    TResult Function(String description)? obrez,
+    TResult Function(String description)? botinec,
   }) {
-    return brezovica?.call();
+    return brezovica?.call(description);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? brezovica,
-    TResult Function()? obrez,
-    TResult Function()? botinec,
+    TResult Function(String description)? brezovica,
+    TResult Function(String description)? obrez,
+    TResult Function(String description)? botinec,
     required TResult orElse(),
   }) {
     if (brezovica != null) {
-      return brezovica();
+      return brezovica(description);
     }
     return orElse();
   }
@@ -421,17 +474,27 @@ class _$BrezovicaBusType
 }
 
 abstract class BrezovicaBusType implements BusType {
-  const factory BrezovicaBusType() = _$BrezovicaBusType;
+  const factory BrezovicaBusType({required String description}) =
+      _$BrezovicaBusType;
 
   factory BrezovicaBusType.fromJson(Map<String, dynamic> json) =
       _$BrezovicaBusType.fromJson;
+
+  @override
+  String get description;
+  @override
+  @JsonKey(ignore: true)
+  $BrezovicaBusTypeCopyWith<BrezovicaBusType> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ObrezBusTypeCopyWith<$Res> {
+abstract class $ObrezBusTypeCopyWith<$Res> implements $BusTypeCopyWith<$Res> {
   factory $ObrezBusTypeCopyWith(
           ObrezBusType value, $Res Function(ObrezBusType) then) =
       _$ObrezBusTypeCopyWithImpl<$Res>;
+  @override
+  $Res call({String description});
 }
 
 /// @nodoc
@@ -443,69 +506,96 @@ class _$ObrezBusTypeCopyWithImpl<$Res> extends _$BusTypeCopyWithImpl<$Res>
 
   @override
   ObrezBusType get _value => super._value as ObrezBusType;
+
+  @override
+  $Res call({
+    Object? description = freezed,
+  }) {
+    return _then(ObrezBusType(
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ObrezBusType with DiagnosticableTreeMixin implements ObrezBusType {
-  const _$ObrezBusType({String? $type}) : $type = $type ?? 'obrez';
+  const _$ObrezBusType({required this.description, String? $type})
+      : $type = $type ?? 'obrez';
 
   factory _$ObrezBusType.fromJson(Map<String, dynamic> json) =>
       _$$ObrezBusTypeFromJson(json);
+
+  @override
+  final String description;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusType.obrez()';
+    return 'BusType.obrez(description: $description)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'BusType.obrez'));
+    properties
+      ..add(DiagnosticsProperty('type', 'BusType.obrez'))
+      ..add(DiagnosticsProperty('description', description));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ObrezBusType);
+        (other.runtimeType == runtimeType &&
+            other is ObrezBusType &&
+            const DeepCollectionEquality()
+                .equals(other.description, description));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(description));
+
+  @JsonKey(ignore: true)
+  @override
+  $ObrezBusTypeCopyWith<ObrezBusType> get copyWith =>
+      _$ObrezBusTypeCopyWithImpl<ObrezBusType>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() brezovica,
-    required TResult Function() obrez,
-    required TResult Function() botinec,
+    required TResult Function(String description) brezovica,
+    required TResult Function(String description) obrez,
+    required TResult Function(String description) botinec,
   }) {
-    return obrez();
+    return obrez(description);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? brezovica,
-    TResult Function()? obrez,
-    TResult Function()? botinec,
+    TResult Function(String description)? brezovica,
+    TResult Function(String description)? obrez,
+    TResult Function(String description)? botinec,
   }) {
-    return obrez?.call();
+    return obrez?.call(description);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? brezovica,
-    TResult Function()? obrez,
-    TResult Function()? botinec,
+    TResult Function(String description)? brezovica,
+    TResult Function(String description)? obrez,
+    TResult Function(String description)? botinec,
     required TResult orElse(),
   }) {
     if (obrez != null) {
-      return obrez();
+      return obrez(description);
     }
     return orElse();
   }
@@ -551,17 +641,26 @@ class _$ObrezBusType with DiagnosticableTreeMixin implements ObrezBusType {
 }
 
 abstract class ObrezBusType implements BusType {
-  const factory ObrezBusType() = _$ObrezBusType;
+  const factory ObrezBusType({required String description}) = _$ObrezBusType;
 
   factory ObrezBusType.fromJson(Map<String, dynamic> json) =
       _$ObrezBusType.fromJson;
+
+  @override
+  String get description;
+  @override
+  @JsonKey(ignore: true)
+  $ObrezBusTypeCopyWith<ObrezBusType> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BotinecBusTypeCopyWith<$Res> {
+abstract class $BotinecBusTypeCopyWith<$Res> implements $BusTypeCopyWith<$Res> {
   factory $BotinecBusTypeCopyWith(
           BotinecBusType value, $Res Function(BotinecBusType) then) =
       _$BotinecBusTypeCopyWithImpl<$Res>;
+  @override
+  $Res call({String description});
 }
 
 /// @nodoc
@@ -573,69 +672,96 @@ class _$BotinecBusTypeCopyWithImpl<$Res> extends _$BusTypeCopyWithImpl<$Res>
 
   @override
   BotinecBusType get _value => super._value as BotinecBusType;
+
+  @override
+  $Res call({
+    Object? description = freezed,
+  }) {
+    return _then(BotinecBusType(
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$BotinecBusType with DiagnosticableTreeMixin implements BotinecBusType {
-  const _$BotinecBusType({String? $type}) : $type = $type ?? 'botinec';
+  const _$BotinecBusType({required this.description, String? $type})
+      : $type = $type ?? 'botinec';
 
   factory _$BotinecBusType.fromJson(Map<String, dynamic> json) =>
       _$$BotinecBusTypeFromJson(json);
+
+  @override
+  final String description;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BusType.botinec()';
+    return 'BusType.botinec(description: $description)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'BusType.botinec'));
+    properties
+      ..add(DiagnosticsProperty('type', 'BusType.botinec'))
+      ..add(DiagnosticsProperty('description', description));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is BotinecBusType);
+        (other.runtimeType == runtimeType &&
+            other is BotinecBusType &&
+            const DeepCollectionEquality()
+                .equals(other.description, description));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(description));
+
+  @JsonKey(ignore: true)
+  @override
+  $BotinecBusTypeCopyWith<BotinecBusType> get copyWith =>
+      _$BotinecBusTypeCopyWithImpl<BotinecBusType>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() brezovica,
-    required TResult Function() obrez,
-    required TResult Function() botinec,
+    required TResult Function(String description) brezovica,
+    required TResult Function(String description) obrez,
+    required TResult Function(String description) botinec,
   }) {
-    return botinec();
+    return botinec(description);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? brezovica,
-    TResult Function()? obrez,
-    TResult Function()? botinec,
+    TResult Function(String description)? brezovica,
+    TResult Function(String description)? obrez,
+    TResult Function(String description)? botinec,
   }) {
-    return botinec?.call();
+    return botinec?.call(description);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? brezovica,
-    TResult Function()? obrez,
-    TResult Function()? botinec,
+    TResult Function(String description)? brezovica,
+    TResult Function(String description)? obrez,
+    TResult Function(String description)? botinec,
     required TResult orElse(),
   }) {
     if (botinec != null) {
-      return botinec();
+      return botinec(description);
     }
     return orElse();
   }
@@ -681,8 +807,16 @@ class _$BotinecBusType with DiagnosticableTreeMixin implements BotinecBusType {
 }
 
 abstract class BotinecBusType implements BusType {
-  const factory BotinecBusType() = _$BotinecBusType;
+  const factory BotinecBusType({required String description}) =
+      _$BotinecBusType;
 
   factory BotinecBusType.fromJson(Map<String, dynamic> json) =
       _$BotinecBusType.fromJson;
+
+  @override
+  String get description;
+  @override
+  @JsonKey(ignore: true)
+  $BotinecBusTypeCopyWith<BotinecBusType> get copyWith =>
+      throw _privateConstructorUsedError;
 }
