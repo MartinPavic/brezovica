@@ -25,69 +25,86 @@ class BusScreen extends HookConsumerWidget {
     return Container(
         color: Colors.blue,
         child: pdfState.when(
-          initial: () => ListView(),
+          initial: () => const Center(),
           showPdf: (viewer) => viewer,
-          listPdfs: (pdfList) => ListView.builder(
-            itemCount: pdfList.length,
-            itemBuilder: (context, index) {
-              return Card(
-                color: Colors.transparent,
-                margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+          listPdfs: (pdfList) => Column(
+            children: [
+              ElevatedButton(
+                onPressed: null,
+                child: const Icon(Icons.picture_as_pdf),
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
                 ),
-                child: GlassmorphicContainer(
-                  height: MediaQuery.of(context).size.height / 5,
-                  width: MediaQuery.of(context).size.width,
-                  borderRadius: 20,
-                  blur: 20,
-                  alignment: Alignment.centerLeft,
-                  border: 2,
-                  linearGradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        const Color(0xFFffffff).withOpacity(0.25),
-                        const Color(0xFFFFFFFF).withOpacity(0.1),
-                      ],
-                      stops: const [
-                        0.1,
-                        1,
-                      ]),
-                  borderGradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      const Color(0xFFffffff).withOpacity(0.5),
-                      const Color((0xFFFFFFFF)).withOpacity(0.5),
-                    ],
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        Files.getNameFromPath(pdfList[index].path),
-                        style: TextStyle(
-                          color: Colors.blue[50],
-                          fontSize: 45,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () => ref.read(pdfProvider.notifier).showPdf(pdfList[index]),
-                        child: const Icon(Icons.download),
-                        style:
-                            ElevatedButton.styleFrom(shape: const CircleBorder()),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            }),
+              ),
+              busList(pdfList, ref),
+            ],
+          ),
           error: (error) => ErrorWidget(error.join(" ")),
         ));
+  }
+
+  ListView busList(List<File> pdfList, WidgetRef ref) {
+    return ListView.builder(
+        itemCount: pdfList.length,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return Card(
+            color: Colors.transparent,
+            margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+            elevation: 6,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: GlassmorphicContainer(
+              height: MediaQuery.of(context).size.height / 5,
+              width: MediaQuery.of(context).size.width,
+              borderRadius: 20,
+              blur: 20,
+              alignment: Alignment.centerLeft,
+              border: 2,
+              linearGradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    const Color(0xFFffffff).withOpacity(0.25),
+                    const Color(0xFFFFFFFF).withOpacity(0.1),
+                  ],
+                  stops: const [
+                    0.1,
+                    1,
+                  ]),
+              borderGradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  const Color(0xFFffffff).withOpacity(0.5),
+                  const Color((0xFFFFFFFF)).withOpacity(0.5),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    Files.getNameFromPath(pdfList[index].path),
+                    style: TextStyle(
+                      color: Colors.blue[50],
+                      fontSize: 45,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () =>
+                        ref.read(pdfProvider.notifier).showPdf(pdfList[index]),
+                    child: const Icon(Icons.picture_as_pdf),
+                    style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

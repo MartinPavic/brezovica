@@ -6,6 +6,16 @@ import 'package:fpdart/fpdart.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Files {
+  static TaskEither<String, Directory> getDownloadDir() {
+    return TaskEither.tryCatch(() async {
+      final appDir = await getApplicationDocumentsDirectory();
+      final downloadDir =
+          Directory(appDir.path + Platform.pathSeparator + 'download');
+      downloadDir.createSync();
+      return downloadDir;
+    }, (e, _) => e.toString());
+  }
+
   static TaskEither<String, File> downloadFile(
       String url, DownloaderUtils options) {
     return TaskEither.tryCatch(() async {
@@ -15,12 +25,8 @@ class Files {
   }
 
   static TaskEither<String, List<File>> getBusPdfs() {
-    return TaskEither.tryCatch(() async {
-      final appDir = await getApplicationDocumentsDirectory();
-      final downloadDir =
-          Directory(appDir.path + Platform.pathSeparator + 'download');
-      return downloadDir.listSync().map((e) => File(e.path)).toList();
-    }, (e, _) => e.toString());
+    return getDownloadDir().map((downloadDir) =>
+        downloadDir.listSync().map((e) => File(e.path)).toList());
   }
 
   static String getNameFromPath(String path) {
