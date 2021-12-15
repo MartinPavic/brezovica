@@ -31,11 +31,11 @@ class BusScreen extends HookConsumerWidget {
           pdfState.whenOrNull(
             initial: () => showModalBottomSheet(
               context: context,
-              builder: addBusBottomSheet([]),
+              builder: addBusBottomSheet(ref, []),
             ),
             listPdfs: (pdfs) => showModalBottomSheet(
               context: context,
-              builder: addBusBottomSheet(pdfs),
+              builder: addBusBottomSheet(ref, pdfs),
             ),
           );
         },

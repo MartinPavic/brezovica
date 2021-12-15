@@ -1,13 +1,18 @@
 import 'dart:io';
 
 import 'package:brezovica/constants.dart';
+import 'package:brezovica/provider/pdf.dart';
 import 'package:brezovica/util/files.dart';
 import 'package:flowder/flowder.dart';
 import 'package:flutter/material.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-Widget Function(BuildContext) addBusBottomSheet(List<File> pdfs) {
+Widget Function(BuildContext) addBusBottomSheet(
+    WidgetRef ref, List<File> pdfs) {
   final downloadedBuses =
       pdfs.map((f) => int.parse(Files.getNameFromPath(f.path)));
+  final pdfState = ref.watch(pdfProvider);
   return (BuildContext context) => Container(
         color: Constants.mainColor,
         child: ListView.builder(
@@ -22,7 +27,8 @@ Widget Function(BuildContext) addBusBottomSheet(List<File> pdfs) {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    Files.getDownloadDir().flatMap((downloadDir) {
+                    final dowloaded =
+                        await Files.getDownloadDir().flatMap((downloadDir) {
                       final options = DownloaderUtils(
                         file: File(downloadDir.path +
                             '/${Constants.busevi[index].number.toString()}.pdf'),
@@ -36,6 +42,10 @@ Widget Function(BuildContext) addBusBottomSheet(List<File> pdfs) {
                           '.pdf';
                       return Files.downloadFile(url, options);
                     }).run();
+                    dowloaded.match(
+                      (l) => ref.read(pdfProvider.notifier).update(),
+                      (r) => null,
+                    );
                   },
                   child:
                       downloadedBuses.contains(Constants.busevi[index].number)
