@@ -1,4 +1,4 @@
-import 'package:brezovica/screen/bus.dart';
+import 'package:brezovica/screen/bus/bus.dart';
 import 'package:brezovica/screen/info.dart';
 import 'package:brezovica/screen/profile.dart';
 import 'package:flutter/material.dart';
