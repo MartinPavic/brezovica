@@ -9,11 +9,15 @@ part of 'bus.dart';
 _$_Bus _$$_BusFromJson(Map<String, dynamic> json) => _$_Bus(
       number: json['number'] as int,
       type: BusType.fromJson(json['type'] as Map<String, dynamic>),
+      url: Uri.parse(json['url'] as String),
+      pdfFilePath: json['pdfFilePath'] as String?,
     );
 
 Map<String, dynamic> _$$_BusToJson(_$_Bus instance) => <String, dynamic>{
       'number': instance.number,
       'type': instance.type,
+      'url': instance.url.toString(),
+      'pdfFilePath': instance.pdfFilePath,
     };
 
 _$BrezovicaBusType _$$BrezovicaBusTypeFromJson(Map<String, dynamic> json) =>

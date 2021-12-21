@@ -21,10 +21,16 @@ Bus _$BusFromJson(Map<String, dynamic> json) {
 class _$BusTearOff {
   const _$BusTearOff();
 
-  _Bus call({required int number, required BusType type}) {
+  _Bus call(
+      {required int number,
+      required BusType type,
+      required Uri url,
+      String? pdfFilePath}) {
     return _Bus(
       number: number,
       type: type,
+      url: url,
+      pdfFilePath: pdfFilePath,
     );
   }
 
@@ -40,6 +46,8 @@ const $Bus = _$BusTearOff();
 mixin _$Bus {
   int get number => throw _privateConstructorUsedError;
   BusType get type => throw _privateConstructorUsedError;
+  Uri get url => throw _privateConstructorUsedError;
+  String? get pdfFilePath => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +58,7 @@ mixin _$Bus {
 abstract class $BusCopyWith<$Res> {
   factory $BusCopyWith(Bus value, $Res Function(Bus) then) =
       _$BusCopyWithImpl<$Res>;
-  $Res call({int number, BusType type});
+  $Res call({int number, BusType type, Uri url, String? pdfFilePath});
 
   $BusTypeCopyWith<$Res> get type;
 }
@@ -67,6 +75,8 @@ class _$BusCopyWithImpl<$Res> implements $BusCopyWith<$Res> {
   $Res call({
     Object? number = freezed,
     Object? type = freezed,
+    Object? url = freezed,
+    Object? pdfFilePath = freezed,
   }) {
     return _then(_value.copyWith(
       number: number == freezed
@@ -77,6 +87,14 @@ class _$BusCopyWithImpl<$Res> implements $BusCopyWith<$Res> {
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as BusType,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as Uri,
+      pdfFilePath: pdfFilePath == freezed
+          ? _value.pdfFilePath
+          : pdfFilePath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 
@@ -93,7 +111,7 @@ abstract class _$BusCopyWith<$Res> implements $BusCopyWith<$Res> {
   factory _$BusCopyWith(_Bus value, $Res Function(_Bus) then) =
       __$BusCopyWithImpl<$Res>;
   @override
-  $Res call({int number, BusType type});
+  $Res call({int number, BusType type, Uri url, String? pdfFilePath});
 
   @override
   $BusTypeCopyWith<$Res> get type;
@@ -112,6 +130,8 @@ class __$BusCopyWithImpl<$Res> extends _$BusCopyWithImpl<$Res>
   $Res call({
     Object? number = freezed,
     Object? type = freezed,
+    Object? url = freezed,
+    Object? pdfFilePath = freezed,
   }) {
     return _then(_Bus(
       number: number == freezed
@@ -122,6 +142,14 @@ class __$BusCopyWithImpl<$Res> extends _$BusCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as BusType,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as Uri,
+      pdfFilePath: pdfFilePath == freezed
+          ? _value.pdfFilePath
+          : pdfFilePath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -129,7 +157,11 @@ class __$BusCopyWithImpl<$Res> extends _$BusCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Bus with DiagnosticableTreeMixin implements _Bus {
-  const _$_Bus({required this.number, required this.type});
+  const _$_Bus(
+      {required this.number,
+      required this.type,
+      required this.url,
+      this.pdfFilePath});
 
   factory _$_Bus.fromJson(Map<String, dynamic> json) => _$$_BusFromJson(json);
 
@@ -137,10 +169,14 @@ class _$_Bus with DiagnosticableTreeMixin implements _Bus {
   final int number;
   @override
   final BusType type;
+  @override
+  final Uri url;
+  @override
+  final String? pdfFilePath;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Bus(number: $number, type: $type)';
+    return 'Bus(number: $number, type: $type, url: $url, pdfFilePath: $pdfFilePath)';
   }
 
   @override
@@ -149,7 +185,9 @@ class _$_Bus with DiagnosticableTreeMixin implements _Bus {
     properties
       ..add(DiagnosticsProperty('type', 'Bus'))
       ..add(DiagnosticsProperty('number', number))
-      ..add(DiagnosticsProperty('type', type));
+      ..add(DiagnosticsProperty('type', type))
+      ..add(DiagnosticsProperty('url', url))
+      ..add(DiagnosticsProperty('pdfFilePath', pdfFilePath));
   }
 
   @override
@@ -158,14 +196,19 @@ class _$_Bus with DiagnosticableTreeMixin implements _Bus {
         (other.runtimeType == runtimeType &&
             other is _Bus &&
             const DeepCollectionEquality().equals(other.number, number) &&
-            const DeepCollectionEquality().equals(other.type, type));
+            const DeepCollectionEquality().equals(other.type, type) &&
+            const DeepCollectionEquality().equals(other.url, url) &&
+            const DeepCollectionEquality()
+                .equals(other.pdfFilePath, pdfFilePath));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(number),
-      const DeepCollectionEquality().hash(type));
+      const DeepCollectionEquality().hash(type),
+      const DeepCollectionEquality().hash(url),
+      const DeepCollectionEquality().hash(pdfFilePath));
 
   @JsonKey(ignore: true)
   @override
@@ -179,7 +222,11 @@ class _$_Bus with DiagnosticableTreeMixin implements _Bus {
 }
 
 abstract class _Bus implements Bus {
-  const factory _Bus({required int number, required BusType type}) = _$_Bus;
+  const factory _Bus(
+      {required int number,
+      required BusType type,
+      required Uri url,
+      String? pdfFilePath}) = _$_Bus;
 
   factory _Bus.fromJson(Map<String, dynamic> json) = _$_Bus.fromJson;
 
@@ -187,6 +234,10 @@ abstract class _Bus implements Bus {
   int get number;
   @override
   BusType get type;
+  @override
+  Uri get url;
+  @override
+  String? get pdfFilePath;
   @override
   @JsonKey(ignore: true)
   _$BusCopyWith<_Bus> get copyWith => throw _privateConstructorUsedError;

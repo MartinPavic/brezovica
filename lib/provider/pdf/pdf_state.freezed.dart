@@ -21,13 +21,7 @@ class _$PdfStateTearOff {
     return const _InitialPdfState();
   }
 
-  _ShowPdfState showPdf(SfPdfViewer viewer) {
-    return _ShowPdfState(
-      viewer,
-    );
-  }
-
-  _ListPdfsState listPdfs(List<File> pdfs) {
+  _ListPdfsState downloadedPdfs(List<File> pdfs) {
     return _ListPdfsState(
       pdfs,
     );
@@ -48,24 +42,21 @@ mixin _$PdfState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(SfPdfViewer viewer) showPdf,
-    required TResult Function(List<File> pdfs) listPdfs,
+    required TResult Function(List<File> pdfs) downloadedPdfs,
     required TResult Function(List<String> errors) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(SfPdfViewer viewer)? showPdf,
-    TResult Function(List<File> pdfs)? listPdfs,
+    TResult Function(List<File> pdfs)? downloadedPdfs,
     TResult Function(List<String> errors)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(SfPdfViewer viewer)? showPdf,
-    TResult Function(List<File> pdfs)? listPdfs,
+    TResult Function(List<File> pdfs)? downloadedPdfs,
     TResult Function(List<String> errors)? error,
     required TResult orElse(),
   }) =>
@@ -73,24 +64,21 @@ mixin _$PdfState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPdfState value) initial,
-    required TResult Function(_ShowPdfState value) showPdf,
-    required TResult Function(_ListPdfsState value) listPdfs,
+    required TResult Function(_ListPdfsState value) downloadedPdfs,
     required TResult Function(_ErrorPdfState value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ShowPdfState value)? showPdf,
-    TResult Function(_ListPdfsState value)? listPdfs,
+    TResult Function(_ListPdfsState value)? downloadedPdfs,
     TResult Function(_ErrorPdfState value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ShowPdfState value)? showPdf,
-    TResult Function(_ListPdfsState value)? listPdfs,
+    TResult Function(_ListPdfsState value)? downloadedPdfs,
     TResult Function(_ErrorPdfState value)? error,
     required TResult orElse(),
   }) =>
@@ -153,8 +141,7 @@ class _$_InitialPdfState extends _InitialPdfState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(SfPdfViewer viewer) showPdf,
-    required TResult Function(List<File> pdfs) listPdfs,
+    required TResult Function(List<File> pdfs) downloadedPdfs,
     required TResult Function(List<String> errors) error,
   }) {
     return initial();
@@ -164,8 +151,7 @@ class _$_InitialPdfState extends _InitialPdfState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(SfPdfViewer viewer)? showPdf,
-    TResult Function(List<File> pdfs)? listPdfs,
+    TResult Function(List<File> pdfs)? downloadedPdfs,
     TResult Function(List<String> errors)? error,
   }) {
     return initial?.call();
@@ -175,8 +161,7 @@ class _$_InitialPdfState extends _InitialPdfState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(SfPdfViewer viewer)? showPdf,
-    TResult Function(List<File> pdfs)? listPdfs,
+    TResult Function(List<File> pdfs)? downloadedPdfs,
     TResult Function(List<String> errors)? error,
     required TResult orElse(),
   }) {
@@ -190,8 +175,7 @@ class _$_InitialPdfState extends _InitialPdfState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPdfState value) initial,
-    required TResult Function(_ShowPdfState value) showPdf,
-    required TResult Function(_ListPdfsState value) listPdfs,
+    required TResult Function(_ListPdfsState value) downloadedPdfs,
     required TResult Function(_ErrorPdfState value) error,
   }) {
     return initial(this);
@@ -201,8 +185,7 @@ class _$_InitialPdfState extends _InitialPdfState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ShowPdfState value)? showPdf,
-    TResult Function(_ListPdfsState value)? listPdfs,
+    TResult Function(_ListPdfsState value)? downloadedPdfs,
     TResult Function(_ErrorPdfState value)? error,
   }) {
     return initial?.call(this);
@@ -212,8 +195,7 @@ class _$_InitialPdfState extends _InitialPdfState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ShowPdfState value)? showPdf,
-    TResult Function(_ListPdfsState value)? listPdfs,
+    TResult Function(_ListPdfsState value)? downloadedPdfs,
     TResult Function(_ErrorPdfState value)? error,
     required TResult orElse(),
   }) {
@@ -227,152 +209,6 @@ class _$_InitialPdfState extends _InitialPdfState {
 abstract class _InitialPdfState extends PdfState {
   const factory _InitialPdfState() = _$_InitialPdfState;
   const _InitialPdfState._() : super._();
-}
-
-/// @nodoc
-abstract class _$ShowPdfStateCopyWith<$Res> {
-  factory _$ShowPdfStateCopyWith(
-          _ShowPdfState value, $Res Function(_ShowPdfState) then) =
-      __$ShowPdfStateCopyWithImpl<$Res>;
-  $Res call({SfPdfViewer viewer});
-}
-
-/// @nodoc
-class __$ShowPdfStateCopyWithImpl<$Res> extends _$PdfStateCopyWithImpl<$Res>
-    implements _$ShowPdfStateCopyWith<$Res> {
-  __$ShowPdfStateCopyWithImpl(
-      _ShowPdfState _value, $Res Function(_ShowPdfState) _then)
-      : super(_value, (v) => _then(v as _ShowPdfState));
-
-  @override
-  _ShowPdfState get _value => super._value as _ShowPdfState;
-
-  @override
-  $Res call({
-    Object? viewer = freezed,
-  }) {
-    return _then(_ShowPdfState(
-      viewer == freezed
-          ? _value.viewer
-          : viewer // ignore: cast_nullable_to_non_nullable
-              as SfPdfViewer,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_ShowPdfState extends _ShowPdfState {
-  const _$_ShowPdfState(this.viewer) : super._();
-
-  @override
-  final SfPdfViewer viewer;
-
-  @override
-  String toString() {
-    return 'PdfState.showPdf(viewer: $viewer)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _ShowPdfState &&
-            const DeepCollectionEquality().equals(other.viewer, viewer));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(viewer));
-
-  @JsonKey(ignore: true)
-  @override
-  _$ShowPdfStateCopyWith<_ShowPdfState> get copyWith =>
-      __$ShowPdfStateCopyWithImpl<_ShowPdfState>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(SfPdfViewer viewer) showPdf,
-    required TResult Function(List<File> pdfs) listPdfs,
-    required TResult Function(List<String> errors) error,
-  }) {
-    return showPdf(viewer);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(SfPdfViewer viewer)? showPdf,
-    TResult Function(List<File> pdfs)? listPdfs,
-    TResult Function(List<String> errors)? error,
-  }) {
-    return showPdf?.call(viewer);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(SfPdfViewer viewer)? showPdf,
-    TResult Function(List<File> pdfs)? listPdfs,
-    TResult Function(List<String> errors)? error,
-    required TResult orElse(),
-  }) {
-    if (showPdf != null) {
-      return showPdf(viewer);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_InitialPdfState value) initial,
-    required TResult Function(_ShowPdfState value) showPdf,
-    required TResult Function(_ListPdfsState value) listPdfs,
-    required TResult Function(_ErrorPdfState value) error,
-  }) {
-    return showPdf(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ShowPdfState value)? showPdf,
-    TResult Function(_ListPdfsState value)? listPdfs,
-    TResult Function(_ErrorPdfState value)? error,
-  }) {
-    return showPdf?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ShowPdfState value)? showPdf,
-    TResult Function(_ListPdfsState value)? listPdfs,
-    TResult Function(_ErrorPdfState value)? error,
-    required TResult orElse(),
-  }) {
-    if (showPdf != null) {
-      return showPdf(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ShowPdfState extends PdfState {
-  const factory _ShowPdfState(SfPdfViewer viewer) = _$_ShowPdfState;
-  const _ShowPdfState._() : super._();
-
-  SfPdfViewer get viewer;
-  @JsonKey(ignore: true)
-  _$ShowPdfStateCopyWith<_ShowPdfState> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -416,7 +252,7 @@ class _$_ListPdfsState extends _ListPdfsState {
 
   @override
   String toString() {
-    return 'PdfState.listPdfs(pdfs: $pdfs)';
+    return 'PdfState.downloadedPdfs(pdfs: $pdfs)';
   }
 
   @override
@@ -440,35 +276,32 @@ class _$_ListPdfsState extends _ListPdfsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(SfPdfViewer viewer) showPdf,
-    required TResult Function(List<File> pdfs) listPdfs,
+    required TResult Function(List<File> pdfs) downloadedPdfs,
     required TResult Function(List<String> errors) error,
   }) {
-    return listPdfs(pdfs);
+    return downloadedPdfs(pdfs);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(SfPdfViewer viewer)? showPdf,
-    TResult Function(List<File> pdfs)? listPdfs,
+    TResult Function(List<File> pdfs)? downloadedPdfs,
     TResult Function(List<String> errors)? error,
   }) {
-    return listPdfs?.call(pdfs);
+    return downloadedPdfs?.call(pdfs);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(SfPdfViewer viewer)? showPdf,
-    TResult Function(List<File> pdfs)? listPdfs,
+    TResult Function(List<File> pdfs)? downloadedPdfs,
     TResult Function(List<String> errors)? error,
     required TResult orElse(),
   }) {
-    if (listPdfs != null) {
-      return listPdfs(pdfs);
+    if (downloadedPdfs != null) {
+      return downloadedPdfs(pdfs);
     }
     return orElse();
   }
@@ -477,35 +310,32 @@ class _$_ListPdfsState extends _ListPdfsState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPdfState value) initial,
-    required TResult Function(_ShowPdfState value) showPdf,
-    required TResult Function(_ListPdfsState value) listPdfs,
+    required TResult Function(_ListPdfsState value) downloadedPdfs,
     required TResult Function(_ErrorPdfState value) error,
   }) {
-    return listPdfs(this);
+    return downloadedPdfs(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ShowPdfState value)? showPdf,
-    TResult Function(_ListPdfsState value)? listPdfs,
+    TResult Function(_ListPdfsState value)? downloadedPdfs,
     TResult Function(_ErrorPdfState value)? error,
   }) {
-    return listPdfs?.call(this);
+    return downloadedPdfs?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ShowPdfState value)? showPdf,
-    TResult Function(_ListPdfsState value)? listPdfs,
+    TResult Function(_ListPdfsState value)? downloadedPdfs,
     TResult Function(_ErrorPdfState value)? error,
     required TResult orElse(),
   }) {
-    if (listPdfs != null) {
-      return listPdfs(this);
+    if (downloadedPdfs != null) {
+      return downloadedPdfs(this);
     }
     return orElse();
   }
@@ -586,8 +416,7 @@ class _$_ErrorPdfState extends _ErrorPdfState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(SfPdfViewer viewer) showPdf,
-    required TResult Function(List<File> pdfs) listPdfs,
+    required TResult Function(List<File> pdfs) downloadedPdfs,
     required TResult Function(List<String> errors) error,
   }) {
     return error(errors);
@@ -597,8 +426,7 @@ class _$_ErrorPdfState extends _ErrorPdfState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(SfPdfViewer viewer)? showPdf,
-    TResult Function(List<File> pdfs)? listPdfs,
+    TResult Function(List<File> pdfs)? downloadedPdfs,
     TResult Function(List<String> errors)? error,
   }) {
     return error?.call(errors);
@@ -608,8 +436,7 @@ class _$_ErrorPdfState extends _ErrorPdfState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(SfPdfViewer viewer)? showPdf,
-    TResult Function(List<File> pdfs)? listPdfs,
+    TResult Function(List<File> pdfs)? downloadedPdfs,
     TResult Function(List<String> errors)? error,
     required TResult orElse(),
   }) {
@@ -623,8 +450,7 @@ class _$_ErrorPdfState extends _ErrorPdfState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPdfState value) initial,
-    required TResult Function(_ShowPdfState value) showPdf,
-    required TResult Function(_ListPdfsState value) listPdfs,
+    required TResult Function(_ListPdfsState value) downloadedPdfs,
     required TResult Function(_ErrorPdfState value) error,
   }) {
     return error(this);
@@ -634,8 +460,7 @@ class _$_ErrorPdfState extends _ErrorPdfState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ShowPdfState value)? showPdf,
-    TResult Function(_ListPdfsState value)? listPdfs,
+    TResult Function(_ListPdfsState value)? downloadedPdfs,
     TResult Function(_ErrorPdfState value)? error,
   }) {
     return error?.call(this);
@@ -645,8 +470,7 @@ class _$_ErrorPdfState extends _ErrorPdfState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ShowPdfState value)? showPdf,
-    TResult Function(_ListPdfsState value)? listPdfs,
+    TResult Function(_ListPdfsState value)? downloadedPdfs,
     TResult Function(_ErrorPdfState value)? error,
     required TResult orElse(),
   }) {

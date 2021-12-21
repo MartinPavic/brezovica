@@ -1,33 +1,40 @@
 import 'dart:io';
 
 import 'package:brezovica/provider/pdf/pdf_state.dart';
+import 'package:brezovica/provider/pdf/pdf_task.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PdfProvider extends StateNotifier<PdfState> {
   PdfProvider() : super(const PdfState.initial());
-  Future<Unit> asyncUpdate<T>(
-    TaskEither<String, List<File>> Function() pdfsTask,
-  ) async {
-    final pdfs = pdfsTask();
-    state = (await pdfs.run()).match(
-      (error) => PdfState.error([error]),
-      (pdfsList) {
-        if (pdfsList.isNotEmpty) {
-          return PdfState.listPdfs(pdfsList);
-        } else {
-          return const PdfState.initial();
-        }
-      },
+
+  Future<Unit> getPdfs() async {
+    final pdfTask = getBusPdfs();
+    final pdfs = await pdfTask.run();
+    pdfs.match(
+      (error) => state = PdfState.error([error]),
+      (downloadedPdfs) => state = PdfState.downloadedPdfs(downloadedPdfs),
     );
     return unit;
   }
 
-  Unit showPdf(File file) {
-    state = PdfState.showPdf(SfPdfViewer.file(file));
+  Unit addPdf(File pdfFile) {
+    state.whenOrNull(
+        downloadedPdfs: (pdfs) => state = PdfState.downloadedPdfs(
+              pdfs.append(pdfFile).toList(),
+            ));
+    return unit;
+  }
+
+  Unit deletePdf(File pdfFile) {
+    state.whenOrNull(
+      downloadedPdfs: (pdfs) {
+        state = PdfState.downloadedPdfs(pdfs.delete(pdfFile).toList());
+      },
+    );
     return unit;
   }
 }
 
-final pdfProvider = StateNotifierProvider<PdfProvider, PdfState>((_) => PdfProvider());
+final pdfProvider =
+    StateNotifierProvider<PdfProvider, PdfState>((_) => PdfProvider());
