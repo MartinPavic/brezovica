@@ -1,20 +1,25 @@
-import 'package:brezovica/screen/bus/bus.dart';
+import 'package:brezovica/service/pdf/pdf.dart';
+import 'package:brezovica/screen/bus/bus_screen.dart';
 import 'package:brezovica/screen/info.dart';
 import 'package:brezovica/screen/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:brezovica/constants.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() => runApp(const ProviderScope(child: MyApp()));
 
 /// This is the main application widget.
-class MyApp extends StatelessWidget {
+class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   static const String _title = 'Flutter Code Sample';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(() {
+      ref.read(pdfProvider.notifier).getPdfs();
+    }, []);
     return const MaterialApp(
       title: _title,
       debugShowCheckedModeBanner: false,

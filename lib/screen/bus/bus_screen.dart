@@ -2,12 +2,10 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:brezovica/constants.dart';
-import 'package:brezovica/provider/pdf/pdf.dart';
+import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/bus/bus_screen_state.dart';
-import 'package:brezovica/util/files.dart';
 import 'package:brezovica/widget/add_bus_bottom_sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -25,11 +23,12 @@ class BusScreen extends HookConsumerWidget {
           busScreenState.maybeWhen(
               error: (_) {},
               orElse: () => showModalBottomSheet(
-                  context: context, builder: addBusBottomSheet(ref)));
+                  context: context, builder: addBusBottomSheet));
         },
       ),
       body: Container(
           height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/bus_bg.jpeg'),
@@ -37,29 +36,28 @@ class BusScreen extends HookConsumerWidget {
             ),
           ),
           child: busScreenState.when(
-            initial: () => const Center(),
-            listBuses: (viewer) => viewer,
-            listBuses: (pdfList) => busList(pdfList, ref),
+            initial: () => const CircularProgressIndicator(),
+            listBuses: (buses) => busList(buses, ref),
+            showPdf: (viewer) => viewer,
             error: (error) => ErrorWidget(error.join(" ")),
           )),
     );
   }
 
-  ListView busList(List<File> pdfList, WidgetRef ref) {
+  ListView busList(List<Bus> busList, WidgetRef ref) {
     return ListView.builder(
-        itemCount: pdfList.length,
+        itemCount: busList.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           return Card(
             color: Colors.transparent,
             margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-            elevation: 6,
+            elevation: 8,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
             child: InkWell(
-              onTap: () =>
-                  ref.read(pdfProvider.notifier).showPdf(pdfList[index]),
+              onTap: () => ref.read(busScreenProvider.notifier).showPdf(File(busList[index].pdfFilePath),
               customBorder: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -94,39 +92,44 @@ class BusScreen extends HookConsumerWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      Files.getNameFromPath(pdfList[index].path),
-                      style: TextStyle(
-                        color: Colors.blue[50],
-                        fontSize: 45,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              busList[index].number.toString(),
+                              style: TextStyle(
+                                color: Colors.blue[50],
+                                fontSize: 45,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.visible
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    // ElevatedButton(
-                    //   onPressed: () =>
-                    //       ,
-                    //   child: const Icon(Icons.picture_as_pdf_rounded),
-                    //   style: ElevatedButton.styleFrom(
-                    //     shape: const CircleBorder(),
-                    //   ),
-                    // )
-                    Text(
-                      Constants.busevi
-                          .firstWhere((bus) =>
-                              bus.number ==
-                              int.parse(
-                                  Files.getNameFromPath(pdfList[index].path)))
-                          .type
-                          .description
-                          .toString(),
-                      style: TextStyle(
-                        color: Colors.blue[50],
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              busList[index].type.description,
+                              style: TextStyle(
+                                color: Colors.blue[50],
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

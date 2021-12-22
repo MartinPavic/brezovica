@@ -55,3 +55,15 @@ Map<String, dynamic> _$$BotinecBusTypeToJson(_$BotinecBusType instance) =>
       'description': instance.description,
       'runtimeType': instance.$type,
     };
+
+_$EmptyBusType _$$EmptyBusTypeFromJson(Map<String, dynamic> json) =>
+    _$EmptyBusType(
+      description: json['description'] as String? ?? '',
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$EmptyBusTypeToJson(_$EmptyBusType instance) =>
+    <String, dynamic>{
+      'description': instance.description,
+      'runtimeType': instance.$type,
+    };

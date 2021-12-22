@@ -15,12 +15,13 @@ class Bus with _$Bus {
       required BusType type,
       required Uri url,
       String? pdfFilePath}) = _Bus;
+  factory Bus.empty() => Bus(number: 0, type: const BusType.empty(), url: Uri());
   factory Bus.fromJson(Map<String, dynamic> json) => _$BusFromJson(json);
   static Either<String, Bus> fromPdf(File pdfFile, List<Bus> buses) {
     return Either.tryCatch(() {
       final fileName = stripFileNameExtension(pdfFile.uri.pathSegments.last);
       final busNumber = int.parse(fileName);
-      return buses.firstWhere((element) => element.number == busNumber);
+      return buses.firstWhere((element) => element.number == busNumber).copyWith(pdfFilePath: pdfFile.path);
     }, (e, _) => e.toString());
   }
 }
@@ -31,6 +32,7 @@ class BusType with _$BusType {
       BrezovicaBusType;
   const factory BusType.obrez({required String description}) = ObrezBusType;
   const factory BusType.botinec({required String description}) = BotinecBusType;
+  const factory BusType.empty({@Default('') String description}) = EmptyBusType;
   factory BusType.fromJson(Map<String, dynamic> json) =>
       _$BusTypeFromJson(json);
 }

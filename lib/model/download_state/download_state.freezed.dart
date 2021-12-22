@@ -17,22 +17,24 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$DownloadStateTearOff {
   const _$DownloadStateTearOff();
 
-  _NotDownloadingState<T> notDownloading<T>() {
-    return _NotDownloadingState<T>();
+  _NotDownloadingState notDownloading() {
+    return const _NotDownloadingState();
   }
 
-  _DownloadingState<T> downloading<T>() {
-    return _DownloadingState<T>();
-  }
-
-  _DownloadSuccessState<T> downloadSuccess<T>(T result) {
-    return _DownloadSuccessState<T>(
-      result,
+  _DownloadingState downloading(DownloaderCore downloader) {
+    return _DownloadingState(
+      downloader,
     );
   }
 
-  _DownloadFailuerState<T> downloadFailure<T>(String error) {
-    return _DownloadFailuerState<T>(
+  _DownloadSuccessState downloadSuccess(File file) {
+    return _DownloadSuccessState(
+      file,
+    );
+  }
+
+  _DownloadFailuerState downloadFailure(String error) {
+    return _DownloadFailuerState(
       error,
     );
   }
@@ -42,117 +44,117 @@ class _$DownloadStateTearOff {
 const $DownloadState = _$DownloadStateTearOff();
 
 /// @nodoc
-mixin _$DownloadState<T> {
+mixin _$DownloadState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() notDownloading,
-    required TResult Function() downloading,
-    required TResult Function(T result) downloadSuccess,
+    required TResult Function(DownloaderCore downloader) downloading,
+    required TResult Function(File file) downloadSuccess,
     required TResult Function(String error) downloadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? notDownloading,
-    TResult Function()? downloading,
-    TResult Function(T result)? downloadSuccess,
+    TResult Function(DownloaderCore downloader)? downloading,
+    TResult Function(File file)? downloadSuccess,
     TResult Function(String error)? downloadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? notDownloading,
-    TResult Function()? downloading,
-    TResult Function(T result)? downloadSuccess,
+    TResult Function(DownloaderCore downloader)? downloading,
+    TResult Function(File file)? downloadSuccess,
     TResult Function(String error)? downloadFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NotDownloadingState<T> value) notDownloading,
-    required TResult Function(_DownloadingState<T> value) downloading,
-    required TResult Function(_DownloadSuccessState<T> value) downloadSuccess,
-    required TResult Function(_DownloadFailuerState<T> value) downloadFailure,
+    required TResult Function(_NotDownloadingState value) notDownloading,
+    required TResult Function(_DownloadingState value) downloading,
+    required TResult Function(_DownloadSuccessState value) downloadSuccess,
+    required TResult Function(_DownloadFailuerState value) downloadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NotDownloadingState<T> value)? notDownloading,
-    TResult Function(_DownloadingState<T> value)? downloading,
-    TResult Function(_DownloadSuccessState<T> value)? downloadSuccess,
-    TResult Function(_DownloadFailuerState<T> value)? downloadFailure,
+    TResult Function(_NotDownloadingState value)? notDownloading,
+    TResult Function(_DownloadingState value)? downloading,
+    TResult Function(_DownloadSuccessState value)? downloadSuccess,
+    TResult Function(_DownloadFailuerState value)? downloadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NotDownloadingState<T> value)? notDownloading,
-    TResult Function(_DownloadingState<T> value)? downloading,
-    TResult Function(_DownloadSuccessState<T> value)? downloadSuccess,
-    TResult Function(_DownloadFailuerState<T> value)? downloadFailure,
+    TResult Function(_NotDownloadingState value)? notDownloading,
+    TResult Function(_DownloadingState value)? downloading,
+    TResult Function(_DownloadSuccessState value)? downloadSuccess,
+    TResult Function(_DownloadFailuerState value)? downloadFailure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DownloadStateCopyWith<T, $Res> {
+abstract class $DownloadStateCopyWith<$Res> {
   factory $DownloadStateCopyWith(
-          DownloadState<T> value, $Res Function(DownloadState<T>) then) =
-      _$DownloadStateCopyWithImpl<T, $Res>;
+          DownloadState value, $Res Function(DownloadState) then) =
+      _$DownloadStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$DownloadStateCopyWithImpl<T, $Res>
-    implements $DownloadStateCopyWith<T, $Res> {
+class _$DownloadStateCopyWithImpl<$Res>
+    implements $DownloadStateCopyWith<$Res> {
   _$DownloadStateCopyWithImpl(this._value, this._then);
 
-  final DownloadState<T> _value;
+  final DownloadState _value;
   // ignore: unused_field
-  final $Res Function(DownloadState<T>) _then;
+  final $Res Function(DownloadState) _then;
 }
 
 /// @nodoc
-abstract class _$NotDownloadingStateCopyWith<T, $Res> {
-  factory _$NotDownloadingStateCopyWith(_NotDownloadingState<T> value,
-          $Res Function(_NotDownloadingState<T>) then) =
-      __$NotDownloadingStateCopyWithImpl<T, $Res>;
+abstract class _$NotDownloadingStateCopyWith<$Res> {
+  factory _$NotDownloadingStateCopyWith(_NotDownloadingState value,
+          $Res Function(_NotDownloadingState) then) =
+      __$NotDownloadingStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$NotDownloadingStateCopyWithImpl<T, $Res>
-    extends _$DownloadStateCopyWithImpl<T, $Res>
-    implements _$NotDownloadingStateCopyWith<T, $Res> {
-  __$NotDownloadingStateCopyWithImpl(_NotDownloadingState<T> _value,
-      $Res Function(_NotDownloadingState<T>) _then)
-      : super(_value, (v) => _then(v as _NotDownloadingState<T>));
+class __$NotDownloadingStateCopyWithImpl<$Res>
+    extends _$DownloadStateCopyWithImpl<$Res>
+    implements _$NotDownloadingStateCopyWith<$Res> {
+  __$NotDownloadingStateCopyWithImpl(
+      _NotDownloadingState _value, $Res Function(_NotDownloadingState) _then)
+      : super(_value, (v) => _then(v as _NotDownloadingState));
 
   @override
-  _NotDownloadingState<T> get _value => super._value as _NotDownloadingState<T>;
+  _NotDownloadingState get _value => super._value as _NotDownloadingState;
 }
 
 /// @nodoc
 
-class _$_NotDownloadingState<T> extends _NotDownloadingState<T>
+class _$_NotDownloadingState extends _NotDownloadingState
     with DiagnosticableTreeMixin {
   const _$_NotDownloadingState() : super._();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DownloadState<$T>.notDownloading()';
+    return 'DownloadState.notDownloading()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'DownloadState<$T>.notDownloading'));
+      ..add(DiagnosticsProperty('type', 'DownloadState.notDownloading'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _NotDownloadingState<T>);
+        (other.runtimeType == runtimeType && other is _NotDownloadingState);
   }
 
   @override
@@ -162,8 +164,8 @@ class _$_NotDownloadingState<T> extends _NotDownloadingState<T>
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() notDownloading,
-    required TResult Function() downloading,
-    required TResult Function(T result) downloadSuccess,
+    required TResult Function(DownloaderCore downloader) downloading,
+    required TResult Function(File file) downloadSuccess,
     required TResult Function(String error) downloadFailure,
   }) {
     return notDownloading();
@@ -173,8 +175,8 @@ class _$_NotDownloadingState<T> extends _NotDownloadingState<T>
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? notDownloading,
-    TResult Function()? downloading,
-    TResult Function(T result)? downloadSuccess,
+    TResult Function(DownloaderCore downloader)? downloading,
+    TResult Function(File file)? downloadSuccess,
     TResult Function(String error)? downloadFailure,
   }) {
     return notDownloading?.call();
@@ -184,8 +186,8 @@ class _$_NotDownloadingState<T> extends _NotDownloadingState<T>
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? notDownloading,
-    TResult Function()? downloading,
-    TResult Function(T result)? downloadSuccess,
+    TResult Function(DownloaderCore downloader)? downloading,
+    TResult Function(File file)? downloadSuccess,
     TResult Function(String error)? downloadFailure,
     required TResult orElse(),
   }) {
@@ -198,10 +200,10 @@ class _$_NotDownloadingState<T> extends _NotDownloadingState<T>
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NotDownloadingState<T> value) notDownloading,
-    required TResult Function(_DownloadingState<T> value) downloading,
-    required TResult Function(_DownloadSuccessState<T> value) downloadSuccess,
-    required TResult Function(_DownloadFailuerState<T> value) downloadFailure,
+    required TResult Function(_NotDownloadingState value) notDownloading,
+    required TResult Function(_DownloadingState value) downloading,
+    required TResult Function(_DownloadSuccessState value) downloadSuccess,
+    required TResult Function(_DownloadFailuerState value) downloadFailure,
   }) {
     return notDownloading(this);
   }
@@ -209,10 +211,10 @@ class _$_NotDownloadingState<T> extends _NotDownloadingState<T>
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NotDownloadingState<T> value)? notDownloading,
-    TResult Function(_DownloadingState<T> value)? downloading,
-    TResult Function(_DownloadSuccessState<T> value)? downloadSuccess,
-    TResult Function(_DownloadFailuerState<T> value)? downloadFailure,
+    TResult Function(_NotDownloadingState value)? notDownloading,
+    TResult Function(_DownloadingState value)? downloading,
+    TResult Function(_DownloadSuccessState value)? downloadSuccess,
+    TResult Function(_DownloadFailuerState value)? downloadFailure,
   }) {
     return notDownloading?.call(this);
   }
@@ -220,10 +222,10 @@ class _$_NotDownloadingState<T> extends _NotDownloadingState<T>
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NotDownloadingState<T> value)? notDownloading,
-    TResult Function(_DownloadingState<T> value)? downloading,
-    TResult Function(_DownloadSuccessState<T> value)? downloadSuccess,
-    TResult Function(_DownloadFailuerState<T> value)? downloadFailure,
+    TResult Function(_NotDownloadingState value)? notDownloading,
+    TResult Function(_DownloadingState value)? downloading,
+    TResult Function(_DownloadSuccessState value)? downloadSuccess,
+    TResult Function(_DownloadFailuerState value)? downloadFailure,
     required TResult orElse(),
   }) {
     if (notDownloading != null) {
@@ -233,90 +235,116 @@ class _$_NotDownloadingState<T> extends _NotDownloadingState<T>
   }
 }
 
-abstract class _NotDownloadingState<T> extends DownloadState<T> {
-  const factory _NotDownloadingState() = _$_NotDownloadingState<T>;
+abstract class _NotDownloadingState extends DownloadState {
+  const factory _NotDownloadingState() = _$_NotDownloadingState;
   const _NotDownloadingState._() : super._();
 }
 
 /// @nodoc
-abstract class _$DownloadingStateCopyWith<T, $Res> {
-  factory _$DownloadingStateCopyWith(_DownloadingState<T> value,
-          $Res Function(_DownloadingState<T>) then) =
-      __$DownloadingStateCopyWithImpl<T, $Res>;
+abstract class _$DownloadingStateCopyWith<$Res> {
+  factory _$DownloadingStateCopyWith(
+          _DownloadingState value, $Res Function(_DownloadingState) then) =
+      __$DownloadingStateCopyWithImpl<$Res>;
+  $Res call({DownloaderCore downloader});
 }
 
 /// @nodoc
-class __$DownloadingStateCopyWithImpl<T, $Res>
-    extends _$DownloadStateCopyWithImpl<T, $Res>
-    implements _$DownloadingStateCopyWith<T, $Res> {
+class __$DownloadingStateCopyWithImpl<$Res>
+    extends _$DownloadStateCopyWithImpl<$Res>
+    implements _$DownloadingStateCopyWith<$Res> {
   __$DownloadingStateCopyWithImpl(
-      _DownloadingState<T> _value, $Res Function(_DownloadingState<T>) _then)
-      : super(_value, (v) => _then(v as _DownloadingState<T>));
+      _DownloadingState _value, $Res Function(_DownloadingState) _then)
+      : super(_value, (v) => _then(v as _DownloadingState));
 
   @override
-  _DownloadingState<T> get _value => super._value as _DownloadingState<T>;
+  _DownloadingState get _value => super._value as _DownloadingState;
+
+  @override
+  $Res call({
+    Object? downloader = freezed,
+  }) {
+    return _then(_DownloadingState(
+      downloader == freezed
+          ? _value.downloader
+          : downloader // ignore: cast_nullable_to_non_nullable
+              as DownloaderCore,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_DownloadingState<T> extends _DownloadingState<T>
+class _$_DownloadingState extends _DownloadingState
     with DiagnosticableTreeMixin {
-  const _$_DownloadingState() : super._();
+  const _$_DownloadingState(this.downloader) : super._();
+
+  @override
+  final DownloaderCore downloader;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DownloadState<$T>.downloading()';
+    return 'DownloadState.downloading(downloader: $downloader)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'DownloadState<$T>.downloading'));
+      ..add(DiagnosticsProperty('type', 'DownloadState.downloading'))
+      ..add(DiagnosticsProperty('downloader', downloader));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _DownloadingState<T>);
+        (other.runtimeType == runtimeType &&
+            other is _DownloadingState &&
+            const DeepCollectionEquality()
+                .equals(other.downloader, downloader));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(downloader));
+
+  @JsonKey(ignore: true)
+  @override
+  _$DownloadingStateCopyWith<_DownloadingState> get copyWith =>
+      __$DownloadingStateCopyWithImpl<_DownloadingState>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() notDownloading,
-    required TResult Function() downloading,
-    required TResult Function(T result) downloadSuccess,
+    required TResult Function(DownloaderCore downloader) downloading,
+    required TResult Function(File file) downloadSuccess,
     required TResult Function(String error) downloadFailure,
   }) {
-    return downloading();
+    return downloading(downloader);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? notDownloading,
-    TResult Function()? downloading,
-    TResult Function(T result)? downloadSuccess,
+    TResult Function(DownloaderCore downloader)? downloading,
+    TResult Function(File file)? downloadSuccess,
     TResult Function(String error)? downloadFailure,
   }) {
-    return downloading?.call();
+    return downloading?.call(downloader);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? notDownloading,
-    TResult Function()? downloading,
-    TResult Function(T result)? downloadSuccess,
+    TResult Function(DownloaderCore downloader)? downloading,
+    TResult Function(File file)? downloadSuccess,
     TResult Function(String error)? downloadFailure,
     required TResult orElse(),
   }) {
     if (downloading != null) {
-      return downloading();
+      return downloading(downloader);
     }
     return orElse();
   }
@@ -324,10 +352,10 @@ class _$_DownloadingState<T> extends _DownloadingState<T>
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NotDownloadingState<T> value) notDownloading,
-    required TResult Function(_DownloadingState<T> value) downloading,
-    required TResult Function(_DownloadSuccessState<T> value) downloadSuccess,
-    required TResult Function(_DownloadFailuerState<T> value) downloadFailure,
+    required TResult Function(_NotDownloadingState value) notDownloading,
+    required TResult Function(_DownloadingState value) downloading,
+    required TResult Function(_DownloadSuccessState value) downloadSuccess,
+    required TResult Function(_DownloadFailuerState value) downloadFailure,
   }) {
     return downloading(this);
   }
@@ -335,10 +363,10 @@ class _$_DownloadingState<T> extends _DownloadingState<T>
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NotDownloadingState<T> value)? notDownloading,
-    TResult Function(_DownloadingState<T> value)? downloading,
-    TResult Function(_DownloadSuccessState<T> value)? downloadSuccess,
-    TResult Function(_DownloadFailuerState<T> value)? downloadFailure,
+    TResult Function(_NotDownloadingState value)? notDownloading,
+    TResult Function(_DownloadingState value)? downloading,
+    TResult Function(_DownloadSuccessState value)? downloadSuccess,
+    TResult Function(_DownloadFailuerState value)? downloadFailure,
   }) {
     return downloading?.call(this);
   }
@@ -346,10 +374,10 @@ class _$_DownloadingState<T> extends _DownloadingState<T>
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NotDownloadingState<T> value)? notDownloading,
-    TResult Function(_DownloadingState<T> value)? downloading,
-    TResult Function(_DownloadSuccessState<T> value)? downloadSuccess,
-    TResult Function(_DownloadFailuerState<T> value)? downloadFailure,
+    TResult Function(_NotDownloadingState value)? notDownloading,
+    TResult Function(_DownloadingState value)? downloading,
+    TResult Function(_DownloadSuccessState value)? downloadSuccess,
+    TResult Function(_DownloadFailuerState value)? downloadFailure,
     required TResult orElse(),
   }) {
     if (downloading != null) {
@@ -359,117 +387,122 @@ class _$_DownloadingState<T> extends _DownloadingState<T>
   }
 }
 
-abstract class _DownloadingState<T> extends DownloadState<T> {
-  const factory _DownloadingState() = _$_DownloadingState<T>;
+abstract class _DownloadingState extends DownloadState {
+  const factory _DownloadingState(DownloaderCore downloader) =
+      _$_DownloadingState;
   const _DownloadingState._() : super._();
+
+  DownloaderCore get downloader;
+  @JsonKey(ignore: true)
+  _$DownloadingStateCopyWith<_DownloadingState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$DownloadSuccessStateCopyWith<T, $Res> {
-  factory _$DownloadSuccessStateCopyWith(_DownloadSuccessState<T> value,
-          $Res Function(_DownloadSuccessState<T>) then) =
-      __$DownloadSuccessStateCopyWithImpl<T, $Res>;
-  $Res call({T result});
+abstract class _$DownloadSuccessStateCopyWith<$Res> {
+  factory _$DownloadSuccessStateCopyWith(_DownloadSuccessState value,
+          $Res Function(_DownloadSuccessState) then) =
+      __$DownloadSuccessStateCopyWithImpl<$Res>;
+  $Res call({File file});
 }
 
 /// @nodoc
-class __$DownloadSuccessStateCopyWithImpl<T, $Res>
-    extends _$DownloadStateCopyWithImpl<T, $Res>
-    implements _$DownloadSuccessStateCopyWith<T, $Res> {
-  __$DownloadSuccessStateCopyWithImpl(_DownloadSuccessState<T> _value,
-      $Res Function(_DownloadSuccessState<T>) _then)
-      : super(_value, (v) => _then(v as _DownloadSuccessState<T>));
+class __$DownloadSuccessStateCopyWithImpl<$Res>
+    extends _$DownloadStateCopyWithImpl<$Res>
+    implements _$DownloadSuccessStateCopyWith<$Res> {
+  __$DownloadSuccessStateCopyWithImpl(
+      _DownloadSuccessState _value, $Res Function(_DownloadSuccessState) _then)
+      : super(_value, (v) => _then(v as _DownloadSuccessState));
 
   @override
-  _DownloadSuccessState<T> get _value =>
-      super._value as _DownloadSuccessState<T>;
+  _DownloadSuccessState get _value => super._value as _DownloadSuccessState;
 
   @override
   $Res call({
-    Object? result = freezed,
+    Object? file = freezed,
   }) {
-    return _then(_DownloadSuccessState<T>(
-      result == freezed
-          ? _value.result
-          : result // ignore: cast_nullable_to_non_nullable
-              as T,
+    return _then(_DownloadSuccessState(
+      file == freezed
+          ? _value.file
+          : file // ignore: cast_nullable_to_non_nullable
+              as File,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_DownloadSuccessState<T> extends _DownloadSuccessState<T>
+class _$_DownloadSuccessState extends _DownloadSuccessState
     with DiagnosticableTreeMixin {
-  const _$_DownloadSuccessState(this.result) : super._();
+  const _$_DownloadSuccessState(this.file) : super._();
 
   @override
-  final T result;
+  final File file;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DownloadState<$T>.downloadSuccess(result: $result)';
+    return 'DownloadState.downloadSuccess(file: $file)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'DownloadState<$T>.downloadSuccess'))
-      ..add(DiagnosticsProperty('result', result));
+      ..add(DiagnosticsProperty('type', 'DownloadState.downloadSuccess'))
+      ..add(DiagnosticsProperty('file', file));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _DownloadSuccessState<T> &&
-            const DeepCollectionEquality().equals(other.result, result));
+            other is _DownloadSuccessState &&
+            const DeepCollectionEquality().equals(other.file, file));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(result));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(file));
 
   @JsonKey(ignore: true)
   @override
-  _$DownloadSuccessStateCopyWith<T, _DownloadSuccessState<T>> get copyWith =>
-      __$DownloadSuccessStateCopyWithImpl<T, _DownloadSuccessState<T>>(
+  _$DownloadSuccessStateCopyWith<_DownloadSuccessState> get copyWith =>
+      __$DownloadSuccessStateCopyWithImpl<_DownloadSuccessState>(
           this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() notDownloading,
-    required TResult Function() downloading,
-    required TResult Function(T result) downloadSuccess,
+    required TResult Function(DownloaderCore downloader) downloading,
+    required TResult Function(File file) downloadSuccess,
     required TResult Function(String error) downloadFailure,
   }) {
-    return downloadSuccess(result);
+    return downloadSuccess(file);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? notDownloading,
-    TResult Function()? downloading,
-    TResult Function(T result)? downloadSuccess,
+    TResult Function(DownloaderCore downloader)? downloading,
+    TResult Function(File file)? downloadSuccess,
     TResult Function(String error)? downloadFailure,
   }) {
-    return downloadSuccess?.call(result);
+    return downloadSuccess?.call(file);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? notDownloading,
-    TResult Function()? downloading,
-    TResult Function(T result)? downloadSuccess,
+    TResult Function(DownloaderCore downloader)? downloading,
+    TResult Function(File file)? downloadSuccess,
     TResult Function(String error)? downloadFailure,
     required TResult orElse(),
   }) {
     if (downloadSuccess != null) {
-      return downloadSuccess(result);
+      return downloadSuccess(file);
     }
     return orElse();
   }
@@ -477,10 +510,10 @@ class _$_DownloadSuccessState<T> extends _DownloadSuccessState<T>
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NotDownloadingState<T> value) notDownloading,
-    required TResult Function(_DownloadingState<T> value) downloading,
-    required TResult Function(_DownloadSuccessState<T> value) downloadSuccess,
-    required TResult Function(_DownloadFailuerState<T> value) downloadFailure,
+    required TResult Function(_NotDownloadingState value) notDownloading,
+    required TResult Function(_DownloadingState value) downloading,
+    required TResult Function(_DownloadSuccessState value) downloadSuccess,
+    required TResult Function(_DownloadFailuerState value) downloadFailure,
   }) {
     return downloadSuccess(this);
   }
@@ -488,10 +521,10 @@ class _$_DownloadSuccessState<T> extends _DownloadSuccessState<T>
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NotDownloadingState<T> value)? notDownloading,
-    TResult Function(_DownloadingState<T> value)? downloading,
-    TResult Function(_DownloadSuccessState<T> value)? downloadSuccess,
-    TResult Function(_DownloadFailuerState<T> value)? downloadFailure,
+    TResult Function(_NotDownloadingState value)? notDownloading,
+    TResult Function(_DownloadingState value)? downloading,
+    TResult Function(_DownloadSuccessState value)? downloadSuccess,
+    TResult Function(_DownloadFailuerState value)? downloadFailure,
   }) {
     return downloadSuccess?.call(this);
   }
@@ -499,10 +532,10 @@ class _$_DownloadSuccessState<T> extends _DownloadSuccessState<T>
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NotDownloadingState<T> value)? notDownloading,
-    TResult Function(_DownloadingState<T> value)? downloading,
-    TResult Function(_DownloadSuccessState<T> value)? downloadSuccess,
-    TResult Function(_DownloadFailuerState<T> value)? downloadFailure,
+    TResult Function(_NotDownloadingState value)? notDownloading,
+    TResult Function(_DownloadingState value)? downloading,
+    TResult Function(_DownloadSuccessState value)? downloadSuccess,
+    TResult Function(_DownloadFailuerState value)? downloadFailure,
     required TResult orElse(),
   }) {
     if (downloadSuccess != null) {
@@ -512,41 +545,40 @@ class _$_DownloadSuccessState<T> extends _DownloadSuccessState<T>
   }
 }
 
-abstract class _DownloadSuccessState<T> extends DownloadState<T> {
-  const factory _DownloadSuccessState(T result) = _$_DownloadSuccessState<T>;
+abstract class _DownloadSuccessState extends DownloadState {
+  const factory _DownloadSuccessState(File file) = _$_DownloadSuccessState;
   const _DownloadSuccessState._() : super._();
 
-  T get result;
+  File get file;
   @JsonKey(ignore: true)
-  _$DownloadSuccessStateCopyWith<T, _DownloadSuccessState<T>> get copyWith =>
+  _$DownloadSuccessStateCopyWith<_DownloadSuccessState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$DownloadFailuerStateCopyWith<T, $Res> {
-  factory _$DownloadFailuerStateCopyWith(_DownloadFailuerState<T> value,
-          $Res Function(_DownloadFailuerState<T>) then) =
-      __$DownloadFailuerStateCopyWithImpl<T, $Res>;
+abstract class _$DownloadFailuerStateCopyWith<$Res> {
+  factory _$DownloadFailuerStateCopyWith(_DownloadFailuerState value,
+          $Res Function(_DownloadFailuerState) then) =
+      __$DownloadFailuerStateCopyWithImpl<$Res>;
   $Res call({String error});
 }
 
 /// @nodoc
-class __$DownloadFailuerStateCopyWithImpl<T, $Res>
-    extends _$DownloadStateCopyWithImpl<T, $Res>
-    implements _$DownloadFailuerStateCopyWith<T, $Res> {
-  __$DownloadFailuerStateCopyWithImpl(_DownloadFailuerState<T> _value,
-      $Res Function(_DownloadFailuerState<T>) _then)
-      : super(_value, (v) => _then(v as _DownloadFailuerState<T>));
+class __$DownloadFailuerStateCopyWithImpl<$Res>
+    extends _$DownloadStateCopyWithImpl<$Res>
+    implements _$DownloadFailuerStateCopyWith<$Res> {
+  __$DownloadFailuerStateCopyWithImpl(
+      _DownloadFailuerState _value, $Res Function(_DownloadFailuerState) _then)
+      : super(_value, (v) => _then(v as _DownloadFailuerState));
 
   @override
-  _DownloadFailuerState<T> get _value =>
-      super._value as _DownloadFailuerState<T>;
+  _DownloadFailuerState get _value => super._value as _DownloadFailuerState;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(_DownloadFailuerState<T>(
+    return _then(_DownloadFailuerState(
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -557,7 +589,7 @@ class __$DownloadFailuerStateCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$_DownloadFailuerState<T> extends _DownloadFailuerState<T>
+class _$_DownloadFailuerState extends _DownloadFailuerState
     with DiagnosticableTreeMixin {
   const _$_DownloadFailuerState(this.error) : super._();
 
@@ -566,14 +598,14 @@ class _$_DownloadFailuerState<T> extends _DownloadFailuerState<T>
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DownloadState<$T>.downloadFailure(error: $error)';
+    return 'DownloadState.downloadFailure(error: $error)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'DownloadState<$T>.downloadFailure'))
+      ..add(DiagnosticsProperty('type', 'DownloadState.downloadFailure'))
       ..add(DiagnosticsProperty('error', error));
   }
 
@@ -581,7 +613,7 @@ class _$_DownloadFailuerState<T> extends _DownloadFailuerState<T>
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _DownloadFailuerState<T> &&
+            other is _DownloadFailuerState &&
             const DeepCollectionEquality().equals(other.error, error));
   }
 
@@ -591,16 +623,16 @@ class _$_DownloadFailuerState<T> extends _DownloadFailuerState<T>
 
   @JsonKey(ignore: true)
   @override
-  _$DownloadFailuerStateCopyWith<T, _DownloadFailuerState<T>> get copyWith =>
-      __$DownloadFailuerStateCopyWithImpl<T, _DownloadFailuerState<T>>(
+  _$DownloadFailuerStateCopyWith<_DownloadFailuerState> get copyWith =>
+      __$DownloadFailuerStateCopyWithImpl<_DownloadFailuerState>(
           this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() notDownloading,
-    required TResult Function() downloading,
-    required TResult Function(T result) downloadSuccess,
+    required TResult Function(DownloaderCore downloader) downloading,
+    required TResult Function(File file) downloadSuccess,
     required TResult Function(String error) downloadFailure,
   }) {
     return downloadFailure(error);
@@ -610,8 +642,8 @@ class _$_DownloadFailuerState<T> extends _DownloadFailuerState<T>
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? notDownloading,
-    TResult Function()? downloading,
-    TResult Function(T result)? downloadSuccess,
+    TResult Function(DownloaderCore downloader)? downloading,
+    TResult Function(File file)? downloadSuccess,
     TResult Function(String error)? downloadFailure,
   }) {
     return downloadFailure?.call(error);
@@ -621,8 +653,8 @@ class _$_DownloadFailuerState<T> extends _DownloadFailuerState<T>
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? notDownloading,
-    TResult Function()? downloading,
-    TResult Function(T result)? downloadSuccess,
+    TResult Function(DownloaderCore downloader)? downloading,
+    TResult Function(File file)? downloadSuccess,
     TResult Function(String error)? downloadFailure,
     required TResult orElse(),
   }) {
@@ -635,10 +667,10 @@ class _$_DownloadFailuerState<T> extends _DownloadFailuerState<T>
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NotDownloadingState<T> value) notDownloading,
-    required TResult Function(_DownloadingState<T> value) downloading,
-    required TResult Function(_DownloadSuccessState<T> value) downloadSuccess,
-    required TResult Function(_DownloadFailuerState<T> value) downloadFailure,
+    required TResult Function(_NotDownloadingState value) notDownloading,
+    required TResult Function(_DownloadingState value) downloading,
+    required TResult Function(_DownloadSuccessState value) downloadSuccess,
+    required TResult Function(_DownloadFailuerState value) downloadFailure,
   }) {
     return downloadFailure(this);
   }
@@ -646,10 +678,10 @@ class _$_DownloadFailuerState<T> extends _DownloadFailuerState<T>
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NotDownloadingState<T> value)? notDownloading,
-    TResult Function(_DownloadingState<T> value)? downloading,
-    TResult Function(_DownloadSuccessState<T> value)? downloadSuccess,
-    TResult Function(_DownloadFailuerState<T> value)? downloadFailure,
+    TResult Function(_NotDownloadingState value)? notDownloading,
+    TResult Function(_DownloadingState value)? downloading,
+    TResult Function(_DownloadSuccessState value)? downloadSuccess,
+    TResult Function(_DownloadFailuerState value)? downloadFailure,
   }) {
     return downloadFailure?.call(this);
   }
@@ -657,10 +689,10 @@ class _$_DownloadFailuerState<T> extends _DownloadFailuerState<T>
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NotDownloadingState<T> value)? notDownloading,
-    TResult Function(_DownloadingState<T> value)? downloading,
-    TResult Function(_DownloadSuccessState<T> value)? downloadSuccess,
-    TResult Function(_DownloadFailuerState<T> value)? downloadFailure,
+    TResult Function(_NotDownloadingState value)? notDownloading,
+    TResult Function(_DownloadingState value)? downloading,
+    TResult Function(_DownloadSuccessState value)? downloadSuccess,
+    TResult Function(_DownloadFailuerState value)? downloadFailure,
     required TResult orElse(),
   }) {
     if (downloadFailure != null) {
@@ -670,13 +702,12 @@ class _$_DownloadFailuerState<T> extends _DownloadFailuerState<T>
   }
 }
 
-abstract class _DownloadFailuerState<T> extends DownloadState<T> {
-  const factory _DownloadFailuerState(String error) =
-      _$_DownloadFailuerState<T>;
+abstract class _DownloadFailuerState extends DownloadState {
+  const factory _DownloadFailuerState(String error) = _$_DownloadFailuerState;
   const _DownloadFailuerState._() : super._();
 
   String get error;
   @JsonKey(ignore: true)
-  _$DownloadFailuerStateCopyWith<T, _DownloadFailuerState<T>> get copyWith =>
+  _$DownloadFailuerStateCopyWith<_DownloadFailuerState> get copyWith =>
       throw _privateConstructorUsedError;
 }

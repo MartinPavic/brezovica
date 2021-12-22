@@ -24,3 +24,7 @@ TaskEither<String, DownloaderCore> downloadFile(
 String stripFileNameExtension(String fileName) {
   return fileName.split('.')[0];
 }
+
+String getFileName(File file) {
+  return stripFileNameExtension(file.uri.pathSegments.last);
+}

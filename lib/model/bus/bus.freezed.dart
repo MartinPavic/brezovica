@@ -251,6 +251,8 @@ BusType _$BusTypeFromJson(Map<String, dynamic> json) {
       return ObrezBusType.fromJson(json);
     case 'botinec':
       return BotinecBusType.fromJson(json);
+    case 'empty':
+      return EmptyBusType.fromJson(json);
 
     default:
       throw CheckedFromJsonException(json, 'runtimeType', 'BusType',
@@ -280,6 +282,12 @@ class _$BusTypeTearOff {
     );
   }
 
+  EmptyBusType empty({String description = ''}) {
+    return EmptyBusType(
+      description: description,
+    );
+  }
+
   BusType fromJson(Map<String, Object?> json) {
     return BusType.fromJson(json);
   }
@@ -297,6 +305,7 @@ mixin _$BusType {
     required TResult Function(String description) brezovica,
     required TResult Function(String description) obrez,
     required TResult Function(String description) botinec,
+    required TResult Function(String description) empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -304,6 +313,7 @@ mixin _$BusType {
     TResult Function(String description)? brezovica,
     TResult Function(String description)? obrez,
     TResult Function(String description)? botinec,
+    TResult Function(String description)? empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -311,6 +321,7 @@ mixin _$BusType {
     TResult Function(String description)? brezovica,
     TResult Function(String description)? obrez,
     TResult Function(String description)? botinec,
+    TResult Function(String description)? empty,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -319,6 +330,7 @@ mixin _$BusType {
     required TResult Function(BrezovicaBusType value) brezovica,
     required TResult Function(ObrezBusType value) obrez,
     required TResult Function(BotinecBusType value) botinec,
+    required TResult Function(EmptyBusType value) empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -326,6 +338,7 @@ mixin _$BusType {
     TResult Function(BrezovicaBusType value)? brezovica,
     TResult Function(ObrezBusType value)? obrez,
     TResult Function(BotinecBusType value)? botinec,
+    TResult Function(EmptyBusType value)? empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -333,6 +346,7 @@ mixin _$BusType {
     TResult Function(BrezovicaBusType value)? brezovica,
     TResult Function(ObrezBusType value)? obrez,
     TResult Function(BotinecBusType value)? botinec,
+    TResult Function(EmptyBusType value)? empty,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -456,6 +470,7 @@ class _$BrezovicaBusType
     required TResult Function(String description) brezovica,
     required TResult Function(String description) obrez,
     required TResult Function(String description) botinec,
+    required TResult Function(String description) empty,
   }) {
     return brezovica(description);
   }
@@ -466,6 +481,7 @@ class _$BrezovicaBusType
     TResult Function(String description)? brezovica,
     TResult Function(String description)? obrez,
     TResult Function(String description)? botinec,
+    TResult Function(String description)? empty,
   }) {
     return brezovica?.call(description);
   }
@@ -476,6 +492,7 @@ class _$BrezovicaBusType
     TResult Function(String description)? brezovica,
     TResult Function(String description)? obrez,
     TResult Function(String description)? botinec,
+    TResult Function(String description)? empty,
     required TResult orElse(),
   }) {
     if (brezovica != null) {
@@ -490,6 +507,7 @@ class _$BrezovicaBusType
     required TResult Function(BrezovicaBusType value) brezovica,
     required TResult Function(ObrezBusType value) obrez,
     required TResult Function(BotinecBusType value) botinec,
+    required TResult Function(EmptyBusType value) empty,
   }) {
     return brezovica(this);
   }
@@ -500,6 +518,7 @@ class _$BrezovicaBusType
     TResult Function(BrezovicaBusType value)? brezovica,
     TResult Function(ObrezBusType value)? obrez,
     TResult Function(BotinecBusType value)? botinec,
+    TResult Function(EmptyBusType value)? empty,
   }) {
     return brezovica?.call(this);
   }
@@ -510,6 +529,7 @@ class _$BrezovicaBusType
     TResult Function(BrezovicaBusType value)? brezovica,
     TResult Function(ObrezBusType value)? obrez,
     TResult Function(BotinecBusType value)? botinec,
+    TResult Function(EmptyBusType value)? empty,
     required TResult orElse(),
   }) {
     if (brezovica != null) {
@@ -623,6 +643,7 @@ class _$ObrezBusType with DiagnosticableTreeMixin implements ObrezBusType {
     required TResult Function(String description) brezovica,
     required TResult Function(String description) obrez,
     required TResult Function(String description) botinec,
+    required TResult Function(String description) empty,
   }) {
     return obrez(description);
   }
@@ -633,6 +654,7 @@ class _$ObrezBusType with DiagnosticableTreeMixin implements ObrezBusType {
     TResult Function(String description)? brezovica,
     TResult Function(String description)? obrez,
     TResult Function(String description)? botinec,
+    TResult Function(String description)? empty,
   }) {
     return obrez?.call(description);
   }
@@ -643,6 +665,7 @@ class _$ObrezBusType with DiagnosticableTreeMixin implements ObrezBusType {
     TResult Function(String description)? brezovica,
     TResult Function(String description)? obrez,
     TResult Function(String description)? botinec,
+    TResult Function(String description)? empty,
     required TResult orElse(),
   }) {
     if (obrez != null) {
@@ -657,6 +680,7 @@ class _$ObrezBusType with DiagnosticableTreeMixin implements ObrezBusType {
     required TResult Function(BrezovicaBusType value) brezovica,
     required TResult Function(ObrezBusType value) obrez,
     required TResult Function(BotinecBusType value) botinec,
+    required TResult Function(EmptyBusType value) empty,
   }) {
     return obrez(this);
   }
@@ -667,6 +691,7 @@ class _$ObrezBusType with DiagnosticableTreeMixin implements ObrezBusType {
     TResult Function(BrezovicaBusType value)? brezovica,
     TResult Function(ObrezBusType value)? obrez,
     TResult Function(BotinecBusType value)? botinec,
+    TResult Function(EmptyBusType value)? empty,
   }) {
     return obrez?.call(this);
   }
@@ -677,6 +702,7 @@ class _$ObrezBusType with DiagnosticableTreeMixin implements ObrezBusType {
     TResult Function(BrezovicaBusType value)? brezovica,
     TResult Function(ObrezBusType value)? obrez,
     TResult Function(BotinecBusType value)? botinec,
+    TResult Function(EmptyBusType value)? empty,
     required TResult orElse(),
   }) {
     if (obrez != null) {
@@ -789,6 +815,7 @@ class _$BotinecBusType with DiagnosticableTreeMixin implements BotinecBusType {
     required TResult Function(String description) brezovica,
     required TResult Function(String description) obrez,
     required TResult Function(String description) botinec,
+    required TResult Function(String description) empty,
   }) {
     return botinec(description);
   }
@@ -799,6 +826,7 @@ class _$BotinecBusType with DiagnosticableTreeMixin implements BotinecBusType {
     TResult Function(String description)? brezovica,
     TResult Function(String description)? obrez,
     TResult Function(String description)? botinec,
+    TResult Function(String description)? empty,
   }) {
     return botinec?.call(description);
   }
@@ -809,6 +837,7 @@ class _$BotinecBusType with DiagnosticableTreeMixin implements BotinecBusType {
     TResult Function(String description)? brezovica,
     TResult Function(String description)? obrez,
     TResult Function(String description)? botinec,
+    TResult Function(String description)? empty,
     required TResult orElse(),
   }) {
     if (botinec != null) {
@@ -823,6 +852,7 @@ class _$BotinecBusType with DiagnosticableTreeMixin implements BotinecBusType {
     required TResult Function(BrezovicaBusType value) brezovica,
     required TResult Function(ObrezBusType value) obrez,
     required TResult Function(BotinecBusType value) botinec,
+    required TResult Function(EmptyBusType value) empty,
   }) {
     return botinec(this);
   }
@@ -833,6 +863,7 @@ class _$BotinecBusType with DiagnosticableTreeMixin implements BotinecBusType {
     TResult Function(BrezovicaBusType value)? brezovica,
     TResult Function(ObrezBusType value)? obrez,
     TResult Function(BotinecBusType value)? botinec,
+    TResult Function(EmptyBusType value)? empty,
   }) {
     return botinec?.call(this);
   }
@@ -843,6 +874,7 @@ class _$BotinecBusType with DiagnosticableTreeMixin implements BotinecBusType {
     TResult Function(BrezovicaBusType value)? brezovica,
     TResult Function(ObrezBusType value)? obrez,
     TResult Function(BotinecBusType value)? botinec,
+    TResult Function(EmptyBusType value)? empty,
     required TResult orElse(),
   }) {
     if (botinec != null) {
@@ -869,5 +901,178 @@ abstract class BotinecBusType implements BusType {
   @override
   @JsonKey(ignore: true)
   $BotinecBusTypeCopyWith<BotinecBusType> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EmptyBusTypeCopyWith<$Res> implements $BusTypeCopyWith<$Res> {
+  factory $EmptyBusTypeCopyWith(
+          EmptyBusType value, $Res Function(EmptyBusType) then) =
+      _$EmptyBusTypeCopyWithImpl<$Res>;
+  @override
+  $Res call({String description});
+}
+
+/// @nodoc
+class _$EmptyBusTypeCopyWithImpl<$Res> extends _$BusTypeCopyWithImpl<$Res>
+    implements $EmptyBusTypeCopyWith<$Res> {
+  _$EmptyBusTypeCopyWithImpl(
+      EmptyBusType _value, $Res Function(EmptyBusType) _then)
+      : super(_value, (v) => _then(v as EmptyBusType));
+
+  @override
+  EmptyBusType get _value => super._value as EmptyBusType;
+
+  @override
+  $Res call({
+    Object? description = freezed,
+  }) {
+    return _then(EmptyBusType(
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$EmptyBusType with DiagnosticableTreeMixin implements EmptyBusType {
+  const _$EmptyBusType({this.description = '', String? $type})
+      : $type = $type ?? 'empty';
+
+  factory _$EmptyBusType.fromJson(Map<String, dynamic> json) =>
+      _$$EmptyBusTypeFromJson(json);
+
+  @JsonKey(defaultValue: '')
+  @override
+  final String description;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BusType.empty(description: $description)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BusType.empty'))
+      ..add(DiagnosticsProperty('description', description));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is EmptyBusType &&
+            const DeepCollectionEquality()
+                .equals(other.description, description));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(description));
+
+  @JsonKey(ignore: true)
+  @override
+  $EmptyBusTypeCopyWith<EmptyBusType> get copyWith =>
+      _$EmptyBusTypeCopyWithImpl<EmptyBusType>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String description) brezovica,
+    required TResult Function(String description) obrez,
+    required TResult Function(String description) botinec,
+    required TResult Function(String description) empty,
+  }) {
+    return empty(description);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String description)? brezovica,
+    TResult Function(String description)? obrez,
+    TResult Function(String description)? botinec,
+    TResult Function(String description)? empty,
+  }) {
+    return empty?.call(description);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String description)? brezovica,
+    TResult Function(String description)? obrez,
+    TResult Function(String description)? botinec,
+    TResult Function(String description)? empty,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty(description);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(BrezovicaBusType value) brezovica,
+    required TResult Function(ObrezBusType value) obrez,
+    required TResult Function(BotinecBusType value) botinec,
+    required TResult Function(EmptyBusType value) empty,
+  }) {
+    return empty(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(BrezovicaBusType value)? brezovica,
+    TResult Function(ObrezBusType value)? obrez,
+    TResult Function(BotinecBusType value)? botinec,
+    TResult Function(EmptyBusType value)? empty,
+  }) {
+    return empty?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BrezovicaBusType value)? brezovica,
+    TResult Function(ObrezBusType value)? obrez,
+    TResult Function(BotinecBusType value)? botinec,
+    TResult Function(EmptyBusType value)? empty,
+    required TResult orElse(),
+  }) {
+    if (empty != null) {
+      return empty(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$EmptyBusTypeToJson(this);
+  }
+}
+
+abstract class EmptyBusType implements BusType {
+  const factory EmptyBusType({String description}) = _$EmptyBusType;
+
+  factory EmptyBusType.fromJson(Map<String, dynamic> json) =
+      _$EmptyBusType.fromJson;
+
+  @override
+  String get description;
+  @override
+  @JsonKey(ignore: true)
+  $EmptyBusTypeCopyWith<EmptyBusType> get copyWith =>
       throw _privateConstructorUsedError;
 }

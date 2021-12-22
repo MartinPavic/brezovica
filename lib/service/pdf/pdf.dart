@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:brezovica/provider/pdf/pdf_state.dart';
-import 'package:brezovica/provider/pdf/pdf_task.dart';
+import 'package:brezovica/service/pdf/pdf_state.dart';
+import 'package:brezovica/service/pdf/pdf_task.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
