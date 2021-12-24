@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/bus/bus_screen_state.dart';
+import 'package:brezovica/service/pdf/pdf.dart';
 import 'package:brezovica/widget/add_bus_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
@@ -38,7 +39,12 @@ class BusScreen extends HookConsumerWidget {
           child: busScreenState.when(
             initial: () => const CircularProgressIndicator(),
             listBuses: (buses) => busList(buses, ref),
-            showPdf: (viewer) => viewer,
+            showPdf: (viewer) => WillPopScope(
+                onWillPop: () async {
+                    ref.read(busScreenProvider.notifier).closePdf(viewer);
+                    return false;
+                },
+                child: viewer),
             error: (error) => ErrorWidget(error.join(" ")),
           )),
     );
@@ -57,7 +63,9 @@ class BusScreen extends HookConsumerWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: InkWell(
-              onTap: () => ref.read(busScreenProvider.notifier).showPdf(File(busList[index].pdfFilePath),
+              onTap: () => ref
+                  .read(busScreenProvider.notifier)
+                  .showPdf(File(busList[index].pdfFilePath!)),
               customBorder: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -96,16 +104,28 @@ class BusScreen extends HookConsumerWidget {
                   children: [
                     Expanded(
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
                               busList[index].number.toString(),
                               style: TextStyle(
-                                color: Colors.blue[50],
-                                fontSize: 45,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.visible
+                                  color: Colors.blue[50],
+                                  fontSize: 45,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.visible),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: IconButton(
+                              onPressed: () => ref
+                                  .read(pdfProvider.notifier)
+                                  .deletePdf(File(busList[index].pdfFilePath!)),
+                              icon: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
                               ),
                             ),
                           ),

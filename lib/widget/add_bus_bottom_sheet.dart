@@ -21,14 +21,15 @@ Widget addBusBottomSheet(BuildContext context) {
   );
 }
 
-TaskEither<String, DownloaderCore> downloadBusPdf(Bus bus, Function(File) onDone) {
+TaskEither<String, DownloaderCore> downloadBusPdf(
+    Bus bus, Function(int, int) progressCallback, Function(File) onDone) {
   return getDownloadDir().flatMap((downloadDir) {
     final file = File(downloadDir.path + '/${bus.number.toString()}.pdf');
     final options = DownloaderUtils(
       file: file,
       onDone: () => onDone(file),
       progress: ProgressImplementation(),
-      progressCallback: (count, total) => print('${(count / total) * 100}'),
+      progressCallback: progressCallback,
       deleteOnCancel: true,
     );
     final url = Constants.zetBusUrl + bus.number.toString() + '.pdf';
@@ -43,6 +44,7 @@ class BusListItem extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final downloadState = useState(const DownloadState.notDownloading());
+    final downloadProgress = useState(0.0);
     final pdfState = ref.watch(pdfProvider);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,20 +53,29 @@ class BusListItem extends HookConsumerWidget {
           '${bus.type.description} (${bus.number.toString()})',
           style: const TextStyle(color: Colors.white),
         ),
-        ElevatedButton(
-          onPressed: () async {
-            downloadState.value.whenOrNull(
-              notDownloading: () {
-                pdfState.whenOrNull(downloadedPdfs: (pdfs) async {
-                  if (pdfs.any((element) => int.parse(getFileName(element)) == bus.number)) {
+        Stack(
+          fit: StackFit.loose,
+          alignment: Alignment.center,
+          children: [
+            CircularProgressIndicator(
+              color: Colors.white,
+              strokeWidth: 10,
+              value: downloadProgress.value,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                downloadState.value.whenOrNull(notDownloading: () async {
+                  if (pdfState.pdfs.any((element) =>
+                      int.parse(getFileName(element)) == bus.number)) {
                     return {};
                   } else {
                     final downloader = await downloadBusPdf(
                         bus,
-                        (File file) {
-                          downloadState.value = DownloadState.downloadSuccess(file);
-                          ref.read(pdfProvider.notifier).addPdf(file);
-                        }).run();
+                        (current, total) => downloadProgress.value =
+                            current / total, (File file) {
+                      downloadState.value = DownloadState.downloadSuccess(file);
+                      ref.read(pdfProvider.notifier).addPdf(file.uri);
+                    }).run();
                     downloader.match(
                         (l) => downloadState.value =
                             DownloadState.downloadFailure(l),
@@ -73,25 +84,24 @@ class BusListItem extends HookConsumerWidget {
                   }
                 });
               },
-              downloading: (d) {
-                d.cancel();
-              }
-            );
-          },
-          child: downloadState.value.when(
-              notDownloading: () {
-                return pdfState.whenOrNull(downloadedPdfs: (pdfs) {
-                  if (pdfs.any((element) => int.parse(getFileName(element)) == bus.number)) {
-                    return const Icon(Icons.check);
-                  } else {
-                    return const Icon(Icons.download);
-                  }
-                });
-              },
-              downloading: (_) => const Icon(Icons.stop),
-              downloadSuccess: (_) => const Icon(Icons.download_done),
-              downloadFailure: (_) => const Icon(Icons.error)),
-          style: ElevatedButton.styleFrom(shape: const CircleBorder()),
+              child: downloadState.value.when(
+                  notDownloading: () {
+                    if (pdfState.pdfs.any((element) =>
+                        int.parse(getFileName(element)) == bus.number)) {
+                      return const Icon(Icons.check);
+                    } else {
+                      return const Icon(Icons.download);
+                    }
+                  },
+                  downloading: (_) => const Icon(Icons.stop),
+                  downloadSuccess: (_) => const Icon(Icons.download_done),
+                  downloadFailure: (_) => const Icon(Icons.error)),
+              style: ElevatedButton.styleFrom(
+                shape: const CircleBorder(),
+                primary: Colors.transparent,
+              ),
+            ),
+          ],
         ),
       ],
     );

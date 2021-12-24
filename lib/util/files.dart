@@ -25,6 +25,6 @@ String stripFileNameExtension(String fileName) {
   return fileName.split('.')[0];
 }
 
-String getFileName(File file) {
-  return stripFileNameExtension(file.uri.pathSegments.last);
+String getFileName(Uri fileUri) {
+  return stripFileNameExtension(fileUri.pathSegments.last);
 }

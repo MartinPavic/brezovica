@@ -6,32 +6,26 @@ import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PdfProvider extends StateNotifier<PdfState> {
-  PdfProvider() : super(const PdfState.initial());
+  PdfProvider() : super(PdfState.initial());
 
   Future<Unit> getPdfs() async {
     final pdfTask = getBusPdfs();
     final pdfs = await pdfTask.run();
     pdfs.match(
-      (error) => state = PdfState.error([error]),
+      (error) => state = PdfState.error(state, error),
       (downloadedPdfs) => state = PdfState.downloadedPdfs(downloadedPdfs),
     );
     return unit;
   }
 
-  Unit addPdf(File pdfFile) {
-    state.whenOrNull(
-        downloadedPdfs: (pdfs) => state = PdfState.downloadedPdfs(
-              pdfs.append(pdfFile).toList(),
-            ));
+  Unit addPdf(Uri pdfFileUri) {
+    state = PdfState.downloadedPdfs(state.pdfs.append(pdfFileUri).toList());
     return unit;
   }
 
   Unit deletePdf(File pdfFile) {
-    state.whenOrNull(
-      downloadedPdfs: (pdfs) {
-        state = PdfState.downloadedPdfs(pdfs.delete(pdfFile).toList());
-      },
-    );
+    pdfFile.deleteSync();
+    state = PdfState.downloadedPdfs(state.pdfs.delete(pdfFile.uri).toList());
     return unit;
   }
 }

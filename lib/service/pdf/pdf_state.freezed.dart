@@ -17,19 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$PdfStateTearOff {
   const _$PdfStateTearOff();
 
-  _InitialPdfState initial() {
-    return const _InitialPdfState();
-  }
-
-  _ListPdfsState downloadedPdfs(List<File> pdfs) {
-    return _ListPdfsState(
-      pdfs,
-    );
-  }
-
-  _ErrorPdfState error(List<String> errors) {
-    return _ErrorPdfState(
-      errors,
+  _PdfState call({required List<Uri> pdfs, List<String> errors = const []}) {
+    return _PdfState(
+      pdfs: pdfs,
+      errors: errors,
     );
   }
 }
@@ -39,49 +30,11 @@ const $PdfState = _$PdfStateTearOff();
 
 /// @nodoc
 mixin _$PdfState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<File> pdfs) downloadedPdfs,
-    required TResult Function(List<String> errors) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<File> pdfs)? downloadedPdfs,
-    TResult Function(List<String> errors)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<File> pdfs)? downloadedPdfs,
-    TResult Function(List<String> errors)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_InitialPdfState value) initial,
-    required TResult Function(_ListPdfsState value) downloadedPdfs,
-    required TResult Function(_ErrorPdfState value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ListPdfsState value)? downloadedPdfs,
-    TResult Function(_ErrorPdfState value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ListPdfsState value)? downloadedPdfs,
-    TResult Function(_ErrorPdfState value)? error,
-    required TResult orElse(),
-  }) =>
+  List<Uri> get pdfs => throw _privateConstructorUsedError;
+  List<String> get errors => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $PdfStateCopyWith<PdfState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -89,6 +42,7 @@ mixin _$PdfState {
 abstract class $PdfStateCopyWith<$Res> {
   factory $PdfStateCopyWith(PdfState value, $Res Function(PdfState) then) =
       _$PdfStateCopyWithImpl<$Res>;
+  $Res call({List<Uri> pdfs, List<String> errors});
 }
 
 /// @nodoc
@@ -98,283 +52,53 @@ class _$PdfStateCopyWithImpl<$Res> implements $PdfStateCopyWith<$Res> {
   final PdfState _value;
   // ignore: unused_field
   final $Res Function(PdfState) _then;
-}
-
-/// @nodoc
-abstract class _$InitialPdfStateCopyWith<$Res> {
-  factory _$InitialPdfStateCopyWith(
-          _InitialPdfState value, $Res Function(_InitialPdfState) then) =
-      __$InitialPdfStateCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$InitialPdfStateCopyWithImpl<$Res> extends _$PdfStateCopyWithImpl<$Res>
-    implements _$InitialPdfStateCopyWith<$Res> {
-  __$InitialPdfStateCopyWithImpl(
-      _InitialPdfState _value, $Res Function(_InitialPdfState) _then)
-      : super(_value, (v) => _then(v as _InitialPdfState));
-
-  @override
-  _InitialPdfState get _value => super._value as _InitialPdfState;
-}
-
-/// @nodoc
-
-class _$_InitialPdfState extends _InitialPdfState {
-  const _$_InitialPdfState() : super._();
-
-  @override
-  String toString() {
-    return 'PdfState.initial()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _InitialPdfState);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<File> pdfs) downloadedPdfs,
-    required TResult Function(List<String> errors) error,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<File> pdfs)? downloadedPdfs,
-    TResult Function(List<String> errors)? error,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<File> pdfs)? downloadedPdfs,
-    TResult Function(List<String> errors)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_InitialPdfState value) initial,
-    required TResult Function(_ListPdfsState value) downloadedPdfs,
-    required TResult Function(_ErrorPdfState value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ListPdfsState value)? downloadedPdfs,
-    TResult Function(_ErrorPdfState value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ListPdfsState value)? downloadedPdfs,
-    TResult Function(_ErrorPdfState value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _InitialPdfState extends PdfState {
-  const factory _InitialPdfState() = _$_InitialPdfState;
-  const _InitialPdfState._() : super._();
-}
-
-/// @nodoc
-abstract class _$ListPdfsStateCopyWith<$Res> {
-  factory _$ListPdfsStateCopyWith(
-          _ListPdfsState value, $Res Function(_ListPdfsState) then) =
-      __$ListPdfsStateCopyWithImpl<$Res>;
-  $Res call({List<File> pdfs});
-}
-
-/// @nodoc
-class __$ListPdfsStateCopyWithImpl<$Res> extends _$PdfStateCopyWithImpl<$Res>
-    implements _$ListPdfsStateCopyWith<$Res> {
-  __$ListPdfsStateCopyWithImpl(
-      _ListPdfsState _value, $Res Function(_ListPdfsState) _then)
-      : super(_value, (v) => _then(v as _ListPdfsState));
-
-  @override
-  _ListPdfsState get _value => super._value as _ListPdfsState;
 
   @override
   $Res call({
     Object? pdfs = freezed,
+    Object? errors = freezed,
   }) {
-    return _then(_ListPdfsState(
-      pdfs == freezed
+    return _then(_value.copyWith(
+      pdfs: pdfs == freezed
           ? _value.pdfs
           : pdfs // ignore: cast_nullable_to_non_nullable
-              as List<File>,
+              as List<Uri>,
+      errors: errors == freezed
+          ? _value.errors
+          : errors // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
 
 /// @nodoc
-
-class _$_ListPdfsState extends _ListPdfsState {
-  const _$_ListPdfsState(this.pdfs) : super._();
-
+abstract class _$PdfStateCopyWith<$Res> implements $PdfStateCopyWith<$Res> {
+  factory _$PdfStateCopyWith(_PdfState value, $Res Function(_PdfState) then) =
+      __$PdfStateCopyWithImpl<$Res>;
   @override
-  final List<File> pdfs;
-
-  @override
-  String toString() {
-    return 'PdfState.downloadedPdfs(pdfs: $pdfs)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _ListPdfsState &&
-            const DeepCollectionEquality().equals(other.pdfs, pdfs));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(pdfs));
-
-  @JsonKey(ignore: true)
-  @override
-  _$ListPdfsStateCopyWith<_ListPdfsState> get copyWith =>
-      __$ListPdfsStateCopyWithImpl<_ListPdfsState>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<File> pdfs) downloadedPdfs,
-    required TResult Function(List<String> errors) error,
-  }) {
-    return downloadedPdfs(pdfs);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<File> pdfs)? downloadedPdfs,
-    TResult Function(List<String> errors)? error,
-  }) {
-    return downloadedPdfs?.call(pdfs);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<File> pdfs)? downloadedPdfs,
-    TResult Function(List<String> errors)? error,
-    required TResult orElse(),
-  }) {
-    if (downloadedPdfs != null) {
-      return downloadedPdfs(pdfs);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_InitialPdfState value) initial,
-    required TResult Function(_ListPdfsState value) downloadedPdfs,
-    required TResult Function(_ErrorPdfState value) error,
-  }) {
-    return downloadedPdfs(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ListPdfsState value)? downloadedPdfs,
-    TResult Function(_ErrorPdfState value)? error,
-  }) {
-    return downloadedPdfs?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ListPdfsState value)? downloadedPdfs,
-    TResult Function(_ErrorPdfState value)? error,
-    required TResult orElse(),
-  }) {
-    if (downloadedPdfs != null) {
-      return downloadedPdfs(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ListPdfsState extends PdfState {
-  const factory _ListPdfsState(List<File> pdfs) = _$_ListPdfsState;
-  const _ListPdfsState._() : super._();
-
-  List<File> get pdfs;
-  @JsonKey(ignore: true)
-  _$ListPdfsStateCopyWith<_ListPdfsState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $Res call({List<Uri> pdfs, List<String> errors});
 }
 
 /// @nodoc
-abstract class _$ErrorPdfStateCopyWith<$Res> {
-  factory _$ErrorPdfStateCopyWith(
-          _ErrorPdfState value, $Res Function(_ErrorPdfState) then) =
-      __$ErrorPdfStateCopyWithImpl<$Res>;
-  $Res call({List<String> errors});
-}
-
-/// @nodoc
-class __$ErrorPdfStateCopyWithImpl<$Res> extends _$PdfStateCopyWithImpl<$Res>
-    implements _$ErrorPdfStateCopyWith<$Res> {
-  __$ErrorPdfStateCopyWithImpl(
-      _ErrorPdfState _value, $Res Function(_ErrorPdfState) _then)
-      : super(_value, (v) => _then(v as _ErrorPdfState));
+class __$PdfStateCopyWithImpl<$Res> extends _$PdfStateCopyWithImpl<$Res>
+    implements _$PdfStateCopyWith<$Res> {
+  __$PdfStateCopyWithImpl(_PdfState _value, $Res Function(_PdfState) _then)
+      : super(_value, (v) => _then(v as _PdfState));
 
   @override
-  _ErrorPdfState get _value => super._value as _ErrorPdfState;
+  _PdfState get _value => super._value as _PdfState;
 
   @override
   $Res call({
+    Object? pdfs = freezed,
     Object? errors = freezed,
   }) {
-    return _then(_ErrorPdfState(
-      errors == freezed
+    return _then(_PdfState(
+      pdfs: pdfs == freezed
+          ? _value.pdfs
+          : pdfs // ignore: cast_nullable_to_non_nullable
+              as List<Uri>,
+      errors: errors == freezed
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
               as List<String>,
@@ -384,109 +108,51 @@ class __$ErrorPdfStateCopyWithImpl<$Res> extends _$PdfStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ErrorPdfState extends _ErrorPdfState {
-  const _$_ErrorPdfState(this.errors) : super._();
+class _$_PdfState implements _PdfState {
+  const _$_PdfState({required this.pdfs, this.errors = const []});
 
+  @override
+  final List<Uri> pdfs;
+  @JsonKey(defaultValue: const [])
   @override
   final List<String> errors;
 
   @override
   String toString() {
-    return 'PdfState.error(errors: $errors)';
+    return 'PdfState(pdfs: $pdfs, errors: $errors)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _ErrorPdfState &&
+            other is _PdfState &&
+            const DeepCollectionEquality().equals(other.pdfs, pdfs) &&
             const DeepCollectionEquality().equals(other.errors, errors));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(errors));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(pdfs),
+      const DeepCollectionEquality().hash(errors));
 
   @JsonKey(ignore: true)
   @override
-  _$ErrorPdfStateCopyWith<_ErrorPdfState> get copyWith =>
-      __$ErrorPdfStateCopyWithImpl<_ErrorPdfState>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<File> pdfs) downloadedPdfs,
-    required TResult Function(List<String> errors) error,
-  }) {
-    return error(errors);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<File> pdfs)? downloadedPdfs,
-    TResult Function(List<String> errors)? error,
-  }) {
-    return error?.call(errors);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<File> pdfs)? downloadedPdfs,
-    TResult Function(List<String> errors)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(errors);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_InitialPdfState value) initial,
-    required TResult Function(_ListPdfsState value) downloadedPdfs,
-    required TResult Function(_ErrorPdfState value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ListPdfsState value)? downloadedPdfs,
-    TResult Function(_ErrorPdfState value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitialPdfState value)? initial,
-    TResult Function(_ListPdfsState value)? downloadedPdfs,
-    TResult Function(_ErrorPdfState value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
+  _$PdfStateCopyWith<_PdfState> get copyWith =>
+      __$PdfStateCopyWithImpl<_PdfState>(this, _$identity);
 }
 
-abstract class _ErrorPdfState extends PdfState {
-  const factory _ErrorPdfState(List<String> errors) = _$_ErrorPdfState;
-  const _ErrorPdfState._() : super._();
+abstract class _PdfState implements PdfState {
+  const factory _PdfState({required List<Uri> pdfs, List<String> errors}) =
+      _$_PdfState;
 
+  @override
+  List<Uri> get pdfs;
+  @override
   List<String> get errors;
+  @override
   @JsonKey(ignore: true)
-  _$ErrorPdfStateCopyWith<_ErrorPdfState> get copyWith =>
+  _$PdfStateCopyWith<_PdfState> get copyWith =>
       throw _privateConstructorUsedError;
 }

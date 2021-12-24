@@ -17,11 +17,11 @@ class Bus with _$Bus {
       String? pdfFilePath}) = _Bus;
   factory Bus.empty() => Bus(number: 0, type: const BusType.empty(), url: Uri());
   factory Bus.fromJson(Map<String, dynamic> json) => _$BusFromJson(json);
-  static Either<String, Bus> fromPdf(File pdfFile, List<Bus> buses) {
+  static Either<String, Bus> fromPdf(Uri pdfFileUri, List<Bus> buses) {
     return Either.tryCatch(() {
-      final fileName = stripFileNameExtension(pdfFile.uri.pathSegments.last);
+      final fileName = stripFileNameExtension(pdfFileUri.pathSegments.last);
       final busNumber = int.parse(fileName);
-      return buses.firstWhere((element) => element.number == busNumber).copyWith(pdfFilePath: pdfFile.path);
+      return buses.firstWhere((element) => element.number == busNumber).copyWith(pdfFilePath: pdfFileUri.path);
     }, (e, _) => e.toString());
   }
 }
