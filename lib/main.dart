@@ -1,7 +1,8 @@
+import 'package:brezovica/service/api/contentful.dart';
 import 'package:brezovica/service/pdf/pdf.dart';
 import 'package:brezovica/screen/bus/bus_screen.dart';
-import 'package:brezovica/screen/info.dart';
-import 'package:brezovica/screen/profile.dart';
+import 'package:brezovica/screen/info/info_screen.dart';
+import 'package:brezovica/screen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:brezovica/constants.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -13,80 +14,64 @@ void main() => runApp(const ProviderScope(child: MyApp()));
 class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'Flutter Code Sample';
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(() {
-      ref.read(pdfProvider.notifier).getPdfs();
-    }, []);
-    return const MaterialApp(
-      title: _title,
-      debugShowCheckedModeBanner: false,
-      home: MyStatefulWidget(),
-    );
-  }
-}
-
-/// This is the stateful widget that the main application instantiates.
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-/// This is the private State class that goes with MyStatefulWidget.
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const String _title = 'Brezovica';
   static const List<Widget> _widgetOptions = <Widget>[
     BusScreen(),
     InfoScreen(),
     ProfileScreen(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text(
-            'Brezovica',
-            style: TextStyle(fontSize: 30),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedIndex = useState<int>(1);
+    final c = ContentfulService();
+    useEffect(() {
+      c.fetchData();
+      ref.read(pdfProvider.notifier).getPdfs();
+    }, []);
+    return MaterialApp(
+      title: _title,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Center(
+            child: Text(
+              'Brezovica',
+              style: TextStyle(fontSize: 30),
+            ),
           ),
+          backgroundColor: Constants.mainColor,
         ),
-        backgroundColor: Constants.mainColor,
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Constants.mainColor,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bus_alert),
-            label: 'Bus',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Obavijesti',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        onTap: _onItemTapped,
+        body: Center(
+          child: _widgetOptions.elementAt(selectedIndex.value),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          elevation: 10,
+          backgroundColor: Constants.mainColor,
+          type: BottomNavigationBarType.shifting,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                backgroundColor: Constants.mainColor,
+                activeIcon: Icon(Icons.directions_bus_filled),
+                icon: Icon(Icons.directions_bus_outlined),
+                label: 'Bus'),
+            BottomNavigationBarItem(
+                activeIcon: Icon(Icons.list_alt_sharp),
+                icon: Icon(Icons.list_alt_outlined),
+                label: 'Obavijesti'),
+            BottomNavigationBarItem(
+                activeIcon: Icon(Icons.person),
+                icon: Icon(Icons.person_outlined),
+                label: 'Profil'),
+          ],
+          currentIndex: selectedIndex.value,
+          selectedItemColor: Colors.white,
+          onTap: (index) {
+              selectedIndex.value = index;
+          },
+        ),
       ),
     );
   }

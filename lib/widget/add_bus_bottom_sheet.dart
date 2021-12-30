@@ -59,7 +59,7 @@ class BusListItem extends HookConsumerWidget {
           children: [
             CircularProgressIndicator(
               color: Colors.white,
-              strokeWidth: 10,
+              strokeWidth: 4,
               value: downloadProgress.value,
             ),
             ElevatedButton(
