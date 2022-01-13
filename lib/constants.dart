@@ -45,4 +45,5 @@ abstract class Constants {
       url: Uri.https('zet.hr', '/UserDocsImages/Autobusne%20linije%20-%20korona/163.pdf'),
     ),
   ];
+  
 }

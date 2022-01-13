@@ -5,7 +5,7 @@ import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/bus/bus_screen_state.dart';
 import 'package:brezovica/service/pdf/pdf.dart';
-import 'package:brezovica/widget/add_bus_bottom_sheet.dart';
+import 'package:brezovica/screen/bus/widget/add_bus_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:glassmorphism/glassmorphism.dart';
