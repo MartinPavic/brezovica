@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:brezovica/model/content_type.dart';
 import 'package:brezovica/util/files.dart';
+import 'package:deep_pick/src/pick.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
@@ -24,6 +26,8 @@ class Bus with _$Bus {
       return buses.firstWhere((element) => element.number == busNumber).copyWith(pdfFilePath: pdfFileUri.path);
     }, (e, _) => e.toString());
   }
+
+  
 }
 
 @freezed

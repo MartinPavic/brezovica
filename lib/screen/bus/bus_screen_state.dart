@@ -11,8 +11,8 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 part 'bus_screen_state.freezed.dart';
 
-class BusScreenProvider extends StateNotifier<BusScreenState> {
-  BusScreenProvider(PdfState state) : super(BusScreenState.fromPdfState(state));
+class BusScreenStateNotifier extends StateNotifier<BusScreenState> {
+  BusScreenStateNotifier(PdfState state) : super(BusScreenState.fromPdfState(state));
 
   BusScreenState previousState = const BusScreenState.initial();
 
@@ -30,9 +30,9 @@ class BusScreenProvider extends StateNotifier<BusScreenState> {
 }
 
 final busScreenProvider =
-    StateNotifierProvider<BusScreenProvider, BusScreenState>((ref) {
+    StateNotifierProvider<BusScreenStateNotifier, BusScreenState>((ref) {
   final pdfState = ref.watch(pdfProvider);
-  return BusScreenProvider(pdfState);
+  return BusScreenStateNotifier(pdfState);
 });
 
 @freezed

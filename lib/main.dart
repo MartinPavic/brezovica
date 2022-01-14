@@ -24,24 +24,13 @@ class MyApp extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedIndex = useState<int>(1);
-    final c = ContentfulService();
     useEffect(() {
-      c.fetchData();
       ref.read(pdfProvider.notifier).getPdfs();
     }, []);
     return MaterialApp(
       title: _title,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Center(
-            child: Text(
-              'Brezovica',
-              style: TextStyle(fontSize: 30),
-            ),
-          ),
-          backgroundColor: Constants.mainColor,
-        ),
         body: Center(
           child: _widgetOptions.elementAt(selectedIndex.value),
         ),
