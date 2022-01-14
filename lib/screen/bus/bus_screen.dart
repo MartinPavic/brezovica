@@ -17,7 +17,8 @@ class BusScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final busScreenState = ref.watch(busScreenProvider);
-    final animationCtrl = useAnimationController(duration: const Duration(milliseconds: 300));
+    final animationCtrl =
+        useAnimationController(duration: const Duration(milliseconds: 300));
     animationCtrl.forward();
     return FadeTransition(
       opacity: Tween(begin: 0.5, end: 1.0).animate(animationCtrl),
@@ -34,25 +35,26 @@ class BusScreen extends HookConsumerWidget {
           },
         ),
         body: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/bus_bg.jpeg'),
-                fit: BoxFit.cover,
-              ),
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/bus_bg.jpeg'),
+              fit: BoxFit.cover,
             ),
-            child: busScreenState.when(
-              initial: () => const CircularProgressIndicator(),
-              listBuses: (buses) => busList(buses, ref),
-              showPdf: (viewer) => WillPopScope(
-                  onWillPop: () async {
-                      ref.read(busScreenProvider.notifier).closePdf(viewer);
-                      return false;
-                  },
-                  child: viewer),
-              error: (error) => ErrorWidget(error.join(" ")),
-            )),
+          ),
+          child: busScreenState.when(
+            initial: () => const CircularProgressIndicator(),
+            listBuses: (buses) => busList(buses, ref),
+            showPdf: (viewer) => WillPopScope(
+                onWillPop: () async {
+                  ref.read(busScreenProvider.notifier).closePdf();
+                  return false;
+                },
+                child: viewer),
+            error: (error) => ErrorWidget(error.join(" ")),
+          ),
+        ),
       ),
     );
   }

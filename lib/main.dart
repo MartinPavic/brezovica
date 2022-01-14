@@ -1,4 +1,4 @@
-import 'package:brezovica/service/api/contentful.dart';
+import 'package:brezovica/service/api/contentful_service.dart';
 import 'package:brezovica/service/pdf/pdf.dart';
 import 'package:brezovica/screen/bus/bus_screen.dart';
 import 'package:brezovica/screen/info/info_screen.dart';
@@ -69,7 +69,7 @@ class MyApp extends HookConsumerWidget {
           currentIndex: selectedIndex.value,
           selectedItemColor: Colors.white,
           onTap: (index) {
-              selectedIndex.value = index;
+            selectedIndex.value = index;
           },
         ),
       ),

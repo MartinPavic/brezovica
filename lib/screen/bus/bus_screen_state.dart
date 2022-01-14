@@ -13,7 +13,7 @@ part 'bus_screen_state.freezed.dart';
 
 class BusScreenProvider extends StateNotifier<BusScreenState> {
   BusScreenProvider(PdfState state) : super(BusScreenState.fromPdfState(state));
-  
+
   BusScreenState previousState = const BusScreenState.initial();
 
   Unit showPdf(File pdfFile) {
@@ -23,8 +23,8 @@ class BusScreenProvider extends StateNotifier<BusScreenState> {
     return unit;
   }
 
-  Unit closePdf(SfPdfViewer viewer) {
-    state = previousState;
+  Unit closePdf() {
+    state.whenOrNull(showPdf: (_) => state = previousState);
     return unit;
   }
 }
