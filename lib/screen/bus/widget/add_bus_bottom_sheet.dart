@@ -15,8 +15,8 @@ Widget addBusBottomSheet(BuildContext context) {
   return Container(
     color: Constants.mainColor,
     child: ListView.builder(
-      itemCount: Constants.busevi.length,
-      itemBuilder: (context, index) => BusListItem(Constants.busevi[index]),
+      itemCount: 1,
+      itemBuilder: (context, index) => BusListItem(Bus.empty()),
     ),
   );
 }
@@ -50,7 +50,7 @@ class BusListItem extends HookConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '${bus.type.description} (${bus.number.toString()})',
+          '${bus.name} (${bus.number.toString()})',
           style: const TextStyle(color: Colors.white),
         ),
         Stack(

@@ -7,11 +7,11 @@ part 'post.g.dart';
 
 @freezed
 class Post with _$Post {
+  static const contentType = 'post';
   const factory Post({required String title, required String text}) = _Post;
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
-  factory Post.fromPick(RequiredPick pick) =>
-    Post(
-      title: pick('title').asStringOrThrow(),
-      text: pick('text').asStringOrThrow(),
-    );
+  factory Post.fromPick(RequiredPick pick) => Post(
+        title: pick('title').asStringOrThrow(),
+        text: pick('text').asStringOrThrow(),
+      );
 }

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/bus/bus_screen_state.dart';
+import 'package:brezovica/service/api/contentful_service.dart';
 import 'package:brezovica/service/pdf/pdf.dart';
 import 'package:brezovica/screen/bus/widget/add_bus_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,10 @@ class BusScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(() {
+      ref.read(contentfulProvider).getAllFromContentType<Bus>(
+          Bus.contentType, (pick) => Bus.fromPick(pick));
+    }, []);
     final busScreenState = ref.watch(busScreenProvider);
     final animationCtrl =
         useAnimationController(duration: const Duration(milliseconds: 300));
@@ -148,7 +153,7 @@ class BusScreen extends HookConsumerWidget {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
-                              busList[index].type.description,
+                              busList[index].name,
                               style: TextStyle(
                                 color: Colors.blue[50],
                                 fontSize: 15,
