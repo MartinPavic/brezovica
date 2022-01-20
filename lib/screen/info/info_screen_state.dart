@@ -1,5 +1,5 @@
 import 'package:brezovica/model/post/post.dart';
-import 'package:brezovica/service/api/contentful_service.dart';
+import 'package:brezovica/service/contentful/contentful_service.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

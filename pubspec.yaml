@@ -45,7 +45,6 @@ dependencies:
   flowder: ^0.2.0
   path_provider: ^2.0.8
   flutter_markdown:
-  deep_pick:
 
 dev_dependencies:
   flutter_test:

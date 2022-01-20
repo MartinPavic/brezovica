@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/bus/bus_screen_state.dart';
-import 'package:brezovica/service/api/contentful_service.dart';
+import 'package:brezovica/service/contentful/contentful_service.dart';
 import 'package:brezovica/service/pdf/pdf.dart';
 import 'package:brezovica/screen/bus/widget/add_bus_bottom_sheet.dart';
 import 'package:flutter/material.dart';

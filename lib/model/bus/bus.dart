@@ -9,10 +9,12 @@ part 'bus.g.dart';
 
 @freezed
 class Bus with _$Bus {
-  static const contentType = 'bus';
+  static String contentType = 'bus';
 
   const factory Bus(
-      {required int number, required String name, String? pdfFilePath}) = _Bus;
+      {required int number,
+      required String name,
+      String? pdfFilePath}) = _Bus;
 
   factory Bus.empty() => const Bus(number: 0, name: '');
   factory Bus.fromJson(Map<String, dynamic> json) => _$BusFromJson(json);
