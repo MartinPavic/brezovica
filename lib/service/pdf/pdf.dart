@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:brezovica/service/pdf/pdf_state.dart';
-import 'package:brezovica/service/pdf/pdf_task.dart';
+import 'package:brezovica/util/files.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -9,7 +9,8 @@ class PdfProvider extends StateNotifier<PdfState> {
   PdfProvider() : super(PdfState.initial());
 
   Future<Unit> getPdfs() async {
-    final pdfTask = getBusPdfs();
+    final pdfTask = getDownloadDir().map((downloadDir) =>
+      downloadDir.listSync().map((e) => e.uri).toList());
     final pdfs = await pdfTask.run();
     pdfs.match(
       (error) => state = PdfState.error(state, error),

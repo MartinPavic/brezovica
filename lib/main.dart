@@ -1,4 +1,3 @@
-import 'package:brezovica/service/api/contentful_service.dart';
 import 'package:brezovica/service/pdf/pdf.dart';
 import 'package:brezovica/screen/bus/bus_screen.dart';
 import 'package:brezovica/screen/info/info_screen.dart';
@@ -23,7 +22,7 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedIndex = useState<int>(1);
+    final selectedIndex = useState<int>(0);
     useEffect(() {
       ref.read(pdfProvider.notifier).getPdfs();
     }, []);

@@ -12,11 +12,14 @@ class InfoScreenStateNotifier extends StateNotifier<InfoScreenState> {
 
   final ContentfulService contentfulService;
 
-  Future<Unit> getPosts() async {
-    final posts = await contentfulService.getAllFromContentType<Post>(
-        'post', (pick) => Post.fromPick(pick));
-    state = InfoScreenState.listPosts(posts);
-    return unit;
+  Future<InfoScreenState> getPosts() {
+    final getPostsTask = contentfulService.listEntry<Post>(
+        'post', (json) => Post.fromJson(json));
+
+    return getPostsTask.match(
+      (error) => state = InfoScreenState.error([error]),
+      (posts) => state = InfoScreenState.listPosts(posts),
+    ).run();
   }
 }
 

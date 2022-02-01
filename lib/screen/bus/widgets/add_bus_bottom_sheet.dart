@@ -21,10 +21,10 @@ Widget addBusBottomSheet(BuildContext context) {
   );
 }
 
-TaskEither<String, DownloaderCore> downloadBusPdf(
+TaskEither<String, DownloaderCore> _downloadBusPdf(
     Bus bus, Function(int, int) progressCallback, Function(File) onDone) {
   return getDownloadDir().flatMap((downloadDir) {
-    final file = File(downloadDir.path + '/${bus.number.toString()}.pdf');
+    final file = File(downloadDir.path + '/${bus.number.toString()}_${bus.name}.pdf');
     final options = DownloaderUtils(
       file: file,
       onDone: () => onDone(file),
@@ -63,24 +63,25 @@ class BusListItem extends HookConsumerWidget {
               value: downloadProgress.value,
             ),
             ElevatedButton(
-              onPressed: () async {
+              onPressed: () {
                 downloadState.value.whenOrNull(notDownloading: () async {
                   if (pdfState.pdfs.any((element) =>
                       int.parse(getFileName(element)) == bus.number)) {
                     return {};
                   } else {
-                    final downloader = await downloadBusPdf(
-                        bus,
-                        (current, total) => downloadProgress.value =
-                            current / total, (File file) {
-                      downloadState.value = DownloadState.downloadSuccess(file);
-                      ref.read(pdfProvider.notifier).addPdf(file.uri);
-                    }).run();
-                    downloader.match(
+                    _downloadBusPdf(
+                      bus,
+                      (current, total) => downloadProgress.value = current / total, 
+                      (File file) {
+                        downloadState.value = DownloadState.downloadSuccess(file);
+                        ref.read(pdfProvider.notifier).addPdf(file.uri);
+                      },
+                    ).match(
                         (l) => downloadState.value =
                             DownloadState.downloadFailure(l),
                         (r) =>
-                            downloadState.value = DownloadState.downloading(r));
+                            downloadState.value = DownloadState.downloading(r),
+                    ).run();
                   }
                 });
               },

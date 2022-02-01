@@ -49,7 +49,7 @@ class BusScreenState with _$BusScreenState {
 
   factory BusScreenState.fromPdfState(PdfState pdfState) {
     final busesErrors = pdfState.pdfs
-        .map((pdf) => Bus.fromPdf(pdf, []))
+        .map((pdf) => Bus.fromPdf(pdf))
         .partition((t) => t.isLeft());
 
     final errors = busesErrors

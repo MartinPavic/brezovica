@@ -1,6 +1,4 @@
-import 'package:brezovica/model/content_type.dart';
 import 'package:brezovica/util/files.dart';
-import 'package:deep_pick/deep_pick.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -18,19 +16,14 @@ class Bus with _$Bus {
 
   factory Bus.empty() => const Bus(number: 0, name: '');
   factory Bus.fromJson(Map<String, dynamic> json) => _$BusFromJson(json);
-  static Either<String, Bus> fromPdf(Uri pdfFileUri, List<Bus> buses) {
+  static Either<String, Bus> fromPdf(Uri pdfFileUri) {
     return Either.tryCatch(() {
-      final fileName = stripFileNameExtension(pdfFileUri.pathSegments.last);
-      final busNumber = int.parse(fileName);
-      return buses
-          .firstWhere((element) => element.number == busNumber)
-          .copyWith(pdfFilePath: pdfFileUri.path);
+      final fileName = getFileName(pdfFileUri);
+      final splitFileName = fileName.split("_");
+      final busNumber = int.parse(splitFileName[0]);
+      final busName = splitFileName[1];
+      return Bus(number: busNumber, name: busName, pdfFilePath: pdfFileUri.path);
     }, (e, _) => e.toString());
   }
 
-  factory Bus.fromPick(RequiredPick pick) => Bus(
-        number: pick('number').asIntOrThrow(),
-        name: pick('name').asStringOrThrow(),
-        pdfFilePath: pick('pdf').asStringOrNull(),
-      );
 }
