@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:brezovica/constants.dart';
+import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -12,21 +13,16 @@ class ContentfulService {
       '/spaces/${Constants.contentfulSpaceId}' +
       '/environments/${Constants.contentfulEnvironmentId}');
 
-  TaskEither<String, List<T>> listEntry<T>(
-      String contentType, T Function(Map<String, dynamic>) parse) {
+  TaskEither<String, List<T>> listEntry<T>(SearchParameters searchParameters) {
     return TaskEither.tryCatch(
       () async {
         Uri uri = Uri.parse(_baseUri.toString() +
-            '/entries?access_token=$accessToken&content_type=$contentType');
+            '/entries?access_token=$accessToken' + searchParameters.toString());
         http.Response response = await http.get(uri);
         if (response.statusCode >= 200 && response.statusCode < 300) {
           Map<String, dynamic> json = jsonDecode(response.body);
-          final items = json['items'] as List;
-          List<T> result = items.map((item) {
-            final fields = item['fields'] as Map<String, dynamic>;
-            return parse(fields);
-          }).toList();
-          return result;
+          Collection<T> result = Collection.fromJson(json);
+          return result.items;
         } else {
           throw HttpException(response.reasonPhrase!);
         }
@@ -53,3 +49,4 @@ class ContentfulService {
 
 final contentfulProvider =
     Provider.autoDispose<ContentfulService>((_) => ContentfulService());
+

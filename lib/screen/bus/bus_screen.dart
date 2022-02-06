@@ -18,8 +18,10 @@ class BusScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
-      ref.read(contentfulProvider).listEntry<Bus>(
-          Bus.contentType, (json) => Bus.fromJson(json));
+      ref
+          .read(contentfulProvider)
+          .getEntry<Bus>('1SQrGqh5rrGhlgmZ302gXb', (json) => Bus.fromJson(json))
+          .run();
     }, []);
     final busScreenState = ref.watch(busScreenProvider);
     final animationCtrl =
