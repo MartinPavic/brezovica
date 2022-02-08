@@ -14,7 +14,7 @@ class ContentfulService {
       '/spaces/${Constants.contentfulSpaceId}' +
       '/environments/${Constants.contentfulEnvironmentId}');
 
-  TaskEither<String, List<T>> listEntry<T>(SearchParameters searchParameters) {
+  TaskEither<String, List<Entry>> listEntry(SearchParameters searchParameters) {
     return TaskEither.tryCatch(
       () async {
         Uri uri = Uri.parse(
@@ -23,7 +23,7 @@ class ContentfulService {
             .get(uri, headers: {'Authorization': 'Bearer $accessToken'});
         if (response.statusCode >= 200 && response.statusCode < 300) {
           Map<String, dynamic> json = jsonDecode(response.body);
-          Collection<T> result = Collection.fromJson(json);
+          Collection result = Collection.fromJson(json, (json) => Entry.fromJson(json, fromJsonT));
           return result.items;
         } else {
           throw HttpException(response.reasonPhrase!);

@@ -2,6 +2,7 @@ import 'package:brezovica/service/pdf/pdf.dart';
 import 'package:brezovica/screen/bus/bus_screen.dart';
 import 'package:brezovica/screen/info/info_screen.dart';
 import 'package:brezovica/screen/profile/profile_screen.dart';
+import 'package:brezovica/service/supabase/supabase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:brezovica/constants.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,9 +15,11 @@ void main() async {
 
   await Hive.initFlutter();
   await Supabase.initialize(
-      url: 'https://sxocarroegfdvntghfwj.supabase.co',
-      anonKey:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MDc4MTI4NSwiZXhwIjoxOTU2MzU3Mjg1fQ.O8BmrftOWqfdMyROPhQ54ZNTCzy53Ylgx3_UWb_Jtl8');
+    url: 'https://sxocarroegfdvntghfwj.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MDc4MTI4NSwiZXhwIjoxOTU2MzU3Mjg1fQ.O8BmrftOWqfdMyROPhQ54ZNTCzy53Ylgx3_UWb_Jtl8',
+    debug: true,
+  );
 
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -37,6 +40,10 @@ class MyApp extends HookConsumerWidget {
     final selectedIndex = useState<int>(0);
     useEffect(() {
       ref.read(pdfProvider.notifier).getPdfs();
+      ref.read(supabaseAuthProvider).signUp(SignUpData(
+            email: 'martin.pavic97@gmail.com',
+            password: 'test123',
+          ));
     }, []);
     return MaterialApp(
       title: _title,

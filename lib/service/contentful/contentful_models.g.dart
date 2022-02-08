@@ -6,6 +6,54 @@ part of 'contentful_models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+Entry<T> _$EntryFromJson<T>(
+  Map<String, dynamic> json,
+  T Function(Object? json) fromJsonT,
+) =>
+    Entry<T>(
+      fromJsonT(json['fields']),
+      Sys.fromJson(json['sys'] as Map<String, dynamic>),
+      json['metadata'],
+    );
+
+Map<String, dynamic> _$EntryToJson<T>(
+  Entry<T> instance,
+  Object? Function(T value) toJsonT,
+) =>
+    <String, dynamic>{
+      'fields': toJsonT(instance.fields),
+      'sys': instance.sys.toJson(),
+      'metadata': instance.metadata,
+    };
+
+Collection<T> _$CollectionFromJson<T>(
+  Map<String, dynamic> json,
+  T Function(Object? json) fromJsonT,
+) =>
+    Collection<T>(
+      Sys.fromJson(json['sys'] as Map<String, dynamic>),
+      json['total'] as int,
+      json['skip'] as int,
+      json['limit'] as int,
+      (json['items'] as List<dynamic>).map(fromJsonT).toList(),
+      json['includes'] == null
+          ? null
+          : Includes.fromJson(json['includes'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$CollectionToJson<T>(
+  Collection<T> instance,
+  Object? Function(T value) toJsonT,
+) =>
+    <String, dynamic>{
+      'sys': instance.sys.toJson(),
+      'total': instance.total,
+      'skip': instance.skip,
+      'limit': instance.limit,
+      'items': instance.items.map(toJsonT).toList(),
+      'includes': instance.includes?.toJson(),
+    };
+
 _$_Sys _$$_SysFromJson(Map<String, dynamic> json) => _$_Sys(
       type: json['type'] as String,
       linkType: json['linkType'] as String?,
@@ -34,54 +82,6 @@ Map<String, dynamic> _$$_SysToJson(_$_Sys instance) => <String, dynamic>{
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'locale': instance.locale,
-    };
-
-_$_Entry<T> _$$_EntryFromJson<T>(
-  Map<String, dynamic> json,
-  T Function(Object? json) fromJsonT,
-) =>
-    _$_Entry<T>(
-      fields: fromJsonT(json['fields']),
-      sys: Sys.fromJson(json['sys'] as Map<String, dynamic>),
-      metadata: json['metadata'],
-    );
-
-Map<String, dynamic> _$$_EntryToJson<T>(
-  _$_Entry<T> instance,
-  Object? Function(T value) toJsonT,
-) =>
-    <String, dynamic>{
-      'fields': toJsonT(instance.fields),
-      'sys': instance.sys,
-      'metadata': instance.metadata,
-    };
-
-_$_Collection<T> _$$_CollectionFromJson<T>(
-  Map<String, dynamic> json,
-  T Function(Object? json) fromJsonT,
-) =>
-    _$_Collection<T>(
-      sys: Sys.fromJson(json['sys'] as Map<String, dynamic>),
-      total: json['total'] as int,
-      skip: json['skip'] as int,
-      limit: json['limit'] as int,
-      items: (json['items'] as List<dynamic>).map(fromJsonT).toList(),
-      includes: json['includes'] == null
-          ? null
-          : Includes.fromJson(json['includes'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$$_CollectionToJson<T>(
-  _$_Collection<T> instance,
-  Object? Function(T value) toJsonT,
-) =>
-    <String, dynamic>{
-      'sys': instance.sys,
-      'total': instance.total,
-      'skip': instance.skip,
-      'limit': instance.limit,
-      'items': instance.items.map(toJsonT).toList(),
-      'includes': instance.includes,
     };
 
 _$_AssetFields _$$_AssetFieldsFromJson(Map<String, dynamic> json) =>
@@ -131,12 +131,17 @@ _$_Includes _$$_IncludesFromJson(Map<String, dynamic> json) => _$_Includes(
           ?.map((e) => Asset.fromJson(e as Map<String, dynamic>))
           .toList(),
       entry: (json['Entry'] as List<dynamic>?)
-          ?.map((e) => Entry<dynamic>.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Entry<dynamic>.fromJson(
+              e as Map<String, dynamic>, (value) => value))
           .toList(),
     );
 
 Map<String, dynamic> _$$_IncludesToJson(_$_Includes instance) =>
     <String, dynamic>{
       'Asset': instance.asset,
-      'Entry': instance.entry,
+      'Entry': instance.entry
+          ?.map((e) => e.toJson(
+                (value) => value,
+              ))
+          .toList(),
     };

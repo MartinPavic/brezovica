@@ -20,29 +20,34 @@ class Sys with _$Sys {
   factory Sys.fromJson(Map<String, dynamic> json) => _$SysFromJson(json);
 }
 
-@freezed
-class Entry<T> with _$Entry<T> {
-  @JsonSerializable(genericArgumentFactories: true)
-  const factory Entry({
-    required T fields,
-    required Sys sys,
-    Object? metadata,
-  }) = _Entry;
-  factory Entry.fromJson(Map<String, dynamic> json) => _$EntryFromJson(json);
+@JsonSerializable(explicitToJson: true, genericArgumentFactories: true)
+class Entry<T> {
+  final T fields;
+  final Sys sys;
+  final Object? metadata;
+
+  Entry(this.fields, this.sys, this.metadata);
+
+  factory Entry.fromJson(Map<String, dynamic> json, T Function(Object? json) fromJsonT) =>
+     _$EntryFromJson(json, fromJsonT);
+
+  Map<String, dynamic> toJson(Object Function(T value) toJsonT) =>
+    _$EntryToJson(this, toJsonT);
 }
 
-@freezed
-class Collection<T> with _$Collection<T> {
-  @JsonSerializable(genericArgumentFactories: true)
-  const factory Collection({
-    required Sys sys,
-    required int total,
-    required int skip,
-    required int limit,
-    required List<T> items,
-    Includes? includes
-  }) = _Collection;
-  factory Collection.fromJson(Map<String, dynamic> json) => _$CollectionFromJson(json);
+@JsonSerializable(explicitToJson: true, genericArgumentFactories: true)
+class Collection<T> {
+  final Sys sys;
+  final int total;
+  final int skip;
+  final int limit;
+  final List<T> items;
+  final Includes? includes;
+  Collection(this.sys, this.total, this.skip, this.limit, this.items, this.includes);
+  factory Collection.fromJson(Map<String, dynamic> json, T Function(Map<String, dynamic>? json) fromJsonT) =>
+     _$CollectionFromJson(json, fromJsonT);
+   Map<String, dynamic> toJson(Object Function(T value) toJsonT) =>
+    _$CollectionToJson(this, toJsonT);
 }
 
 @freezed
