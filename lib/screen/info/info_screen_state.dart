@@ -1,4 +1,5 @@
 import 'package:brezovica/model/post/post.dart';
+import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:brezovica/service/contentful/contentful_service.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,13 +14,15 @@ class InfoScreenStateNotifier extends StateNotifier<InfoScreenState> {
   final ContentfulService contentfulService;
 
   Future<InfoScreenState> getPosts() {
-    final getPostsTask = contentfulService.listEntry<Post>(
-        'post', (json) => Post.fromJson(json));
+    final searchParams = SearchParameters(contentType: Post.contentType);
+    final getPostsTask = contentfulService.listEntry<Post>(searchParams);
 
-    return getPostsTask.match(
-      (error) => state = InfoScreenState.error([error]),
-      (posts) => state = InfoScreenState.listPosts(posts),
-    ).run();
+    return getPostsTask
+        .match(
+          (error) => state = InfoScreenState.error([error]),
+          (posts) => state = InfoScreenState.listPosts(posts),
+        )
+        .run();
   }
 }
 

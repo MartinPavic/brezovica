@@ -89,7 +89,7 @@ ListView postList(List<Post> postList, WidgetRef ref) {
                 children: [
                   Expanded(
                     child: Text(
-                      postList[index].title.toString(),
+                      postList[index].title,
                       style: TextStyle(
                           color: Colors.blue[50],
                           fontSize: 45,

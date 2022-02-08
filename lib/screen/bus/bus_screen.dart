@@ -17,12 +17,6 @@ class BusScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(() {
-      ref
-          .read(contentfulProvider)
-          .getEntry<Bus>('1SQrGqh5rrGhlgmZ302gXb', (json) => Bus.fromJson(json))
-          .run();
-    }, []);
     final busScreenState = ref.watch(busScreenProvider);
     final animationCtrl =
         useAnimationController(duration: const Duration(milliseconds: 300));
@@ -35,10 +29,9 @@ class BusScreen extends HookConsumerWidget {
           child: const Icon(Icons.add),
           backgroundColor: Constants.mainColor,
           onPressed: () {
-            busScreenState.maybeWhen(
-                error: (_) {},
-                orElse: () => showModalBottomSheet(
-                    context: context, builder: addBusBottomSheet));
+            busScreenState.maybeWhen(error: (_) {}, orElse: () {});
+            // showModalBottomSheet(
+            //     context: context, builder: addBusBottomSheet));
           },
         ),
         body: Container(

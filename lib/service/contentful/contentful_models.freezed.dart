@@ -1797,11 +1797,6 @@ class _$_SearchParameters implements _SearchParameters {
   final int? skip;
 
   @override
-  String toString() {
-    return 'SearchParameters(contentType: $contentType, select: $select, limit: $limit, skip: $skip)';
-  }
-
-  @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&

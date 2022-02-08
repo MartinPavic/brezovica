@@ -13,7 +13,7 @@ part 'bus_screen_state.freezed.dart';
 
 class BusScreenStateNotifier extends StateNotifier<BusScreenState> {
   BusScreenStateNotifier(PdfState state)
-      : super(BusScreenState.fromPdfState(state));
+      : super(const BusScreenState.initial());
 
   BusScreenState previousState = const BusScreenState.initial();
 
@@ -47,29 +47,29 @@ class BusScreenState with _$BusScreenState {
   const factory BusScreenState.error(List<String> errors) =
       _ErrorBusScreenState;
 
-  factory BusScreenState.fromPdfState(PdfState pdfState) {
-    final busesErrors = pdfState.pdfs
-        .map((pdf) => Bus.fromPdf(pdf))
-        .partition((t) => t.isLeft());
+  // factory BusScreenState.fromPdfState(PdfState pdfState) {
+  //   final busesErrors = pdfState.pdfs
+  //       .map((pdf) => Bus.fromPdf(pdf))
+  //       .partition((t) => t.isLeft());
 
-    final errors = busesErrors
-        .foldLeft<List<String>>(
-            List.empty(),
-            (errors, iterable) =>
-                iterable.map((e) => e.getLeft().getOrElse(() => '')).toList())
-        .filter((t) => t.isNotEmpty);
-    final buses = busesErrors.foldLeftFirst<List<Bus>>(
-        List.empty(),
-        (buses, iterable) => iterable
-            .map((e) => e.getOrElse((l) => Bus.empty()))
-            .toList()
-            .sorted((a, b) => a.number - b.number));
-    if (buses.isEmpty && errors.isEmpty) {
-      return const BusScreenState.initial();
-    }
-    if (errors.isNotEmpty) {
-      return BusScreenState.error(errors.toList());
-    }
-    return BusScreenState.listBuses(buses);
-  }
+  //   final errors = busesErrors
+  //       .foldLeft<List<String>>(
+  //           List.empty(),
+  //           (errors, iterable) =>
+  //               iterable.map((e) => e.getLeft().getOrElse(() => '')).toList())
+  //       .filter((t) => t.isNotEmpty);
+  //   final buses = busesErrors.foldLeftFirst<List<Bus>>(
+  //       List.empty(),
+  //       (buses, iterable) => iterable
+  //           .map((e) => e.getOrElse((l) => Bus.empty()))
+  //           .toList()
+  //           .sorted((a, b) => a.number - b.number));
+  //   if (buses.isEmpty && errors.isEmpty) {
+  //     return const BusScreenState.initial();
+  //   }
+  //   if (errors.isNotEmpty) {
+  //     return BusScreenState.error(errors.toList());
+  //   }
+  //   return BusScreenState.listBuses(buses);
+  // }
 }
