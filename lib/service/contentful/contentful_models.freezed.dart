@@ -1165,12 +1165,14 @@ class _$SearchParametersTearOff {
       {@JsonKey(name: 'content_type') String? contentType,
       String? select,
       int? limit,
-      int? skip}) {
+      int? skip,
+      @JsonKey(name: 'mimetype_group') String? mimeTypeGroup}) {
     return _SearchParameters(
       contentType: contentType,
       select: select,
       limit: limit,
       skip: skip,
+      mimeTypeGroup: mimeTypeGroup,
     );
   }
 }
@@ -1185,6 +1187,8 @@ mixin _$SearchParameters {
   String? get select => throw _privateConstructorUsedError;
   int? get limit => throw _privateConstructorUsedError;
   int? get skip => throw _privateConstructorUsedError;
+  @JsonKey(name: 'mimetype_group')
+  String? get mimeTypeGroup => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SearchParametersCopyWith<SearchParameters> get copyWith =>
@@ -1200,7 +1204,8 @@ abstract class $SearchParametersCopyWith<$Res> {
       {@JsonKey(name: 'content_type') String? contentType,
       String? select,
       int? limit,
-      int? skip});
+      int? skip,
+      @JsonKey(name: 'mimetype_group') String? mimeTypeGroup});
 }
 
 /// @nodoc
@@ -1218,6 +1223,7 @@ class _$SearchParametersCopyWithImpl<$Res>
     Object? select = freezed,
     Object? limit = freezed,
     Object? skip = freezed,
+    Object? mimeTypeGroup = freezed,
   }) {
     return _then(_value.copyWith(
       contentType: contentType == freezed
@@ -1236,6 +1242,10 @@ class _$SearchParametersCopyWithImpl<$Res>
           ? _value.skip
           : skip // ignore: cast_nullable_to_non_nullable
               as int?,
+      mimeTypeGroup: mimeTypeGroup == freezed
+          ? _value.mimeTypeGroup
+          : mimeTypeGroup // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1251,7 +1261,8 @@ abstract class _$SearchParametersCopyWith<$Res>
       {@JsonKey(name: 'content_type') String? contentType,
       String? select,
       int? limit,
-      int? skip});
+      int? skip,
+      @JsonKey(name: 'mimetype_group') String? mimeTypeGroup});
 }
 
 /// @nodoc
@@ -1271,6 +1282,7 @@ class __$SearchParametersCopyWithImpl<$Res>
     Object? select = freezed,
     Object? limit = freezed,
     Object? skip = freezed,
+    Object? mimeTypeGroup = freezed,
   }) {
     return _then(_SearchParameters(
       contentType: contentType == freezed
@@ -1289,6 +1301,10 @@ class __$SearchParametersCopyWithImpl<$Res>
           ? _value.skip
           : skip // ignore: cast_nullable_to_non_nullable
               as int?,
+      mimeTypeGroup: mimeTypeGroup == freezed
+          ? _value.mimeTypeGroup
+          : mimeTypeGroup // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1300,7 +1316,8 @@ class _$_SearchParameters implements _SearchParameters {
       {@JsonKey(name: 'content_type') this.contentType,
       this.select,
       this.limit,
-      this.skip});
+      this.skip,
+      @JsonKey(name: 'mimetype_group') this.mimeTypeGroup});
 
   @override
   @JsonKey(name: 'content_type')
@@ -1311,6 +1328,14 @@ class _$_SearchParameters implements _SearchParameters {
   final int? limit;
   @override
   final int? skip;
+  @override
+  @JsonKey(name: 'mimetype_group')
+  final String? mimeTypeGroup;
+
+  @override
+  String toString() {
+    return 'SearchParameters(contentType: $contentType, select: $select, limit: $limit, skip: $skip, mimeTypeGroup: $mimeTypeGroup)';
+  }
 
   @override
   bool operator ==(dynamic other) {
@@ -1321,7 +1346,9 @@ class _$_SearchParameters implements _SearchParameters {
                 .equals(other.contentType, contentType) &&
             const DeepCollectionEquality().equals(other.select, select) &&
             const DeepCollectionEquality().equals(other.limit, limit) &&
-            const DeepCollectionEquality().equals(other.skip, skip));
+            const DeepCollectionEquality().equals(other.skip, skip) &&
+            const DeepCollectionEquality()
+                .equals(other.mimeTypeGroup, mimeTypeGroup));
   }
 
   @override
@@ -1330,7 +1357,8 @@ class _$_SearchParameters implements _SearchParameters {
       const DeepCollectionEquality().hash(contentType),
       const DeepCollectionEquality().hash(select),
       const DeepCollectionEquality().hash(limit),
-      const DeepCollectionEquality().hash(skip));
+      const DeepCollectionEquality().hash(skip),
+      const DeepCollectionEquality().hash(mimeTypeGroup));
 
   @JsonKey(ignore: true)
   @override
@@ -1340,10 +1368,12 @@ class _$_SearchParameters implements _SearchParameters {
 
 abstract class _SearchParameters implements SearchParameters {
   const factory _SearchParameters(
-      {@JsonKey(name: 'content_type') String? contentType,
-      String? select,
-      int? limit,
-      int? skip}) = _$_SearchParameters;
+          {@JsonKey(name: 'content_type') String? contentType,
+          String? select,
+          int? limit,
+          int? skip,
+          @JsonKey(name: 'mimetype_group') String? mimeTypeGroup}) =
+      _$_SearchParameters;
 
   @override
   @JsonKey(name: 'content_type')
@@ -1354,6 +1384,9 @@ abstract class _SearchParameters implements SearchParameters {
   int? get limit;
   @override
   int? get skip;
+  @override
+  @JsonKey(name: 'mimetype_group')
+  String? get mimeTypeGroup;
   @override
   @JsonKey(ignore: true)
   _$SearchParametersCopyWith<_SearchParameters> get copyWith =>

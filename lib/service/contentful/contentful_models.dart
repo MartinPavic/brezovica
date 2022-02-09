@@ -44,7 +44,7 @@ class Collection<T> {
   final List<T> items;
   final Includes? includes;
   Collection(this.sys, this.total, this.skip, this.limit, this.items, this.includes);
-  factory Collection.fromJson(Map<String, dynamic> json, T Function(Map<String, dynamic>? json) fromJsonT) =>
+  factory Collection.fromJson(Map<String, dynamic> json, T Function(Object? json) fromJsonT) =>
      _$CollectionFromJson(json, fromJsonT);
    Map<String, dynamic> toJson(Object Function(T value) toJsonT) =>
     _$CollectionToJson(this, toJsonT);
@@ -90,6 +90,7 @@ class Includes with _$Includes {
   factory Includes.fromJson(Map<String, dynamic> json) => _$IncludesFromJson(json);
 }
 
+// TODO
 @freezed
 class SearchParameters with _$SearchParameters {
   const factory SearchParameters({
@@ -97,13 +98,18 @@ class SearchParameters with _$SearchParameters {
     String? select,
     int? limit,
     int? skip,
+    @JsonKey(name: 'mimetype_group') String? mimeTypeGroup
   }) = _SearchParameters;
 
-  @override
-  String toString() {
+
+  String toQueryString() {
+    if (mimeTypeGroup != null) {
+      return '&mimetype_group=$mimeTypeGroup';
+    }
     return (contentType != null ? '&content_type=$contentType' : '') +
            (select != null ? '&select=$select' : '') +
            (limit != null ? '&limit=$limit' : '') +
            (skip != null ? '&skip=$skip' : '');
   }
+
 }

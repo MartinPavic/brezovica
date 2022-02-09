@@ -15,7 +15,7 @@ class InfoScreenStateNotifier extends StateNotifier<InfoScreenState> {
 
   Future<InfoScreenState> getPosts() {
     final searchParams = SearchParameters(contentType: Post.contentType);
-    final getPostsTask = contentfulService.listEntry<Post>(searchParams);
+    final getPostsTask = contentfulService.getEntryCollection<Post>(searchParams);
 
     return getPostsTask
         .match(
