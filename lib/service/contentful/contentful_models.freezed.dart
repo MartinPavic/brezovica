@@ -1157,6 +1157,10 @@ abstract class _Includes implements Includes {
       throw _privateConstructorUsedError;
 }
 
+SearchParameters _$SearchParametersFromJson(Map<String, dynamic> json) {
+  return _SearchParameters.fromJson(json);
+}
+
 /// @nodoc
 class _$SearchParametersTearOff {
   const _$SearchParametersTearOff();
@@ -1175,6 +1179,10 @@ class _$SearchParametersTearOff {
       mimeTypeGroup: mimeTypeGroup,
     );
   }
+
+  SearchParameters fromJson(Map<String, Object?> json) {
+    return SearchParameters.fromJson(json);
+  }
 }
 
 /// @nodoc
@@ -1190,6 +1198,7 @@ mixin _$SearchParameters {
   @JsonKey(name: 'mimetype_group')
   String? get mimeTypeGroup => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $SearchParametersCopyWith<SearchParameters> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1310,14 +1319,18 @@ class __$SearchParametersCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-class _$_SearchParameters implements _SearchParameters {
+@JsonSerializable()
+class _$_SearchParameters extends _SearchParameters {
   const _$_SearchParameters(
       {@JsonKey(name: 'content_type') this.contentType,
       this.select,
       this.limit,
       this.skip,
-      @JsonKey(name: 'mimetype_group') this.mimeTypeGroup});
+      @JsonKey(name: 'mimetype_group') this.mimeTypeGroup})
+      : super._();
+
+  factory _$_SearchParameters.fromJson(Map<String, dynamic> json) =>
+      _$$_SearchParametersFromJson(json);
 
   @override
   @JsonKey(name: 'content_type')
@@ -1364,9 +1377,14 @@ class _$_SearchParameters implements _SearchParameters {
   @override
   _$SearchParametersCopyWith<_SearchParameters> get copyWith =>
       __$SearchParametersCopyWithImpl<_SearchParameters>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_SearchParametersToJson(this);
+  }
 }
 
-abstract class _SearchParameters implements SearchParameters {
+abstract class _SearchParameters extends SearchParameters {
   const factory _SearchParameters(
           {@JsonKey(name: 'content_type') String? contentType,
           String? select,
@@ -1374,6 +1392,10 @@ abstract class _SearchParameters implements SearchParameters {
           int? skip,
           @JsonKey(name: 'mimetype_group') String? mimeTypeGroup}) =
       _$_SearchParameters;
+  const _SearchParameters._() : super._();
+
+  factory _SearchParameters.fromJson(Map<String, dynamic> json) =
+      _$_SearchParameters.fromJson;
 
   @override
   @JsonKey(name: 'content_type')

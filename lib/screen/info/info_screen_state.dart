@@ -1,6 +1,8 @@
 import 'package:brezovica/model/post/post.dart';
+import 'package:brezovica/screen/info/info_screen.dart';
 import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:brezovica/service/contentful/contentful_service.dart';
+import 'package:brezovica/service/supabase/supabase_auth.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,12 +17,14 @@ class InfoScreenStateNotifier extends StateNotifier<InfoScreenState> {
 
   Future<InfoScreenState> getPosts() {
     final searchParams = SearchParameters(contentType: Post.contentType);
-    final getPostsTask = contentfulService.getEntryCollection<Post>(searchParams);
+    final getPostsTask = contentfulService.getEntryCollection<Post>(
+        searchParams, (json) => Post.fromJson(json as Map<String, dynamic>));
 
     return getPostsTask
         .match(
           (error) => state = InfoScreenState.error([error]),
-          (posts) => state = InfoScreenState.listPosts(posts),
+          (postsCollection) => state = InfoScreenState.listPosts(
+              postsCollection.items.map((e) => e.fields).toList()),
         )
         .run();
   }

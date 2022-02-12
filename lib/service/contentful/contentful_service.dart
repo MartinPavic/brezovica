@@ -40,9 +40,9 @@ class ContentfulService {
       String entryId, T Function(Object?) parseT) {
     return TaskEither.tryCatch(
       () async {
-        Uri uri = Uri.parse(_baseUri.toString() +
-            '/entries/$entryId');
-        http.Response response = await http.get(uri, headers: {'Authorization': 'Bearer $accessToken'});
+        Uri uri = Uri.parse(_baseUri.toString() + '/entries/$entryId');
+        http.Response response = await http
+            .get(uri, headers: {'Authorization': 'Bearer $accessToken'});
         if (response.statusCode >= 200 && response.statusCode < 300) {
           Map<String, dynamic> json = jsonDecode(response.body);
           Entry<T> result = Entry.fromJson(json, parseT);
@@ -58,10 +58,10 @@ class ContentfulService {
   TaskEither<String, Collection<Asset>> getAssetCollection(
       SearchParameters searchParameters) {
     return TaskEither.tryCatch(() async {
-      Uri uri = Uri.parse(_baseUri.toString() +
-          '/assets?access_token=$accessToken' +
-          searchParameters.toQueryString());
-      http.Response response = await http.get(uri, headers: {'Authorization': 'Bearer $accessToken'});
+      Uri uri = Uri.parse(
+          _baseUri.toString() + '/assets' + searchParameters.toQueryString());
+      http.Response response = await http
+          .get(uri, headers: {'Authorization': 'Bearer $accessToken'});
       if (response.statusCode >= 200 && response.statusCode < 300) {
         Map<String, dynamic> json = jsonDecode(response.body);
         Collection<Asset> result = Collection.fromJson(
@@ -75,9 +75,9 @@ class ContentfulService {
 
   TaskEither<String, Asset> getAsset(String assetId) {
     return TaskEither.tryCatch(() async {
-      Uri uri = Uri.parse(
-          _baseUri.toString() + '/assets/$assetId?access_token=$accessToken');
-      http.Response response = await http.get(uri);
+      Uri uri = Uri.parse(_baseUri.toString() + '/assets/$assetId');
+      http.Response response = await http
+          .get(uri, headers: {'Authorization': 'Bearer $accessToken'});
       if (response.statusCode >= 200 && response.statusCode < 300) {
         Map<String, dynamic> json = jsonDecode(response.body);
         Asset result = Asset.fromJson(json);

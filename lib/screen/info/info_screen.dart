@@ -1,5 +1,6 @@
 import 'package:brezovica/model/post/post.dart';
 import 'package:brezovica/screen/info/info_screen_state.dart';
+import 'package:brezovica/service/supabase/supabase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -35,6 +36,7 @@ class InfoScreen extends HookConsumerWidget {
       ),
     );
   }
+
 }
 
 ListView postList(List<Post> postList, WidgetRef ref) {

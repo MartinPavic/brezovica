@@ -145,3 +145,21 @@ Map<String, dynamic> _$$_IncludesToJson(_$_Includes instance) =>
               ))
           .toList(),
     };
+
+_$_SearchParameters _$$_SearchParametersFromJson(Map<String, dynamic> json) =>
+    _$_SearchParameters(
+      contentType: json['content_type'] as String?,
+      select: json['select'] as String?,
+      limit: json['limit'] as int?,
+      skip: json['skip'] as int?,
+      mimeTypeGroup: json['mimetype_group'] as String?,
+    );
+
+Map<String, dynamic> _$$_SearchParametersToJson(_$_SearchParameters instance) =>
+    <String, dynamic>{
+      'content_type': instance.contentType,
+      'select': instance.select,
+      'limit': instance.limit,
+      'skip': instance.skip,
+      'mimetype_group': instance.mimeTypeGroup,
+    };
