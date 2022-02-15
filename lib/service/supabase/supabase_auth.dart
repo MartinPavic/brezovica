@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart' as riverpod;
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -11,26 +13,34 @@ class SupabaseAuthService {
   SupabaseAuthService(this._auth);
   final GoTrueClient _auth;
 
-  TaskEither<String, User> signIn(AuthData signInData) {
+  TaskEither<Object, User> signIn(String email) {
     return TaskEither.tryCatch(
       () async {
-        final response = await signInData.email.match(
-          (email) => _auth.signIn(email: email, password: signInData.password),
-          () => signInData.phoneNumber.match(
-            (phoneNumber) => _auth.signIn(phone: phoneNumber, password: signInData.password),
-            () => Future(() => GotrueSessionResponse(
-                error: GotrueError("Molimo unesite email ili broj telefona"))),
-          ),
+        final response = await _auth.signIn(
+          email: email,
+          options: AuthOptions(
+              redirectTo:
+                  kIsWeb ? null : 'com.example.brezovica://login-callback/'),
         );
-        if (response.error != null) {
-          throw response.error!;
-        }
-        if (response.user == null) {
-          throw Exception("WHAAT");
-        }
+
+        if (response.error != null) throw response.error!;
+
         return response.user!;
       },
-      (error, _) => error.toString(),
+      (error, _) => error,
+    );
+  }
+
+  TaskEither<GotrueError, Unit> signOut() {
+    return TaskEither.tryCatch(
+      () async {
+        final response = await _auth.signOut();
+
+        if (response.error != null) throw response.error!;
+
+        return unit;
+      },
+      (error, _) => error as GotrueError,
     );
   }
 
@@ -67,8 +77,8 @@ final supabaseAuthProvider = riverpod.Provider<SupabaseAuthService>(
 @freezed
 class AuthData with _$AuthData {
   const factory AuthData({
-    @Default(None) Option<String> email,
-    @Default(None) Option<String> phoneNumber,
+    @Default(None()) Option<String> email,
+    @Default(None()) Option<String> phoneNumber,
     required String password,
   }) = _AuthData;
 }
@@ -77,15 +87,14 @@ class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
   @override
   void onUnauthenticated() {
     if (mounted) {
-     // Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+      // Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
     }
   }
 
   @override
   void onAuthenticated(Session session) {
     if (mounted) {
-     // Navigator.of(context)
-     //     .pushNamedAndRemoveUntil('/account', (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
     }
   }
 
@@ -94,12 +103,12 @@ class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
 
   @override
   void onErrorAuthenticating(String message) {
-    // context.showErrorSnackBar(message: message);
+    //context.showErrorSnackBar(message: message);
   }
 }
 
 class AuthRequiredState<T extends StatefulWidget>
-    extends SupabaseAuthRequiredState<T>{
+    extends SupabaseAuthRequiredState<T> {
   @override
   void onUnauthenticated() {
     /// Users will be sent back to the LoginPage if they sign out.
@@ -108,5 +117,4 @@ class AuthRequiredState<T extends StatefulWidget>
       Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
     }
   }
-
 }

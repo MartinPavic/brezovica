@@ -19,8 +19,8 @@ class _$AuthDataTearOff {
   const _$AuthDataTearOff();
 
   _AuthData call(
-      {Option<String> email = None,
-      Option<String> phoneNumber = None,
+      {Option<String> email = const None(),
+      Option<String> phoneNumber = const None(),
       required String password}) {
     return _AuthData(
       email: email,
@@ -128,7 +128,9 @@ class __$AuthDataCopyWithImpl<$Res> extends _$AuthDataCopyWithImpl<$Res>
 
 class _$_AuthData implements _AuthData {
   const _$_AuthData(
-      {this.email = None, this.phoneNumber = None, required this.password});
+      {this.email = const None(),
+      this.phoneNumber = const None(),
+      required this.password});
 
   @JsonKey()
   @override

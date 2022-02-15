@@ -1,3 +1,5 @@
+import 'package:brezovica/screen/home/home_screen.dart';
+import 'package:brezovica/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -22,14 +24,17 @@ class MyApp extends HookConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   static const String _title = 'Brezovica';
-  
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const MaterialApp(
+    return MaterialApp(
       title: _title,
       debugShowCheckedModeBanner: false,
       initialRoute: '/login',
-      routes: <String, WidgetBuilder>{},
+      routes: <String, WidgetBuilder>{
+        '/login': (context) => const LoginScreen(),
+        '/home': (context) => const HomeScreen(),
+      },
     );
   }
 }

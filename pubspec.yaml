@@ -105,4 +105,5 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_native_splash:
-  color: "#42a5f5"
+  # image: assets/mzb.png
+  background_image: assets/mzb.png
