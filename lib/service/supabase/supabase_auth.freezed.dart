@@ -126,7 +126,7 @@ class __$AuthDataCopyWithImpl<$Res> extends _$AuthDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AuthData implements _AuthData {
+class _$_AuthData with DiagnosticableTreeMixin implements _AuthData {
   const _$_AuthData(
       {this.email = const None(),
       this.phoneNumber = const None(),
@@ -142,8 +142,18 @@ class _$_AuthData implements _AuthData {
   final String password;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthData(email: $email, phoneNumber: $phoneNumber, password: $password)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthData'))
+      ..add(DiagnosticsProperty('email', email))
+      ..add(DiagnosticsProperty('phoneNumber', phoneNumber))
+      ..add(DiagnosticsProperty('password', password));
   }
 
   @override

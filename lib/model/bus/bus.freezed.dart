@@ -22,16 +22,10 @@ Bus _$BusFromJson(Map<String, dynamic> json) {
 class _$BusTearOff {
   const _$BusTearOff();
 
-  _Bus call(
-      {required String id,
-      required int number,
-      required String name,
-      String? pdfFilePath}) {
+  _Bus call({required int number, required String name}) {
     return _Bus(
-      id: id,
       number: number,
       name: name,
-      pdfFilePath: pdfFilePath,
     );
   }
 
@@ -45,10 +39,8 @@ const $Bus = _$BusTearOff();
 
 /// @nodoc
 mixin _$Bus {
-  String get id => throw _privateConstructorUsedError;
   int get number => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String? get pdfFilePath => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -59,7 +51,7 @@ mixin _$Bus {
 abstract class $BusCopyWith<$Res> {
   factory $BusCopyWith(Bus value, $Res Function(Bus) then) =
       _$BusCopyWithImpl<$Res>;
-  $Res call({String id, int number, String name, String? pdfFilePath});
+  $Res call({int number, String name});
 }
 
 /// @nodoc
@@ -72,16 +64,10 @@ class _$BusCopyWithImpl<$Res> implements $BusCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? number = freezed,
     Object? name = freezed,
-    Object? pdfFilePath = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       number: number == freezed
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
@@ -90,10 +76,6 @@ class _$BusCopyWithImpl<$Res> implements $BusCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      pdfFilePath: pdfFilePath == freezed
-          ? _value.pdfFilePath
-          : pdfFilePath // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -103,7 +85,7 @@ abstract class _$BusCopyWith<$Res> implements $BusCopyWith<$Res> {
   factory _$BusCopyWith(_Bus value, $Res Function(_Bus) then) =
       __$BusCopyWithImpl<$Res>;
   @override
-  $Res call({String id, int number, String name, String? pdfFilePath});
+  $Res call({int number, String name});
 }
 
 /// @nodoc
@@ -117,16 +99,10 @@ class __$BusCopyWithImpl<$Res> extends _$BusCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? number = freezed,
     Object? name = freezed,
-    Object? pdfFilePath = freezed,
   }) {
     return _then(_Bus(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       number: number == freezed
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
@@ -135,10 +111,6 @@ class __$BusCopyWithImpl<$Res> extends _$BusCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      pdfFilePath: pdfFilePath == freezed
-          ? _value.pdfFilePath
-          : pdfFilePath // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -146,26 +118,18 @@ class __$BusCopyWithImpl<$Res> extends _$BusCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Bus implements _Bus {
-  const _$_Bus(
-      {required this.id,
-      required this.number,
-      required this.name,
-      this.pdfFilePath});
+  const _$_Bus({required this.number, required this.name});
 
   factory _$_Bus.fromJson(Map<String, dynamic> json) => _$$_BusFromJson(json);
 
   @override
-  final String id;
-  @override
   final int number;
   @override
   final String name;
-  @override
-  final String? pdfFilePath;
 
   @override
   String toString() {
-    return 'Bus(id: $id, number: $number, name: $name, pdfFilePath: $pdfFilePath)';
+    return 'Bus(number: $number, name: $name)';
   }
 
   @override
@@ -173,20 +137,15 @@ class _$_Bus implements _Bus {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Bus &&
-            const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.number, number) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality()
-                .equals(other.pdfFilePath, pdfFilePath));
+            const DeepCollectionEquality().equals(other.name, name));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(number),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(pdfFilePath));
+      const DeepCollectionEquality().hash(name));
 
   @JsonKey(ignore: true)
   @override
@@ -200,22 +159,14 @@ class _$_Bus implements _Bus {
 }
 
 abstract class _Bus implements Bus {
-  const factory _Bus(
-      {required String id,
-      required int number,
-      required String name,
-      String? pdfFilePath}) = _$_Bus;
+  const factory _Bus({required int number, required String name}) = _$_Bus;
 
   factory _Bus.fromJson(Map<String, dynamic> json) = _$_Bus.fromJson;
 
   @override
-  String get id;
-  @override
   int get number;
   @override
   String get name;
-  @override
-  String? get pdfFilePath;
   @override
   @JsonKey(ignore: true)
   _$BusCopyWith<_Bus> get copyWith => throw _privateConstructorUsedError;

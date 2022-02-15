@@ -26,9 +26,9 @@ class _$SysTearOff {
       {required String type,
       String? linkType,
       String? id,
-      String? space,
-      String? environment,
-      String? contentType,
+      Object? space,
+      Object? environment,
+      Object? contentType,
       int? revision,
       DateTime? createdAt,
       DateTime? updatedAt,
@@ -60,9 +60,9 @@ mixin _$Sys {
   String get type => throw _privateConstructorUsedError;
   String? get linkType => throw _privateConstructorUsedError;
   String? get id => throw _privateConstructorUsedError;
-  String? get space => throw _privateConstructorUsedError;
-  String? get environment => throw _privateConstructorUsedError;
-  String? get contentType => throw _privateConstructorUsedError;
+  Object? get space => throw _privateConstructorUsedError;
+  Object? get environment => throw _privateConstructorUsedError;
+  Object? get contentType => throw _privateConstructorUsedError;
   int? get revision => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -81,9 +81,9 @@ abstract class $SysCopyWith<$Res> {
       {String type,
       String? linkType,
       String? id,
-      String? space,
-      String? environment,
-      String? contentType,
+      Object? space,
+      Object? environment,
+      Object? contentType,
       int? revision,
       DateTime? createdAt,
       DateTime? updatedAt,
@@ -124,18 +124,9 @@ class _$SysCopyWithImpl<$Res> implements $SysCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      space: space == freezed
-          ? _value.space
-          : space // ignore: cast_nullable_to_non_nullable
-              as String?,
-      environment: environment == freezed
-          ? _value.environment
-          : environment // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentType: contentType == freezed
-          ? _value.contentType
-          : contentType // ignore: cast_nullable_to_non_nullable
-              as String?,
+      space: space == freezed ? _value.space : space,
+      environment: environment == freezed ? _value.environment : environment,
+      contentType: contentType == freezed ? _value.contentType : contentType,
       revision: revision == freezed
           ? _value.revision
           : revision // ignore: cast_nullable_to_non_nullable
@@ -165,9 +156,9 @@ abstract class _$SysCopyWith<$Res> implements $SysCopyWith<$Res> {
       {String type,
       String? linkType,
       String? id,
-      String? space,
-      String? environment,
-      String? contentType,
+      Object? space,
+      Object? environment,
+      Object? contentType,
       int? revision,
       DateTime? createdAt,
       DateTime? updatedAt,
@@ -209,18 +200,9 @@ class __$SysCopyWithImpl<$Res> extends _$SysCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      space: space == freezed
-          ? _value.space
-          : space // ignore: cast_nullable_to_non_nullable
-              as String?,
-      environment: environment == freezed
-          ? _value.environment
-          : environment // ignore: cast_nullable_to_non_nullable
-              as String?,
-      contentType: contentType == freezed
-          ? _value.contentType
-          : contentType // ignore: cast_nullable_to_non_nullable
-              as String?,
+      space: space == freezed ? _value.space : space,
+      environment: environment == freezed ? _value.environment : environment,
+      contentType: contentType == freezed ? _value.contentType : contentType,
       revision: revision == freezed
           ? _value.revision
           : revision // ignore: cast_nullable_to_non_nullable
@@ -265,11 +247,11 @@ class _$_Sys implements _Sys {
   @override
   final String? id;
   @override
-  final String? space;
+  final Object? space;
   @override
-  final String? environment;
+  final Object? environment;
   @override
-  final String? contentType;
+  final Object? contentType;
   @override
   final int? revision;
   @override
@@ -333,9 +315,9 @@ abstract class _Sys implements Sys {
       {required String type,
       String? linkType,
       String? id,
-      String? space,
-      String? environment,
-      String? contentType,
+      Object? space,
+      Object? environment,
+      Object? contentType,
       int? revision,
       DateTime? createdAt,
       DateTime? updatedAt,
@@ -350,11 +332,11 @@ abstract class _Sys implements Sys {
   @override
   String? get id;
   @override
-  String? get space;
+  Object? get space;
   @override
-  String? get environment;
+  Object? get environment;
   @override
-  String? get contentType;
+  Object? get contentType;
   @override
   int? get revision;
   @override

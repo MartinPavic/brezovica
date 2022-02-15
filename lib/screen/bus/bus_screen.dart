@@ -4,9 +4,11 @@ import 'dart:ui';
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/bus/bus_screen_state.dart';
+import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:brezovica/service/contentful/contentful_service.dart';
 import 'package:brezovica/service/pdf/pdf.dart';
 import 'package:brezovica/screen/bus/widgets/add_bus_bottom_sheet.dart';
+import 'package:brezovica/service/supabase/supabase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:glassmorphism/glassmorphism.dart';
@@ -17,6 +19,12 @@ class BusScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    
+    useEffect(() {
+      final notifier = ref.read(busScreenProvider.notifier);
+      notifier.getBuses();
+      return notifier.dispose;
+    }, []);
     final busScreenState = ref.watch(busScreenProvider);
     final animationCtrl =
         useAnimationController(duration: const Duration(milliseconds: 300));
@@ -72,9 +80,11 @@ class BusScreen extends HookConsumerWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: InkWell(
-              onTap: () => ref
-                  .read(busScreenProvider.notifier)
-                  .showPdf(File(busList[index].pdfFilePath!)),
+              onTap: (){},
+
+                // () => ref
+                //   .read(busScreenProvider.notifier)
+                //   .showPdf(File(busList[index].pdfFilePath!)),
               customBorder: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -129,9 +139,11 @@ class BusScreen extends HookConsumerWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: IconButton(
-                              onPressed: () => ref
-                                  .read(pdfProvider.notifier)
-                                  .deletePdf(File(busList[index].pdfFilePath!)),
+                              onPressed: (){},
+                              
+                                // () => ref
+                                //   .read(pdfProvider.notifier)
+                                //   .deletePdf(File(busList[index].pdfFilePath!)),
                               icon: const Icon(
                                 Icons.delete,
                                 color: Colors.red,

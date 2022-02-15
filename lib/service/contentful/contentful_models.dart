@@ -9,9 +9,9 @@ class Sys with _$Sys {
       {required String type,
       String? linkType,
       String? id,
-      String? space,
-      String? environment,
-      String? contentType,
+      Object? space,
+      Object? environment,
+      Object? contentType,
       int? revision,
       DateTime? createdAt,
       DateTime? updatedAt,
@@ -94,7 +94,7 @@ class Includes with _$Includes {
 @freezed
 class SearchParameters with _$SearchParameters {
   const SearchParameters._();
-  
+
   const factory SearchParameters(
           {@JsonKey(name: 'content_type') String? contentType,
           String? select,
@@ -109,5 +109,4 @@ class SearchParameters with _$SearchParameters {
   String toQueryString() {
     return '?${toJson().entries.where((e) => e.value != null).map((e) => '${e.key}=${e.value}').join('&')}';
   }
-
 }

@@ -13,7 +13,7 @@ class SupabaseAuthService {
   SupabaseAuthService(this._auth);
   final GoTrueClient _auth;
 
-  TaskEither<Object, User> signIn(String email) {
+  TaskEither<Object, Unit> signIn(String email) {
     return TaskEither.tryCatch(
       () async {
         final response = await _auth.signIn(
@@ -25,13 +25,13 @@ class SupabaseAuthService {
 
         if (response.error != null) throw response.error!;
 
-        return response.user!;
+        return unit;
       },
       (error, _) => error,
     );
   }
 
-  TaskEither<GotrueError, Unit> signOut() {
+  TaskEither<Object, Unit> signOut() {
     return TaskEither.tryCatch(
       () async {
         final response = await _auth.signOut();
@@ -40,7 +40,7 @@ class SupabaseAuthService {
 
         return unit;
       },
-      (error, _) => error as GotrueError,
+      (error, _) => error,
     );
   }
 
@@ -71,7 +71,7 @@ class SupabaseAuthService {
   }
 }
 
-final supabaseAuthProvider = riverpod.Provider<SupabaseAuthService>(
+final supabaseAuthProvider = riverpod.Provider.autoDispose<SupabaseAuthService>(
     (_) => SupabaseAuthService(Supabase.instance.client.auth));
 
 @freezed

@@ -2,7 +2,6 @@ import 'package:brezovica/constants.dart';
 import 'package:brezovica/screen/bus/bus_screen.dart';
 import 'package:brezovica/screen/info/info_screen.dart';
 import 'package:brezovica/screen/profile/profile_screen.dart';
-import 'package:brezovica/service/supabase/supabase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -13,7 +12,7 @@ class HomeScreen extends StatefulHookWidget {
   State<StatefulWidget> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends AuthRequiredState<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   static final List<Widget> _widgetOptions = [
     const BusScreen(),
     const InfoScreen(),
@@ -22,6 +21,7 @@ class _HomeScreenState extends AuthRequiredState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final selectedIndex = useState<int>(0);
+
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(selectedIndex.value),

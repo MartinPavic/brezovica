@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
+import 'package:brezovica/service/contentful/contentful_models.dart';
+import 'package:brezovica/service/contentful/contentful_service.dart';
 import 'package:brezovica/service/pdf/pdf.dart';
 import 'package:brezovica/service/pdf/pdf_state.dart';
 import 'package:fpdart/fpdart.dart';
@@ -12,10 +14,26 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 part 'bus_screen_state.freezed.dart';
 
 class BusScreenStateNotifier extends StateNotifier<BusScreenState> {
-  BusScreenStateNotifier(PdfState state)
+  BusScreenStateNotifier(this._contentfulService)
       : super(const BusScreenState.initial());
 
+  final ContentfulService _contentfulService;
   BusScreenState previousState = const BusScreenState.initial();
+
+  Unit getBuses() {
+    final searchParams = SearchParameters(contentType: Bus.contentType);
+    _contentfulService
+        .getEntryCollection(
+          searchParams,
+          (json) => Bus.fromJson(json as Map<String, dynamic>),
+        )
+        .match(
+          (error) => state = BusScreenState.error([error]),
+          (busCollection) => state = BusScreenState.listBuses(
+              busCollection.items.map((e) => e.fields).toList()),
+        ).run();
+    return unit;
+  }
 
   Unit showPdf(File pdfFile) {
     final viewer = SfPdfViewer.file(pdfFile);
@@ -32,8 +50,8 @@ class BusScreenStateNotifier extends StateNotifier<BusScreenState> {
 
 final busScreenProvider =
     StateNotifierProvider<BusScreenStateNotifier, BusScreenState>((ref) {
-  final pdfState = ref.watch(pdfProvider);
-  return BusScreenStateNotifier(pdfState);
+  final contentfulService = ref.read(contentfulProvider);
+  return BusScreenStateNotifier(contentfulService);
 });
 
 @freezed

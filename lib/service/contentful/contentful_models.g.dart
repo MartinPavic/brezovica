@@ -58,9 +58,9 @@ _$_Sys _$$_SysFromJson(Map<String, dynamic> json) => _$_Sys(
       type: json['type'] as String,
       linkType: json['linkType'] as String?,
       id: json['id'] as String?,
-      space: json['space'] as String?,
-      environment: json['environment'] as String?,
-      contentType: json['contentType'] as String?,
+      space: json['space'],
+      environment: json['environment'],
+      contentType: json['contentType'],
       revision: json['revision'] as int?,
       createdAt: json['createdAt'] == null
           ? null
