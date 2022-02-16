@@ -16,7 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   static final List<Widget> _widgetOptions = [
     const BusScreen(),
     const InfoScreen(),
-    const ProfileScreen()
+    const ProfileScreen(),
+    Container(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,13 +40,17 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.directions_bus_outlined),
               label: 'Bus'),
           BottomNavigationBarItem(
-              activeIcon: Icon(Icons.list_alt_sharp),
-              icon: Icon(Icons.list_alt_outlined),
+              activeIcon: Icon(Icons.feed),
+              icon: Icon(Icons.feed_outlined),
               label: 'Obavijesti'),
           BottomNavigationBarItem(
-              activeIcon: Icon(Icons.person),
-              icon: Icon(Icons.person_outlined),
-              label: 'Profil'),
+              activeIcon: Icon(Icons.feedback),
+              icon: Icon(Icons.feedback_outlined),
+              label: 'Feedback'),
+          BottomNavigationBarItem(
+              activeIcon: Icon(Icons.info),
+              icon: Icon(Icons.info_outline),
+              label: 'O nama'),
         ],
         currentIndex: selectedIndex.value,
         selectedItemColor: Colors.white,

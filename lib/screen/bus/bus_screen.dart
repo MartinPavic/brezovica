@@ -19,11 +19,10 @@ class BusScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    
     useEffect(() {
       final notifier = ref.read(busScreenProvider.notifier);
       notifier.getBuses();
-      return notifier.dispose;
+      return null;
     }, []);
     final busScreenState = ref.watch(busScreenProvider);
     final animationCtrl =
@@ -52,7 +51,7 @@ class BusScreen extends HookConsumerWidget {
             ),
           ),
           child: busScreenState.when(
-            initial: () => const CircularProgressIndicator(),
+            initial: () {},
             listBuses: (buses) => busList(buses, ref),
             showPdf: (viewer) => WillPopScope(
                 onWillPop: () async {
@@ -80,11 +79,11 @@ class BusScreen extends HookConsumerWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: InkWell(
-              onTap: (){},
+              onTap: () {},
 
-                // () => ref
-                //   .read(busScreenProvider.notifier)
-                //   .showPdf(File(busList[index].pdfFilePath!)),
+              // () => ref
+              //   .read(busScreenProvider.notifier)
+              //   .showPdf(File(busList[index].pdfFilePath!)),
               customBorder: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -139,11 +138,11 @@ class BusScreen extends HookConsumerWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: IconButton(
-                              onPressed: (){},
-                              
-                                // () => ref
-                                //   .read(pdfProvider.notifier)
-                                //   .deletePdf(File(busList[index].pdfFilePath!)),
+                              onPressed: () {},
+
+                              // () => ref
+                              //   .read(pdfProvider.notifier)
+                              //   .deletePdf(File(busList[index].pdfFilePath!)),
                               icon: const Icon(
                                 Icons.delete,
                                 color: Colors.red,
