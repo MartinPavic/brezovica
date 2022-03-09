@@ -1,4 +1,5 @@
 import 'package:brezovica/constants.dart';
+import 'package:brezovica/screen/about/about_screen.dart';
 import 'package:brezovica/screen/bus/bus_screen.dart';
 import 'package:brezovica/screen/info/info_screen.dart';
 import 'package:brezovica/screen/profile/profile_screen.dart';
@@ -17,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const BusScreen(),
     const InfoScreen(),
     const ProfileScreen(),
-    Container(),
+    const AboutScreen(),
   ];
   @override
   Widget build(BuildContext context) {
