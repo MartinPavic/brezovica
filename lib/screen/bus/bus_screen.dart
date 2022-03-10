@@ -12,8 +12,7 @@ class BusScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
-      final notifier = ref.read(busScreenProvider.notifier);
-      notifier.getBuses();
+      ref.read(busScreenProvider.notifier).getBuses();
       return null;
     }, []);
     final busScreenState = ref.watch(busScreenProvider);

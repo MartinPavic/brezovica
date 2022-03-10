@@ -1,8 +1,8 @@
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/screen/about/about_screen.dart';
 import 'package:brezovica/screen/bus/bus_screen.dart';
+import 'package:brezovica/screen/feedback/feedback_screen.dart';
 import 'package:brezovica/screen/info/info_screen.dart';
-import 'package:brezovica/screen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static final List<Widget> _widgetOptions = [
     const BusScreen(),
     const InfoScreen(),
-    const ProfileScreen(),
+    const FeedbackScreen(),
     const AboutScreen(),
   ];
   @override
