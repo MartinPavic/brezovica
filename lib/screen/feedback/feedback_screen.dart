@@ -20,14 +20,41 @@ class FeedbackScreen extends HookWidget {
       _textAreaController.addListener(() {
         _textAreaValid.value = _textAreaController.text.isNotEmpty;
       });
+      return null;
     }, [_nameController, _textAreaController]);
-    return SafeArea(
+    return Theme(
+      data: ThemeData().copyWith(dividerColor: Colors.transparent),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
+        persistentFooterButtons: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              elevation: 10,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 50,
+                vertical: 20,
+              ),
+              textStyle: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: _nameValid.value && _textAreaValid.value
+                ? () => openEmailApp(context, _textAreaController.value)
+                : null,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                Icon(Icons.email),
+                Text("Send email"),
+              ],
+            ),
+          )
+        ],
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            physics: const ClampingScrollPhysics(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -38,12 +65,18 @@ class FeedbackScreen extends HookWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 TextFormField(
                   controller: _nameController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: "Ime i prezime",
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 TextField(
                   controller: _textAreaController,
@@ -53,29 +86,6 @@ class FeedbackScreen extends HookWidget {
                     border: OutlineInputBorder(),
                   ),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 10,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 50,
-                      vertical: 20,
-                    ),
-                    textStyle: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  onPressed: _nameValid.value && _textAreaValid.value
-                      ? () => openEmailApp(context, _textAreaController.value)
-                      : null,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Icon(Icons.email),
-                      Text("Send email"),
-                    ],
-                  ),
-                )
               ],
             ),
           ),

@@ -1,11 +1,8 @@
 import 'dart:io';
 
-import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:brezovica/service/contentful/contentful_service.dart';
-import 'package:brezovica/service/pdf/pdf.dart';
-import 'package:brezovica/service/pdf/pdf_state.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -20,18 +17,19 @@ class BusScreenStateNotifier extends StateNotifier<BusScreenState> {
   final ContentfulService _contentfulService;
   BusScreenState previousState = const BusScreenState.initial();
 
-  Unit getBuses() {
+  TaskEither<String, List<Bus>> fetchBusesFromContentfulTask() {
     final searchParams = SearchParameters(contentType: Bus.contentType);
-    _contentfulService
+    return _contentfulService
         .getEntryCollection(
           searchParams,
           (json) => Bus.fromJson(json as Map<String, dynamic>),
         )
-        .match(
-          (error) => state = BusScreenState.error([error]),
-          (busCollection) => state = BusScreenState.listBuses(
-              busCollection.items.map((e) => e.fields).toList()),
-        ).run();
+        .map((collection) =>
+            collection.items.map((entry) => entry.fields).toList());
+  }
+
+  Unit getBuses() {
+    // Fetch buses from hive database
     return unit;
   }
 
@@ -64,30 +62,4 @@ class BusScreenState with _$BusScreenState {
       _ShowPdfBusScreenState;
   const factory BusScreenState.error(List<String> errors) =
       _ErrorBusScreenState;
-
-  // factory BusScreenState.fromPdfState(PdfState pdfState) {
-  //   final busesErrors = pdfState.pdfs
-  //       .map((pdf) => Bus.fromPdf(pdf))
-  //       .partition((t) => t.isLeft());
-
-  //   final errors = busesErrors
-  //       .foldLeft<List<String>>(
-  //           List.empty(),
-  //           (errors, iterable) =>
-  //               iterable.map((e) => e.getLeft().getOrElse(() => '')).toList())
-  //       .filter((t) => t.isNotEmpty);
-  //   final buses = busesErrors.foldLeftFirst<List<Bus>>(
-  //       List.empty(),
-  //       (buses, iterable) => iterable
-  //           .map((e) => e.getOrElse((l) => Bus.empty()))
-  //           .toList()
-  //           .sorted((a, b) => a.number - b.number));
-  //   if (buses.isEmpty && errors.isEmpty) {
-  //     return const BusScreenState.initial();
-  //   }
-  //   if (errors.isNotEmpty) {
-  //     return BusScreenState.error(errors.toList());
-  //   }
-  //   return BusScreenState.listBuses(buses);
-  // }
 }

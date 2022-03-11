@@ -10,6 +10,7 @@ class Bus with _$Bus {
   const factory Bus({
     required int number,
     required String name,
+    required String pdfUrl
   }) = _Bus;
 
   factory Bus.fromJson(Map<String, dynamic> json) => _$BusFromJson(json);

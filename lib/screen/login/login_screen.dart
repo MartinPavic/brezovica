@@ -32,7 +32,7 @@ class _LoginScreenState extends AuthState<LoginScreen>
       _emailController.addListener(() {
         _emailValid.value = emailRegExp.hasMatch(_emailController.text);
       });
-      return _emailController.dispose;
+      return null;
     }, [_emailController]);
 
     final _isLoading = useState(false);

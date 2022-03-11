@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    final selectedIndex = useState<int>(0);
+    final selectedIndex = useState<int>(1);
 
     return Scaffold(
       body: Center(
