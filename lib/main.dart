@@ -1,3 +1,4 @@
+import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/home/home_screen.dart';
 import 'package:brezovica/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
+  Hive.registerAdapter(BusAdapter());
+  await Hive.openBox<Bus>('buses');
   await Supabase.initialize(
     url: 'https://sxocarroegfdvntghfwj.supabase.co',
     anonKey:

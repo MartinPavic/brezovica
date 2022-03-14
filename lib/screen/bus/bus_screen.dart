@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/bus/bus_screen_state.dart';
@@ -5,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:brezovica/util/snackbar_mixin.dart';
-
 
 class BusScreen extends HookConsumerWidget {
   const BusScreen({Key? key}) : super(key: key);
@@ -87,7 +88,9 @@ class BusScreen extends HookConsumerWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: InkWell(
-            onTap: () {},
+            onTap: () => ref
+                .read(busScreenProvider.notifier)
+                .showPdf(File(busList[index].fileUrl!)),
             customBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
@@ -96,10 +99,11 @@ class BusScreen extends HookConsumerWidget {
               child: Text(
                 busList[index].number.toString(),
                 style: TextStyle(
-                    color: Colors.blue[50],
-                    fontSize: 45,
-                    fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.visible),
+                  color: Colors.blue[50],
+                  fontSize: 45,
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.visible,
+                ),
               ),
             ),
           ),
@@ -126,12 +130,12 @@ class AddBusBottomSheet extends HookConsumerWidget {
   }
 }
 
-class BusListItem extends HookWidget {
+class BusListItem extends HookConsumerWidget {
   const BusListItem(this.bus, {Key? key}) : super(key: key);
   final Bus bus;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final downloadProgress = useState(0.0);
     return ListTile(
       title: Text(
@@ -142,7 +146,15 @@ class BusListItem extends HookWidget {
         bus.name,
         style: const TextStyle(color: Colors.white),
       ),
-      trailing: const Icon(Icons.download, color: Colors.white,),
+      trailing: TextButton.icon(
+        icon: const Icon(
+          Icons.download,
+          color: Colors.white,
+        ),
+        label: Text(""),
+        onPressed: () =>
+            ref.read(busScreenProvider.notifier).downloadBusPdf(bus).run(),
+      ),
     );
   }
 }

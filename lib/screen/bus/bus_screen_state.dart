@@ -3,7 +3,12 @@ import 'dart:io';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:brezovica/service/contentful/contentful_service.dart';
+import 'package:brezovica/util/files.dart';
+import 'package:flowder/flowder.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
@@ -15,6 +20,7 @@ class BusScreenStateNotifier extends StateNotifier<BusScreenState> {
       : super(const BusScreenState.initial());
 
   final ContentfulService _contentfulService;
+  final Box<Bus> busBox = Hive.box<Bus>('buses');
   BusScreenState previousState = const BusScreenState.initial();
 
   TaskEither<String, List<Bus>> fetchBusesFromContentfulTask() {
@@ -28,8 +34,30 @@ class BusScreenStateNotifier extends StateNotifier<BusScreenState> {
             collection.items.map((entry) => entry.fields).toList());
   }
 
-  Unit getBuses() {
+  TaskEither<String, DownloaderCore> downloadBusPdf(Bus bus) {
+    return getDownloadDir().flatMap((downloadDir) {
+      final file = File(downloadDir.path + '/${bus.number.toString()}.pdf');
+      final options = DownloaderUtils(
+        file: file,
+        onDone: () => busBox.put(
+          bus.number,
+          bus.copyWith(
+            fileUrl: file.uri.path.toString(),
+          ),
+        ),
+        progress: ProgressImplementation(),
+        progressCallback: (count, total) => print('${(count / total) * 100}'),
+        deleteOnCancel: true,
+      );
+      return downloadFile(bus.pdfUrl, options);
+    });
+  }
+
+  Future<Unit> getBuses() async {
     // Fetch buses from hive database
+    final busList = busBox.values.toList();
+    state = BusScreenState.listBuses(busList);
+
     return unit;
   }
 

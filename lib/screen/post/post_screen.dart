@@ -13,19 +13,20 @@ class PostScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
-      child: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              Expanded(child: Text(post.title)),
-              Expanded(child: Markdown(data: post.text)),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Back"))
-            ],
-          )),
+      child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(Icons.arrow_back)),
+        body: Column(
+          children: [
+            Expanded(child: Text(post.title)),
+            Expanded(child: Markdown(data: post.text)),
+          ],
+        ),
+      ),
     );
   }
 }
