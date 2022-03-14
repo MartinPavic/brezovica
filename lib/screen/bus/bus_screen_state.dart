@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:brezovica/service/contentful/contentful_service.dart';
+import 'package:brezovica/service/hive/hive_service.dart';
 import 'package:brezovica/util/files.dart';
 import 'package:flowder/flowder.dart';
 import 'package:flutter/foundation.dart';
@@ -16,16 +17,18 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 part 'bus_screen_state.freezed.dart';
 
 class BusScreenStateNotifier extends StateNotifier<BusScreenState> {
-  BusScreenStateNotifier(this._contentfulService)
+  BusScreenStateNotifier({required this.contentfulService, required this.hiveService})
       : super(const BusScreenState.initial());
 
-  final ContentfulService _contentfulService;
+  final ContentfulService contentfulService;
+  final HiveService hiveService;
+
   final Box<Bus> busBox = Hive.box<Bus>('buses');
   BusScreenState previousState = const BusScreenState.initial();
 
   TaskEither<String, List<Bus>> fetchBusesFromContentfulTask() {
     final searchParams = SearchParameters(contentType: Bus.contentType);
-    return _contentfulService
+    return contentfulService
         .getEntryCollection(
           searchParams,
           (json) => Bus.fromJson(json as Map<String, dynamic>),
@@ -77,7 +80,8 @@ class BusScreenStateNotifier extends StateNotifier<BusScreenState> {
 final busScreenProvider =
     StateNotifierProvider<BusScreenStateNotifier, BusScreenState>((ref) {
   final contentfulService = ref.read(contentfulProvider);
-  return BusScreenStateNotifier(contentfulService);
+  final hiveService = ref.read(hiveProvider);
+  return BusScreenStateNotifier(contentfulService: contentfulService, hiveService: hiveService);
 });
 
 @freezed

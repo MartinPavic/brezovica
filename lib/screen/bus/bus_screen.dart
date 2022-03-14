@@ -31,17 +31,18 @@ class BusScreen extends HookConsumerWidget {
           onPressed: () {
             busScreenState.maybeWhen(
                 error: (_) {},
-                orElse: () async {
-                  final task = ref
-                      .read(busScreenProvider.notifier)
-                      .fetchBusesFromContentfulTask();
-                  (await task.run()).match(
-                    (err) => context.showErrorSnackBar(message: err),
-                    (busList) => showModalBottomSheet(
-                      context: context,
-                      builder: (_) => AddBusBottomSheet(busList: busList),
-                    ),
-                  );
+                orElse: () {
+                  ref
+                    .read(busScreenProvider.notifier)
+                    .fetchBusesFromContentfulTask()
+                    .match(
+                      (err) => context.showErrorSnackBar(message: err),
+                      (busList) => showModalBottomSheet(
+                        context: context,
+                        builder: (_) => AddBusBottomSheet(busList: busList),
+                      ),
+                    )
+                    .run();
                 });
           },
         ),
