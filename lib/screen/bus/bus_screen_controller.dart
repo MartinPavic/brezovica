@@ -9,9 +9,10 @@ import 'package:fpdart/fpdart.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class BusScreenController {
-  BusScreenController(this._contentfulService) : super();
+  BusScreenController(this._contentfulService);
 
   final ContentfulService _contentfulService;
 
@@ -47,22 +48,17 @@ class BusScreenController {
     });
   }
 
-  Future<Unit> getBuses() async {
-    // Fetch buses from hive database
-
-    return unit;
+  IO<List<Bus>> getBuses() {
+    return IO.of(busBox.values.toList());
   }
 
-  Unit showPdf(File pdfFile) {
-    return unit;
+  IO<SfPdfViewer> showPdf(File pdfFile) {
+    return IO.of(SfPdfViewer.file(pdfFile));
   }
 
-  Unit closePdf() {
-    return unit;
-  }
 }
 
-final busScreenProvider = Provider.autoDispose<BusScreenController>((ref) {
+final busScreenProvider = Provider<BusScreenController>((ref) {
   final contentfulService = ref.read(contentfulProvider);
   return BusScreenController(contentfulService);
 });

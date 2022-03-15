@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         showSelectedLabels: true,
         showUnselectedLabels: false,
         elevation: 10,
-        backgroundColor: Constants.mainColor,
+        selectedItemColor: Colors.white,
         type: BottomNavigationBarType.shifting,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -41,20 +41,22 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.directions_bus_outlined),
               label: 'Bus'),
           BottomNavigationBarItem(
+              backgroundColor: Constants.mainColor,
               activeIcon: Icon(Icons.feed),
               icon: Icon(Icons.feed_outlined),
               label: 'Obavijesti'),
           BottomNavigationBarItem(
+              backgroundColor: Constants.mainColor,
               activeIcon: Icon(Icons.feedback),
               icon: Icon(Icons.feedback_outlined),
               label: 'Feedback'),
           BottomNavigationBarItem(
+              backgroundColor: Constants.mainColor,
               activeIcon: Icon(Icons.info),
               icon: Icon(Icons.info_outline),
               label: 'O nama'),
         ],
         currentIndex: selectedIndex.value,
-        selectedItemColor: Colors.white,
         onTap: (index) {
           selectedIndex.value = index;
         },

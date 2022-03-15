@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/bus/bus_screen_controller.dart';
+import 'package:brezovica/screen/pdf/pdf_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,10 +15,7 @@ class BusScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(() {
-      ref.read(busScreenProvider).getBuses();
-      return null;
-    }, []);
+    final loading = useState(false);
     final busScreenController = ref.watch(busScreenProvider);
     final animationCtrl =
         useAnimationController(duration: const Duration(milliseconds: 300));
@@ -27,9 +25,11 @@ class BusScreen extends HookConsumerWidget {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
             elevation: 10,
-            child: const Icon(Icons.add),
+            child: loading.value ? const CircularProgressIndicator() : const Icon(Icons.add),
             backgroundColor: Constants.mainColor,
-            onPressed: () => ref
+            onPressed: () {
+              loading.value = true;
+              ref
                 .read(busScreenProvider)
                 .fetchBusesFromContentfulTask()
                 .match(
@@ -39,7 +39,9 @@ class BusScreen extends HookConsumerWidget {
                     builder: (_) => AddBusBottomSheet(busList: busList),
                   ),
                 )
-                .run()),
+                .run()
+                .then((_) => loading.value = false);
+            }),
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -53,7 +55,7 @@ class BusScreen extends HookConsumerWidget {
             valueListenable: busScreenController.busBox.listenable(),
             builder: (context, Box<Bus> box, _) {
               if (box.values.isEmpty) {
-                return const CircularProgressIndicator();
+                return Container();
               } else {
                 return busGrid(box.values.toList(), ref);
               }
@@ -82,9 +84,24 @@ class BusScreen extends HookConsumerWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: InkWell(
-            onTap: () => ref
-                .read(busScreenProvider)
-                .showPdf(File(busList[index].fileUrl!)),
+            onTap: () {
+              final viewer = ref
+                  .read(busScreenProvider)
+                  .showPdf(File(busList[index].fileUrl!))
+                  .run();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WillPopScope(
+                    onWillPop: () async {
+                      Navigator.pop(context);
+                      return false;
+                    },
+                    child: PdfScreen(viewer),
+                  ),
+                ),
+              );
+            },
             customBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),

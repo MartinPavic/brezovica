@@ -1,3 +1,4 @@
+import 'package:brezovica/constants.dart';
 import 'package:brezovica/util/snackbar_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -39,7 +40,11 @@ class _LoginScreenState extends AuthState<LoginScreen>
     final supabaseAuthService = ref.read(supabaseAuthProvider);
 
     return Scaffold(
-        appBar: AppBar(title: const Text('Prijavi se'), centerTitle: true),
+        appBar: AppBar(
+          title: const Text('Prijavi se'),
+          centerTitle: true,
+          backgroundColor: Constants.mainColor,
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
