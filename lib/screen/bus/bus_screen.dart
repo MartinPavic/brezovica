@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
-import 'package:brezovica/screen/bus/bus_screen_state.dart';
+import 'package:brezovica/screen/bus/bus_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:brezovica/util/snackbar_mixin.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class BusScreen extends HookConsumerWidget {
   const BusScreen({Key? key}) : super(key: key);
@@ -14,10 +15,10 @@ class BusScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
-      ref.read(busScreenProvider.notifier).getBuses();
+      ref.read(busScreenProvider).getBuses();
       return null;
     }, []);
-    final busScreenState = ref.watch(busScreenProvider);
+    final busScreenController = ref.watch(busScreenProvider);
     final animationCtrl =
         useAnimationController(duration: const Duration(milliseconds: 300));
     animationCtrl.forward();
@@ -25,27 +26,20 @@ class BusScreen extends HookConsumerWidget {
       opacity: Tween(begin: 0.5, end: 1.0).animate(animationCtrl),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          elevation: 10,
-          child: const Icon(Icons.add),
-          backgroundColor: Constants.mainColor,
-          onPressed: () {
-            busScreenState.maybeWhen(
-                error: (_) {},
-                orElse: () {
-                  ref
-                    .read(busScreenProvider.notifier)
-                    .fetchBusesFromContentfulTask()
-                    .match(
-                      (err) => context.showErrorSnackBar(message: err),
-                      (busList) => showModalBottomSheet(
-                        context: context,
-                        builder: (_) => AddBusBottomSheet(busList: busList),
-                      ),
-                    )
-                    .run();
-                });
-          },
-        ),
+            elevation: 10,
+            child: const Icon(Icons.add),
+            backgroundColor: Constants.mainColor,
+            onPressed: () => ref
+                .read(busScreenProvider)
+                .fetchBusesFromContentfulTask()
+                .match(
+                  (err) => context.showErrorSnackBar(message: err),
+                  (busList) => showModalBottomSheet(
+                    context: context,
+                    builder: (_) => AddBusBottomSheet(busList: busList),
+                  ),
+                )
+                .run()),
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -55,16 +49,15 @@ class BusScreen extends HookConsumerWidget {
               fit: BoxFit.cover,
             ),
           ),
-          child: busScreenState.when(
-            initial: () {},
-            listBuses: (buses) => busGrid(buses, ref),
-            showPdf: (viewer) => WillPopScope(
-                onWillPop: () async {
-                  ref.read(busScreenProvider.notifier).closePdf();
-                  return false;
-                },
-                child: viewer),
-            error: (error) => ErrorWidget(error.join(" ")),
+          child: ValueListenableBuilder(
+            valueListenable: busScreenController.busBox.listenable(),
+            builder: (context, Box<Bus> box, _) {
+              if (box.values.isEmpty) {
+                return const CircularProgressIndicator();
+              } else {
+                return busGrid(box.values.toList(), ref);
+              }
+            },
           ),
         ),
       ),
@@ -90,7 +83,7 @@ class BusScreen extends HookConsumerWidget {
           ),
           child: InkWell(
             onTap: () => ref
-                .read(busScreenProvider.notifier)
+                .read(busScreenProvider)
                 .showPdf(File(busList[index].fileUrl!)),
             customBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
@@ -152,9 +145,8 @@ class BusListItem extends HookConsumerWidget {
           Icons.download,
           color: Colors.white,
         ),
-        label: Text(""),
-        onPressed: () =>
-            ref.read(busScreenProvider.notifier).downloadBusPdf(bus).run(),
+        label: const Text(""),
+        onPressed: () => ref.read(busScreenProvider).downloadBusPdf(bus).run(),
       ),
     );
   }

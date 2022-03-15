@@ -8,7 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 
 class ContentfulService {
-  static const String accessToken =
+  static const String _accessToken =
       'K_TBUAwGk9xjGj_x2sN0wJdSC1wDDtmCmDXB-JuDOJc';
   final Uri _baseUri = Uri.parse(Constants.contentfulUrl +
       '/spaces/${Constants.contentfulSpaceId}' +
@@ -22,7 +22,7 @@ class ContentfulService {
             '/entries' +
             searchParameters.toQueryString());
         http.Response response = await http
-            .get(uri, headers: {'Authorization': 'Bearer $accessToken'});
+            .get(uri, headers: {'Authorization': 'Bearer $_accessToken'});
         if (response.statusCode >= 200 && response.statusCode < 300) {
           Map<String, dynamic> json = jsonDecode(response.body);
           Collection<Entry<T>> result = Collection.fromJson(json,
@@ -42,7 +42,7 @@ class ContentfulService {
       () async {
         Uri uri = Uri.parse(_baseUri.toString() + '/entries/$entryId');
         http.Response response = await http
-            .get(uri, headers: {'Authorization': 'Bearer $accessToken'});
+            .get(uri, headers: {'Authorization': 'Bearer $_accessToken'});
         if (response.statusCode >= 200 && response.statusCode < 300) {
           Map<String, dynamic> json = jsonDecode(response.body);
           Entry<T> result = Entry.fromJson(json, parseT);
@@ -61,7 +61,7 @@ class ContentfulService {
       Uri uri = Uri.parse(
           _baseUri.toString() + '/assets' + searchParameters.toQueryString());
       http.Response response = await http
-          .get(uri, headers: {'Authorization': 'Bearer $accessToken'});
+          .get(uri, headers: {'Authorization': 'Bearer $_accessToken'});
       if (response.statusCode >= 200 && response.statusCode < 300) {
         Map<String, dynamic> json = jsonDecode(response.body);
         Collection<Asset> result = Collection.fromJson(
@@ -77,7 +77,7 @@ class ContentfulService {
     return TaskEither.tryCatch(() async {
       Uri uri = Uri.parse(_baseUri.toString() + '/assets/$assetId');
       http.Response response = await http
-          .get(uri, headers: {'Authorization': 'Bearer $accessToken'});
+          .get(uri, headers: {'Authorization': 'Bearer $_accessToken'});
       if (response.statusCode >= 200 && response.statusCode < 300) {
         Map<String, dynamic> json = jsonDecode(response.body);
         Asset result = Asset.fromJson(json);
