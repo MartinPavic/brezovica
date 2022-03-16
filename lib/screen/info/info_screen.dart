@@ -1,24 +1,18 @@
 import 'package:brezovica/model/post/post.dart';
-import 'package:brezovica/screen/info/info_screen_state.dart';
+import 'package:brezovica/screen/info/info_screen_controller.dart';
 import 'package:brezovica/screen/post/post_screen.dart';
-import 'package:brezovica/service/supabase/supabase_auth.dart';
+import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:brezovica/util/snackbar_mixin.dart';
 
-class InfoScreen extends HookConsumerWidget {
+class InfoScreen extends HookWidget {
   const InfoScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(() {
-      ref.read(infoScreenProvider.notifier).getPosts();
-      return null;
-    }, []);
-    final infoScreenState = ref.watch(infoScreenProvider);
-    final animationCtrl =
-        useAnimationController(duration: const Duration(milliseconds: 300));
+  Widget build(BuildContext context) {
+    final animationCtrl = useAnimationController(duration: const Duration(milliseconds: 300));
     animationCtrl.forward();
     return FadeTransition(
       opacity: Tween(begin: 0.5, end: 1.0).animate(animationCtrl),
@@ -31,15 +25,29 @@ class InfoScreen extends HookConsumerWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: infoScreenState.whenOrNull(
-            listPosts: (posts) => postList(posts, ref),
-            error: (e) => ErrorWidget(e)),
+        child: Consumer(
+          builder: (_, ref, __) {
+            final controller = ref.watch(
+              getPostsFutureProvider(
+                SearchParameters(contentType: Post.contentType),
+              ),
+            );
+            return controller.when(
+              data: (posts) => postList(posts),
+              error: (error, _) {
+                context.showErrorSnackBar(message: error.toString());
+                return Container();
+              },
+              loading: () => const CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }
 }
 
-ListView postList(List<Post> postList, WidgetRef ref) {
+ListView postList(List<Post> postList) {
   return ListView.builder(
     itemCount: postList.length,
     scrollDirection: Axis.vertical,

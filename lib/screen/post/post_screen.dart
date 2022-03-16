@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PostScreen extends HookConsumerWidget {
+class PostScreen extends StatelessWidget {
   const PostScreen({Key? key, required this.post}) : super(key: key);
 
   final Post post;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.startTop,

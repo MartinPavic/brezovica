@@ -4,6 +4,7 @@ import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/bus/bus_screen_controller.dart';
 import 'package:brezovica/screen/pdf/pdf_screen.dart';
+import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -27,18 +28,17 @@ class BusScreen extends HookConsumerWidget {
             child: loading.value ? const CircularProgressIndicator() : const Icon(Icons.add),
             backgroundColor: Constants.mainColor,
             onPressed: () => busBoxAsyncValue.whenOrNull(
-                  data: (data) {
-                    ref
+                  data: (data) async {
+                    final result = await ref
                         .read(busScreenProvider(data))
-                        .fetchBusesFromContentfulTask()
-                        .match(
-                          (err) => context.showErrorSnackBar(message: err),
-                          (busList) => showModalBottomSheet(
-                            context: context,
-                            builder: (_) => AddBusBottomSheet(busList: busList),
-                          ),
-                        )
-                        .run();
+                        .fetchBusesFromContentful(SearchParameters(contentType: Bus.contentType));
+                    result.match(
+                      (err) => context.showErrorSnackBar(message: err),
+                      (busList) => showModalBottomSheet(
+                        context: context,
+                        builder: (_) => AddBusBottomSheet(busList: busList),
+                      ),
+                    );
                   },
                 )),
         body: Container(
@@ -83,7 +83,7 @@ class BusScreen extends HookConsumerWidget {
           ),
           child: InkWell(
             onTap: () {
-              final viewer = controller.showPdf(File(busList[index].fileUrl!)).run();
+              final viewer = controller.showPdf(File(busList[index].fileUrl!));
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -142,8 +142,6 @@ class BusListItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final downloadProgress = useState(0.0);
-
     return ListTile(
       title: Text(
         bus.number.toString(),
@@ -160,13 +158,14 @@ class BusListItem extends HookConsumerWidget {
         ),
         label: const Text(""),
         onPressed: () => ref.read(busBoxProvider).whenOrNull(
-              data: (data) => ref
-                  .read(
-                    busScreenProvider(data),
-                  )
-                  .downloadBusPdf(bus)
-                  .run(),
-            ),
+          data: (busBox) async {
+            final result = await ref.read(busScreenProvider(busBox)).downloadBusPdf(bus);
+            result.match(
+              (err) => context.showErrorSnackBar(message: err),
+              (downloaderCore) => null,
+            );
+          },
+        ),
       ),
     );
   }

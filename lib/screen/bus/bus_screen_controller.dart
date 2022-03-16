@@ -18,41 +18,41 @@ class BusScreenController {
 
   final Box<Bus> busBox;
 
-  TaskEither<String, List<Bus>> fetchBusesFromContentfulTask() {
-    final searchParams = SearchParameters(contentType: Bus.contentType);
-    return _contentfulService
-        .getEntryCollection(
-          searchParams,
-          (json) => Bus.fromJson(json as Map<String, dynamic>),
-        )
-        .map((collection) => collection.items.map((entry) => entry.fields).toList());
+  Future<Either<String, List<Bus>>> fetchBusesFromContentful(SearchParameters searchParameters) {
+    return TaskEither.fromTask(_contentfulService
+        .getEntryCollection(searchParameters, (json) => Bus.fromJson(json as Map<String, dynamic>))
+        .map((collection) => collection.items.map((entry) => entry.fields).toList()))
+        .mapLeft((l) => l.toString())
+        .run();
   }
 
-  TaskEither<String, DownloaderCore> downloadBusPdf(Bus bus) {
-    return getDownloadDir().flatMap((downloadDir) {
-      final file = File(downloadDir.path + '/${bus.number.toString()}.pdf');
-      final options = DownloaderUtils(
-        file: file,
-        onDone: () => busBox.put(
-          bus.number,
-          bus.copyWith(
-            fileUrl: file.uri.path.toString(),
+  Future<Either<String, DownloaderCore>> downloadBusPdf(Bus bus) {
+    return getDownloadDir().flatMap(
+      (downloadDir) {
+        final file = File(downloadDir.path + '/${bus.number.toString()}.pdf');
+        final options = DownloaderUtils(
+          file: file,
+          onDone: () => busBox.put(
+            bus.number,
+            bus.copyWith(
+              fileUrl: file.uri.path.toString(),
+            ),
           ),
-        ),
-        progress: ProgressImplementation(),
-        progressCallback: (count, total) => print('${(count / total) * 100}'),
-        deleteOnCancel: true,
-      );
-      return downloadFile(bus.pdfUrl, options);
-    });
+          progress: ProgressImplementation(),
+          progressCallback: (count, total) => print('${(count / total) * 100}'),
+          deleteOnCancel: true,
+        );
+        return downloadFile(bus.pdfUrl, options);
+      },
+    ).run();
   }
 
-  IO<List<Bus>> getBuses() {
-    return IO.of(busBox.values.toList());
+  List<Bus> getBuses() {
+    return busBox.values.toList();
   }
 
-  IO<SfPdfViewer> showPdf(File pdfFile) {
-    return IO.of(SfPdfViewer.file(pdfFile));
+  SfPdfViewer showPdf(File pdfFile) {
+    return SfPdfViewer.file(pdfFile);
   }
 }
 
