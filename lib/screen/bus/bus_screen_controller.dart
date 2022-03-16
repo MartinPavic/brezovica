@@ -12,11 +12,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class BusScreenController {
-  BusScreenController(this._contentfulService);
+  BusScreenController(this._contentfulService, this.busBox);
 
   final ContentfulService _contentfulService;
 
-  final Box<Bus> busBox = Hive.box<Bus>('buses');
+  final Box<Bus> busBox;
 
   TaskEither<String, List<Bus>> fetchBusesFromContentfulTask() {
     final searchParams = SearchParameters(contentType: Bus.contentType);
@@ -25,8 +25,7 @@ class BusScreenController {
           searchParams,
           (json) => Bus.fromJson(json as Map<String, dynamic>),
         )
-        .map((collection) =>
-            collection.items.map((entry) => entry.fields).toList());
+        .map((collection) => collection.items.map((entry) => entry.fields).toList());
   }
 
   TaskEither<String, DownloaderCore> downloadBusPdf(Bus bus) {
@@ -55,10 +54,14 @@ class BusScreenController {
   IO<SfPdfViewer> showPdf(File pdfFile) {
     return IO.of(SfPdfViewer.file(pdfFile));
   }
-
 }
 
-final busScreenProvider = Provider<BusScreenController>((ref) {
+final busBoxProvider = FutureProvider<Box<Bus>>(((ref) async {
+  Hive.registerAdapter(BusAdapter());
+  return await Hive.openBox<Bus>('buses');
+}));
+
+final busScreenProvider = Provider.family<BusScreenController, Box<Bus>>((ref, busBox) {
   final contentfulService = ref.read(contentfulProvider);
-  return BusScreenController(contentfulService);
+  return BusScreenController(contentfulService, busBox);
 });

@@ -10,8 +10,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
-  Hive.registerAdapter(BusAdapter());
-  await Hive.openBox<Bus>('buses');
   await Supabase.initialize(
     url: 'https://sxocarroegfdvntghfwj.supabase.co',
     anonKey:

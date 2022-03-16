@@ -94,8 +94,7 @@ class FeedbackScreen extends HookWidget {
     );
   }
 
-  Future<Unit> openEmailApp(
-      BuildContext context, TextEditingValue input) async {
+  Future<Unit> openEmailApp(BuildContext context, TextEditingValue input) async {
     final result = await OpenMailApp.composeNewEmailInMailApp(
         emailContent: EmailContent(
       to: ["martin.pavic97@gmail.com"],

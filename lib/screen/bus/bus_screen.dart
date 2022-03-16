@@ -16,9 +16,8 @@ class BusScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loading = useState(false);
-    final busScreenController = ref.watch(busScreenProvider);
-    final animationCtrl =
-        useAnimationController(duration: const Duration(milliseconds: 300));
+    final busBoxAsyncValue = ref.watch(busBoxProvider);
+    final animationCtrl = useAnimationController(duration: const Duration(milliseconds: 300));
     animationCtrl.forward();
     return FadeTransition(
       opacity: Tween(begin: 0.5, end: 1.0).animate(animationCtrl),
@@ -27,46 +26,45 @@ class BusScreen extends HookConsumerWidget {
             elevation: 10,
             child: loading.value ? const CircularProgressIndicator() : const Icon(Icons.add),
             backgroundColor: Constants.mainColor,
-            onPressed: () {
-              loading.value = true;
-              ref
-                .read(busScreenProvider)
-                .fetchBusesFromContentfulTask()
-                .match(
-                  (err) => context.showErrorSnackBar(message: err),
-                  (busList) => showModalBottomSheet(
-                    context: context,
-                    builder: (_) => AddBusBottomSheet(busList: busList),
-                  ),
-                )
-                .run()
-                .then((_) => loading.value = false);
-            }),
+            onPressed: () => busBoxAsyncValue.whenOrNull(
+                  data: (data) {
+                    ref
+                        .read(busScreenProvider(data))
+                        .fetchBusesFromContentfulTask()
+                        .match(
+                          (err) => context.showErrorSnackBar(message: err),
+                          (busList) => showModalBottomSheet(
+                            context: context,
+                            builder: (_) => AddBusBottomSheet(busList: busList),
+                          ),
+                        )
+                        .run();
+                  },
+                )),
         body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/bus_bg.jpeg'),
-              fit: BoxFit.cover,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/bus_bg.jpeg'),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          child: ValueListenableBuilder(
-            valueListenable: busScreenController.busBox.listenable(),
-            builder: (context, Box<Bus> box, _) {
-              if (box.values.isEmpty) {
-                return Container();
-              } else {
-                return busGrid(box.values.toList(), ref);
-              }
-            },
-          ),
-        ),
+            child: busBoxAsyncValue.when(
+              data: (busBox) {
+                return ValueListenableBuilder(
+                    valueListenable: busBox.listenable(),
+                    builder: (context, Box<Bus> box, _) =>
+                        busGrid(box.values.toList(), ref.read(busScreenProvider(busBox))));
+              },
+              error: (error, _) => ErrorWidget(error),
+              loading: () => const CircularProgressIndicator(),
+            )),
       ),
     );
   }
 
-  GridView busGrid(List<Bus> busList, WidgetRef ref) {
+  GridView busGrid(List<Bus> busList, BusScreenController controller) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -85,10 +83,7 @@ class BusScreen extends HookConsumerWidget {
           ),
           child: InkWell(
             onTap: () {
-              final viewer = ref
-                  .read(busScreenProvider)
-                  .showPdf(File(busList[index].fileUrl!))
-                  .run();
+              final viewer = controller.showPdf(File(busList[index].fileUrl!)).run();
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -148,6 +143,7 @@ class BusListItem extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final downloadProgress = useState(0.0);
+
     return ListTile(
       title: Text(
         bus.number.toString(),
@@ -163,7 +159,14 @@ class BusListItem extends HookConsumerWidget {
           color: Colors.white,
         ),
         label: const Text(""),
-        onPressed: () => ref.read(busScreenProvider).downloadBusPdf(bus).run(),
+        onPressed: () => ref.read(busBoxProvider).whenOrNull(
+              data: (data) => ref
+                  .read(
+                    busScreenProvider(data),
+                  )
+                  .downloadBusPdf(bus)
+                  .run(),
+            ),
       ),
     );
   }
