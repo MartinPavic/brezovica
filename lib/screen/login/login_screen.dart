@@ -13,10 +13,8 @@ class LoginScreen extends StatefulHookConsumerWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends AuthState<LoginScreen>
-    implements ConsumerState<LoginScreen> {
-  final emailRegExp =
-      RegExp(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)");
+class _LoginScreenState extends AuthState<LoginScreen> implements ConsumerState<LoginScreen> {
+  final emailRegExp = RegExp(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)");
 
   @override
   void initState() {
@@ -57,7 +55,7 @@ class _LoginScreenState extends AuthState<LoginScreen>
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      errorText: _emailValid.value
+                      errorText: _emailController.text.isNotEmpty && _emailValid.value
                           ? null
                           : 'Molimo unesite ispravan email, npr: primjer@gmail.com',
                     ),
@@ -71,26 +69,20 @@ class _LoginScreenState extends AuthState<LoginScreen>
                             supabaseAuthService
                                 .signIn(_emailController.text)
                                 .match(
-                                  (l) => context.showErrorSnackBar(
-                                      message: l.toString()),
-                                  (r) => context.showSnackBar(
-                                    message: 'Provjeri svoj email!',
-                                  ),
+                                  (l) => context.showErrorSnackBar(message: l.toString()),
+                                  (r) => context.showSnackBar(message: 'Provjeri svoj email!'),
                                 )
                                 .run()
                                 .whenComplete(() => _isLoading.value = false);
                           },
-                    child: Text(_isLoading.value
-                        ? 'Loading'
-                        : 'Pošalji mi link za prijavu'),
+                    child: Text(_isLoading.value ? 'Loading' : 'Pošalji mi link za prijavu'),
                   ),
                 ],
               ),
             ),
             TextButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/home', (route) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
                 },
                 child: const Text("Nastavi anonimno"))
           ],

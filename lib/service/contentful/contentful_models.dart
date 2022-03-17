@@ -1,3 +1,4 @@
+import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'contentful_models.freezed.dart';
@@ -7,15 +8,15 @@ part 'contentful_models.g.dart';
 class Sys with _$Sys {
   const factory Sys(
       {required String type,
-      String? linkType,
-      String? id,
-      Object? space,
-      Object? environment,
-      Object? contentType,
-      int? revision,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      String? locale}) = _Sys;
+      @Default(None) Option<String> linkType,
+      @Default(None) Option<String> id,
+      @Default(None) Option<Object> space,
+      @Default(None) Option<Object> environment,
+      @Default(None) Option<Object> contentType,
+      @Default(None) Option<int> revision,
+      @Default(None) Option<DateTime> createdAt,
+      @Default(None) Option<DateTime> updatedAt,
+      @Default(None) Option<String> locale}) = _Sys;
   factory Sys.fromJson(Map<String, dynamic> json) => _$SysFromJson(json);
 }
 
@@ -85,8 +86,8 @@ class Asset with _$Asset {
 @freezed
 class Includes with _$Includes {
   const factory Includes(
-      {@JsonKey(name: 'Asset') List<Asset>? asset,
-      @JsonKey(name: 'Entry') List<Entry>? entry}) = _Includes;
+      {@JsonKey(name: 'Asset') @Default(None) Option<List<Asset>> assets,
+      @JsonKey(name: 'Entry') List<Entry>? entries}) = _Includes;
   factory Includes.fromJson(Map<String, dynamic> json) =>
       _$IncludesFromJson(json);
 }
@@ -109,4 +110,10 @@ class SearchParameters with _$SearchParameters {
   String toQueryString() {
     return '?${toJson().entries.where((e) => e.value != null).map((e) => '${e.key}=${e.value}').join('&')}';
   }
+}
+
+@freezed
+class EntryFieldImage with _$EntryFieldImage {
+  const factory EntryFieldImage({required Sys sys, Asset? asset}) = _EntryFieldImage;
+  factory EntryFieldImage.fromJson(Map<String, dynamic> json) => _$EntryFieldImageFromJson(json);
 }

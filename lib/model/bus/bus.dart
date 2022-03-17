@@ -6,7 +6,8 @@ part 'bus.g.dart';
 
 @freezed
 class Bus with _$Bus {
-  static String contentType = 'bus';
+  static const String contentType = 'bus';
+  static const int hiveTypeId = 0;
   @HiveType(typeId: 0, adapterName: 'BusAdapter')
   const factory Bus(
       {@HiveField(0) required int number,

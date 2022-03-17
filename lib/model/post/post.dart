@@ -1,3 +1,4 @@
+import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
@@ -11,6 +12,9 @@ class Post with _$Post {
   const factory Post({
     required String title,
     required String text,
+    String? description,
+    EntryFieldImage? avatar
   }) = _Post;
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 }
+

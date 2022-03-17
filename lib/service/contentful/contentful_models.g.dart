@@ -56,32 +56,61 @@ Map<String, dynamic> _$CollectionToJson<T>(
 
 _$_Sys _$$_SysFromJson(Map<String, dynamic> json) => _$_Sys(
       type: json['type'] as String,
-      linkType: json['linkType'] as String?,
-      id: json['id'] as String?,
-      space: json['space'],
-      environment: json['environment'],
-      contentType: json['contentType'],
-      revision: json['revision'] as int?,
+      linkType: json['linkType'] == null
+          ? None
+          : Option<String>.fromJson(json['linkType']),
+      id: json['id'] == null ? None : Option<String>.fromJson(json['id']),
+      space:
+          json['space'] == null ? None : Option<Object>.fromJson(json['space']),
+      environment: json['environment'] == null
+          ? None
+          : Option<Object>.fromJson(json['environment']),
+      contentType: json['contentType'] == null
+          ? None
+          : Option<Object>.fromJson(json['contentType']),
+      revision: json['revision'] == null
+          ? None
+          : Option<int>.fromJson(json['revision']),
       createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse(json['createdAt'] as String),
+          ? None
+          : Option<DateTime>.fromJson(json['createdAt']),
       updatedAt: json['updatedAt'] == null
-          ? null
-          : DateTime.parse(json['updatedAt'] as String),
-      locale: json['locale'] as String?,
+          ? None
+          : Option<DateTime>.fromJson(json['updatedAt']),
+      locale: json['locale'] == null
+          ? None
+          : Option<String>.fromJson(json['locale']),
     );
 
 Map<String, dynamic> _$$_SysToJson(_$_Sys instance) => <String, dynamic>{
       'type': instance.type,
-      'linkType': instance.linkType,
-      'id': instance.id,
-      'space': instance.space,
-      'environment': instance.environment,
-      'contentType': instance.contentType,
-      'revision': instance.revision,
-      'createdAt': instance.createdAt?.toIso8601String(),
-      'updatedAt': instance.updatedAt?.toIso8601String(),
-      'locale': instance.locale,
+      'linkType': instance.linkType.toJson(
+        (value) => value,
+      ),
+      'id': instance.id.toJson(
+        (value) => value,
+      ),
+      'space': instance.space.toJson(
+        (value) => value,
+      ),
+      'environment': instance.environment.toJson(
+        (value) => value,
+      ),
+      'contentType': instance.contentType.toJson(
+        (value) => value,
+      ),
+      'revision': instance.revision.toJson(
+        (value) => value,
+      ),
+      'createdAt': instance.createdAt.toJson(
+        (value) => value.toIso8601String(),
+      ),
+      'updatedAt': instance.updatedAt.toJson(
+        (value) => value.toIso8601String(),
+      ),
+      'locale': instance.locale.toJson(
+        (value) => value,
+      ),
     };
 
 _$_AssetFields _$$_AssetFieldsFromJson(Map<String, dynamic> json) =>
@@ -127,10 +156,10 @@ Map<String, dynamic> _$$_AssetToJson(_$_Asset instance) => <String, dynamic>{
     };
 
 _$_Includes _$$_IncludesFromJson(Map<String, dynamic> json) => _$_Includes(
-      asset: (json['Asset'] as List<dynamic>?)
-          ?.map((e) => Asset.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      entry: (json['Entry'] as List<dynamic>?)
+      assets: json['Asset'] == null
+          ? None
+          : Option<List<Asset>>.fromJson(json['Asset']),
+      entries: (json['Entry'] as List<dynamic>?)
           ?.map((e) => Entry<dynamic>.fromJson(
               e as Map<String, dynamic>, (value) => value))
           .toList(),
@@ -138,8 +167,10 @@ _$_Includes _$$_IncludesFromJson(Map<String, dynamic> json) => _$_Includes(
 
 Map<String, dynamic> _$$_IncludesToJson(_$_Includes instance) =>
     <String, dynamic>{
-      'Asset': instance.asset,
-      'Entry': instance.entry
+      'Asset': instance.assets.toJson(
+        (value) => value,
+      ),
+      'Entry': instance.entries
           ?.map((e) => e.toJson(
                 (value) => value,
               ))
@@ -162,4 +193,18 @@ Map<String, dynamic> _$$_SearchParametersToJson(_$_SearchParameters instance) =>
       'limit': instance.limit,
       'skip': instance.skip,
       'mimetype_group': instance.mimeTypeGroup,
+    };
+
+_$_EntryFieldImage _$$_EntryFieldImageFromJson(Map<String, dynamic> json) =>
+    _$_EntryFieldImage(
+      sys: Sys.fromJson(json['sys'] as Map<String, dynamic>),
+      asset: json['asset'] == null
+          ? null
+          : Asset.fromJson(json['asset'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$_EntryFieldImageToJson(_$_EntryFieldImage instance) =>
+    <String, dynamic>{
+      'sys': instance.sys,
+      'asset': instance.asset,
     };

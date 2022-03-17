@@ -13,17 +13,23 @@ class PostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Icon(Icons.arrow_back),
-          backgroundColor: Constants.mainColor,
+        appBar: AppBar(
+          leading: TextButton.icon(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.arrow_back, color: Constants.mainColor,),
+            label: const Text(''),
+          ),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            post.title,
+            style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Constants.mainColor),
+          ),
         ),
-        body: Column(
-          children: [
-            Expanded(child: Text(post.title)),
-            Expanded(child: Markdown(data: post.text)),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Markdown(data: post.text),
         ),
       ),
     );

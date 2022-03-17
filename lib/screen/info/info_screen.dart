@@ -2,10 +2,12 @@ import 'package:brezovica/model/post/post.dart';
 import 'package:brezovica/screen/info/info_screen_controller.dart';
 import 'package:brezovica/screen/post/post_screen.dart';
 import 'package:brezovica/service/contentful/contentful_models.dart';
+import 'package:brezovica/service/contentful/contentful_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:brezovica/util/snackbar_mixin.dart';
+import 'package:shimmer/shimmer.dart';
 
 class InfoScreen extends HookWidget {
   const InfoScreen({Key? key}) : super(key: key);
@@ -28,18 +30,15 @@ class InfoScreen extends HookWidget {
         child: Consumer(
           builder: (_, ref, __) {
             final controller = ref.watch(
-              getPostsFutureProvider(
-                SearchParameters(contentType: Post.contentType),
-              ),
+              getPostsFutureProvider(SearchParameters(contentType: Post.contentType)),
             );
             return controller.when(
-              data: (posts) => postList(posts),
-              error: (error, _) {
-                context.showErrorSnackBar(message: error.toString());
-                return Container();
-              },
-              loading: () => const CircularProgressIndicator(),
-            );
+                data: (posts) => postList(posts),
+                error: (error, _) {
+                  context.showErrorSnackBar(message: error.toString());
+                  return Container();
+                },
+                loading: () => loadingList());
           },
         ),
       ),
@@ -53,6 +52,9 @@ ListView postList(List<Post> postList) {
     scrollDirection: Axis.vertical,
     shrinkWrap: true,
     itemBuilder: (context, index) {
+      // final postAvatarId = postList[index].avatar!.sys.id!;
+      // ref.read(contentfulProvider).getAsset(postAvatarId).run()
+      //   .then((value) => print(value.fields.file.url));
       return Card(
         color: Colors.green,
         margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
@@ -108,5 +110,28 @@ ListView postList(List<Post> postList) {
         ),
       );
     },
+  );
+}
+
+Shimmer loadingList() {
+  return Shimmer.fromColors(
+    child: ListView.builder(
+      itemBuilder: (context, index) => Opacity(
+        opacity: 0.8,
+        child: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+            color: Colors.grey,
+          ),
+          height: 72,
+          width: MediaQuery.of(context).size.width,
+          margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+        ),
+      ),
+    ),
+    baseColor: Colors.grey,
+    highlightColor: Colors.white,
   );
 }

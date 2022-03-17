@@ -56,12 +56,14 @@ class BusScreenController {
   }
 }
 
-final busBoxProvider = FutureProvider<Box<Bus>>(((ref) async {
-  Hive.registerAdapter(BusAdapter());
+final busBoxFutureProvider = FutureProvider<Box<Bus>>(((ref) async {
+  if (!Hive.isAdapterRegistered(Bus.hiveTypeId)) {
+    Hive.registerAdapter(BusAdapter());
+  }
   return await Hive.openBox<Bus>('buses');
 }));
 
-final busScreenProvider = Provider.family<BusScreenController, Box<Bus>>((ref, busBox) {
+final busScreenControllerProvider = Provider.family<BusScreenController, Box<Bus>>((ref, busBox) {
   final contentfulService = ref.read(contentfulProvider);
   return BusScreenController(contentfulService, busBox);
 });

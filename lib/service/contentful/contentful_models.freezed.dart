@@ -24,15 +24,15 @@ class _$SysTearOff {
 
   _Sys call(
       {required String type,
-      String? linkType,
-      String? id,
-      Object? space,
-      Object? environment,
-      Object? contentType,
-      int? revision,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      String? locale}) {
+      Option<String> linkType = None,
+      Option<String> id = None,
+      Option<Object> space = None,
+      Option<Object> environment = None,
+      Option<Object> contentType = None,
+      Option<int> revision = None,
+      Option<DateTime> createdAt = None,
+      Option<DateTime> updatedAt = None,
+      Option<String> locale = None}) {
     return _Sys(
       type: type,
       linkType: linkType,
@@ -58,15 +58,15 @@ const $Sys = _$SysTearOff();
 /// @nodoc
 mixin _$Sys {
   String get type => throw _privateConstructorUsedError;
-  String? get linkType => throw _privateConstructorUsedError;
-  String? get id => throw _privateConstructorUsedError;
-  Object? get space => throw _privateConstructorUsedError;
-  Object? get environment => throw _privateConstructorUsedError;
-  Object? get contentType => throw _privateConstructorUsedError;
-  int? get revision => throw _privateConstructorUsedError;
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
-  String? get locale => throw _privateConstructorUsedError;
+  Option<String> get linkType => throw _privateConstructorUsedError;
+  Option<String> get id => throw _privateConstructorUsedError;
+  Option<Object> get space => throw _privateConstructorUsedError;
+  Option<Object> get environment => throw _privateConstructorUsedError;
+  Option<Object> get contentType => throw _privateConstructorUsedError;
+  Option<int> get revision => throw _privateConstructorUsedError;
+  Option<DateTime> get createdAt => throw _privateConstructorUsedError;
+  Option<DateTime> get updatedAt => throw _privateConstructorUsedError;
+  Option<String> get locale => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -79,15 +79,15 @@ abstract class $SysCopyWith<$Res> {
       _$SysCopyWithImpl<$Res>;
   $Res call(
       {String type,
-      String? linkType,
-      String? id,
-      Object? space,
-      Object? environment,
-      Object? contentType,
-      int? revision,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      String? locale});
+      Option<String> linkType,
+      Option<String> id,
+      Option<Object> space,
+      Option<Object> environment,
+      Option<Object> contentType,
+      Option<int> revision,
+      Option<DateTime> createdAt,
+      Option<DateTime> updatedAt,
+      Option<String> locale});
 }
 
 /// @nodoc
@@ -119,30 +119,39 @@ class _$SysCopyWithImpl<$Res> implements $SysCopyWith<$Res> {
       linkType: linkType == freezed
           ? _value.linkType
           : linkType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Option<String>,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      space: space == freezed ? _value.space : space,
-      environment: environment == freezed ? _value.environment : environment,
-      contentType: contentType == freezed ? _value.contentType : contentType,
+              as Option<String>,
+      space: space == freezed
+          ? _value.space
+          : space // ignore: cast_nullable_to_non_nullable
+              as Option<Object>,
+      environment: environment == freezed
+          ? _value.environment
+          : environment // ignore: cast_nullable_to_non_nullable
+              as Option<Object>,
+      contentType: contentType == freezed
+          ? _value.contentType
+          : contentType // ignore: cast_nullable_to_non_nullable
+              as Option<Object>,
       revision: revision == freezed
           ? _value.revision
           : revision // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as Option<int>,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as Option<DateTime>,
       updatedAt: updatedAt == freezed
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as Option<DateTime>,
       locale: locale == freezed
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Option<String>,
     ));
   }
 }
@@ -154,15 +163,15 @@ abstract class _$SysCopyWith<$Res> implements $SysCopyWith<$Res> {
   @override
   $Res call(
       {String type,
-      String? linkType,
-      String? id,
-      Object? space,
-      Object? environment,
-      Object? contentType,
-      int? revision,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      String? locale});
+      Option<String> linkType,
+      Option<String> id,
+      Option<Object> space,
+      Option<Object> environment,
+      Option<Object> contentType,
+      Option<int> revision,
+      Option<DateTime> createdAt,
+      Option<DateTime> updatedAt,
+      Option<String> locale});
 }
 
 /// @nodoc
@@ -195,30 +204,39 @@ class __$SysCopyWithImpl<$Res> extends _$SysCopyWithImpl<$Res>
       linkType: linkType == freezed
           ? _value.linkType
           : linkType // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Option<String>,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      space: space == freezed ? _value.space : space,
-      environment: environment == freezed ? _value.environment : environment,
-      contentType: contentType == freezed ? _value.contentType : contentType,
+              as Option<String>,
+      space: space == freezed
+          ? _value.space
+          : space // ignore: cast_nullable_to_non_nullable
+              as Option<Object>,
+      environment: environment == freezed
+          ? _value.environment
+          : environment // ignore: cast_nullable_to_non_nullable
+              as Option<Object>,
+      contentType: contentType == freezed
+          ? _value.contentType
+          : contentType // ignore: cast_nullable_to_non_nullable
+              as Option<Object>,
       revision: revision == freezed
           ? _value.revision
           : revision // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as Option<int>,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as Option<DateTime>,
       updatedAt: updatedAt == freezed
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as Option<DateTime>,
       locale: locale == freezed
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Option<String>,
     ));
   }
 }
@@ -228,38 +246,47 @@ class __$SysCopyWithImpl<$Res> extends _$SysCopyWithImpl<$Res>
 class _$_Sys implements _Sys {
   const _$_Sys(
       {required this.type,
-      this.linkType,
-      this.id,
-      this.space,
-      this.environment,
-      this.contentType,
-      this.revision,
-      this.createdAt,
-      this.updatedAt,
-      this.locale});
+      this.linkType = None,
+      this.id = None,
+      this.space = None,
+      this.environment = None,
+      this.contentType = None,
+      this.revision = None,
+      this.createdAt = None,
+      this.updatedAt = None,
+      this.locale = None});
 
   factory _$_Sys.fromJson(Map<String, dynamic> json) => _$$_SysFromJson(json);
 
   @override
   final String type;
+  @JsonKey()
   @override
-  final String? linkType;
+  final Option<String> linkType;
+  @JsonKey()
   @override
-  final String? id;
+  final Option<String> id;
+  @JsonKey()
   @override
-  final Object? space;
+  final Option<Object> space;
+  @JsonKey()
   @override
-  final Object? environment;
+  final Option<Object> environment;
+  @JsonKey()
   @override
-  final Object? contentType;
+  final Option<Object> contentType;
+  @JsonKey()
   @override
-  final int? revision;
+  final Option<int> revision;
+  @JsonKey()
   @override
-  final DateTime? createdAt;
+  final Option<DateTime> createdAt;
+  @JsonKey()
   @override
-  final DateTime? updatedAt;
+  final Option<DateTime> updatedAt;
+  @JsonKey()
   @override
-  final String? locale;
+  final Option<String> locale;
 
   @override
   String toString() {
@@ -313,38 +340,38 @@ class _$_Sys implements _Sys {
 abstract class _Sys implements Sys {
   const factory _Sys(
       {required String type,
-      String? linkType,
-      String? id,
-      Object? space,
-      Object? environment,
-      Object? contentType,
-      int? revision,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      String? locale}) = _$_Sys;
+      Option<String> linkType,
+      Option<String> id,
+      Option<Object> space,
+      Option<Object> environment,
+      Option<Object> contentType,
+      Option<int> revision,
+      Option<DateTime> createdAt,
+      Option<DateTime> updatedAt,
+      Option<String> locale}) = _$_Sys;
 
   factory _Sys.fromJson(Map<String, dynamic> json) = _$_Sys.fromJson;
 
   @override
   String get type;
   @override
-  String? get linkType;
+  Option<String> get linkType;
   @override
-  String? get id;
+  Option<String> get id;
   @override
-  Object? get space;
+  Option<Object> get space;
   @override
-  Object? get environment;
+  Option<Object> get environment;
   @override
-  Object? get contentType;
+  Option<Object> get contentType;
   @override
-  int? get revision;
+  Option<int> get revision;
   @override
-  DateTime? get createdAt;
+  Option<DateTime> get createdAt;
   @override
-  DateTime? get updatedAt;
+  Option<DateTime> get updatedAt;
   @override
-  String? get locale;
+  Option<String> get locale;
   @override
   @JsonKey(ignore: true)
   _$SysCopyWith<_Sys> get copyWith => throw _privateConstructorUsedError;
@@ -972,11 +999,11 @@ class _$IncludesTearOff {
   const _$IncludesTearOff();
 
   _Includes call(
-      {@JsonKey(name: 'Asset') List<Asset>? asset,
-      @JsonKey(name: 'Entry') List<Entry>? entry}) {
+      {@JsonKey(name: 'Asset') Option<List<Asset>> assets = None,
+      @JsonKey(name: 'Entry') List<Entry>? entries}) {
     return _Includes(
-      asset: asset,
-      entry: entry,
+      assets: assets,
+      entries: entries,
     );
   }
 
@@ -991,9 +1018,9 @@ const $Includes = _$IncludesTearOff();
 /// @nodoc
 mixin _$Includes {
   @JsonKey(name: 'Asset')
-  List<Asset>? get asset => throw _privateConstructorUsedError;
+  Option<List<Asset>> get assets => throw _privateConstructorUsedError;
   @JsonKey(name: 'Entry')
-  List<Entry>? get entry => throw _privateConstructorUsedError;
+  List<Entry>? get entries => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1006,8 +1033,8 @@ abstract class $IncludesCopyWith<$Res> {
   factory $IncludesCopyWith(Includes value, $Res Function(Includes) then) =
       _$IncludesCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'Asset') List<Asset>? asset,
-      @JsonKey(name: 'Entry') List<Entry>? entry});
+      {@JsonKey(name: 'Asset') Option<List<Asset>> assets,
+      @JsonKey(name: 'Entry') List<Entry>? entries});
 }
 
 /// @nodoc
@@ -1020,17 +1047,17 @@ class _$IncludesCopyWithImpl<$Res> implements $IncludesCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? asset = freezed,
-    Object? entry = freezed,
+    Object? assets = freezed,
+    Object? entries = freezed,
   }) {
     return _then(_value.copyWith(
-      asset: asset == freezed
-          ? _value.asset
-          : asset // ignore: cast_nullable_to_non_nullable
-              as List<Asset>?,
-      entry: entry == freezed
-          ? _value.entry
-          : entry // ignore: cast_nullable_to_non_nullable
+      assets: assets == freezed
+          ? _value.assets
+          : assets // ignore: cast_nullable_to_non_nullable
+              as Option<List<Asset>>,
+      entries: entries == freezed
+          ? _value.entries
+          : entries // ignore: cast_nullable_to_non_nullable
               as List<Entry>?,
     ));
   }
@@ -1042,8 +1069,8 @@ abstract class _$IncludesCopyWith<$Res> implements $IncludesCopyWith<$Res> {
       __$IncludesCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'Asset') List<Asset>? asset,
-      @JsonKey(name: 'Entry') List<Entry>? entry});
+      {@JsonKey(name: 'Asset') Option<List<Asset>> assets,
+      @JsonKey(name: 'Entry') List<Entry>? entries});
 }
 
 /// @nodoc
@@ -1057,17 +1084,17 @@ class __$IncludesCopyWithImpl<$Res> extends _$IncludesCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? asset = freezed,
-    Object? entry = freezed,
+    Object? assets = freezed,
+    Object? entries = freezed,
   }) {
     return _then(_Includes(
-      asset: asset == freezed
-          ? _value.asset
-          : asset // ignore: cast_nullable_to_non_nullable
-              as List<Asset>?,
-      entry: entry == freezed
-          ? _value.entry
-          : entry // ignore: cast_nullable_to_non_nullable
+      assets: assets == freezed
+          ? _value.assets
+          : assets // ignore: cast_nullable_to_non_nullable
+              as Option<List<Asset>>,
+      entries: entries == freezed
+          ? _value.entries
+          : entries // ignore: cast_nullable_to_non_nullable
               as List<Entry>?,
     ));
   }
@@ -1077,21 +1104,22 @@ class __$IncludesCopyWithImpl<$Res> extends _$IncludesCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Includes implements _Includes {
   const _$_Includes(
-      {@JsonKey(name: 'Asset') this.asset, @JsonKey(name: 'Entry') this.entry});
+      {@JsonKey(name: 'Asset') this.assets = None,
+      @JsonKey(name: 'Entry') this.entries});
 
   factory _$_Includes.fromJson(Map<String, dynamic> json) =>
       _$$_IncludesFromJson(json);
 
   @override
   @JsonKey(name: 'Asset')
-  final List<Asset>? asset;
+  final Option<List<Asset>> assets;
   @override
   @JsonKey(name: 'Entry')
-  final List<Entry>? entry;
+  final List<Entry>? entries;
 
   @override
   String toString() {
-    return 'Includes(asset: $asset, entry: $entry)';
+    return 'Includes(assets: $assets, entries: $entries)';
   }
 
   @override
@@ -1099,15 +1127,15 @@ class _$_Includes implements _Includes {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Includes &&
-            const DeepCollectionEquality().equals(other.asset, asset) &&
-            const DeepCollectionEquality().equals(other.entry, entry));
+            const DeepCollectionEquality().equals(other.assets, assets) &&
+            const DeepCollectionEquality().equals(other.entries, entries));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(asset),
-      const DeepCollectionEquality().hash(entry));
+      const DeepCollectionEquality().hash(assets),
+      const DeepCollectionEquality().hash(entries));
 
   @JsonKey(ignore: true)
   @override
@@ -1122,17 +1150,17 @@ class _$_Includes implements _Includes {
 
 abstract class _Includes implements Includes {
   const factory _Includes(
-      {@JsonKey(name: 'Asset') List<Asset>? asset,
-      @JsonKey(name: 'Entry') List<Entry>? entry}) = _$_Includes;
+      {@JsonKey(name: 'Asset') Option<List<Asset>> assets,
+      @JsonKey(name: 'Entry') List<Entry>? entries}) = _$_Includes;
 
   factory _Includes.fromJson(Map<String, dynamic> json) = _$_Includes.fromJson;
 
   @override
   @JsonKey(name: 'Asset')
-  List<Asset>? get asset;
+  Option<List<Asset>> get assets;
   @override
   @JsonKey(name: 'Entry')
-  List<Entry>? get entry;
+  List<Entry>? get entries;
   @override
   @JsonKey(ignore: true)
   _$IncludesCopyWith<_Includes> get copyWith =>
@@ -1394,5 +1422,200 @@ abstract class _SearchParameters extends SearchParameters {
   @override
   @JsonKey(ignore: true)
   _$SearchParametersCopyWith<_SearchParameters> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+EntryFieldImage _$EntryFieldImageFromJson(Map<String, dynamic> json) {
+  return _EntryFieldImage.fromJson(json);
+}
+
+/// @nodoc
+class _$EntryFieldImageTearOff {
+  const _$EntryFieldImageTearOff();
+
+  _EntryFieldImage call({required Sys sys, Asset? asset}) {
+    return _EntryFieldImage(
+      sys: sys,
+      asset: asset,
+    );
+  }
+
+  EntryFieldImage fromJson(Map<String, Object?> json) {
+    return EntryFieldImage.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $EntryFieldImage = _$EntryFieldImageTearOff();
+
+/// @nodoc
+mixin _$EntryFieldImage {
+  Sys get sys => throw _privateConstructorUsedError;
+  Asset? get asset => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $EntryFieldImageCopyWith<EntryFieldImage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EntryFieldImageCopyWith<$Res> {
+  factory $EntryFieldImageCopyWith(
+          EntryFieldImage value, $Res Function(EntryFieldImage) then) =
+      _$EntryFieldImageCopyWithImpl<$Res>;
+  $Res call({Sys sys, Asset? asset});
+
+  $SysCopyWith<$Res> get sys;
+  $AssetCopyWith<$Res>? get asset;
+}
+
+/// @nodoc
+class _$EntryFieldImageCopyWithImpl<$Res>
+    implements $EntryFieldImageCopyWith<$Res> {
+  _$EntryFieldImageCopyWithImpl(this._value, this._then);
+
+  final EntryFieldImage _value;
+  // ignore: unused_field
+  final $Res Function(EntryFieldImage) _then;
+
+  @override
+  $Res call({
+    Object? sys = freezed,
+    Object? asset = freezed,
+  }) {
+    return _then(_value.copyWith(
+      sys: sys == freezed
+          ? _value.sys
+          : sys // ignore: cast_nullable_to_non_nullable
+              as Sys,
+      asset: asset == freezed
+          ? _value.asset
+          : asset // ignore: cast_nullable_to_non_nullable
+              as Asset?,
+    ));
+  }
+
+  @override
+  $SysCopyWith<$Res> get sys {
+    return $SysCopyWith<$Res>(_value.sys, (value) {
+      return _then(_value.copyWith(sys: value));
+    });
+  }
+
+  @override
+  $AssetCopyWith<$Res>? get asset {
+    if (_value.asset == null) {
+      return null;
+    }
+
+    return $AssetCopyWith<$Res>(_value.asset!, (value) {
+      return _then(_value.copyWith(asset: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$EntryFieldImageCopyWith<$Res>
+    implements $EntryFieldImageCopyWith<$Res> {
+  factory _$EntryFieldImageCopyWith(
+          _EntryFieldImage value, $Res Function(_EntryFieldImage) then) =
+      __$EntryFieldImageCopyWithImpl<$Res>;
+  @override
+  $Res call({Sys sys, Asset? asset});
+
+  @override
+  $SysCopyWith<$Res> get sys;
+  @override
+  $AssetCopyWith<$Res>? get asset;
+}
+
+/// @nodoc
+class __$EntryFieldImageCopyWithImpl<$Res>
+    extends _$EntryFieldImageCopyWithImpl<$Res>
+    implements _$EntryFieldImageCopyWith<$Res> {
+  __$EntryFieldImageCopyWithImpl(
+      _EntryFieldImage _value, $Res Function(_EntryFieldImage) _then)
+      : super(_value, (v) => _then(v as _EntryFieldImage));
+
+  @override
+  _EntryFieldImage get _value => super._value as _EntryFieldImage;
+
+  @override
+  $Res call({
+    Object? sys = freezed,
+    Object? asset = freezed,
+  }) {
+    return _then(_EntryFieldImage(
+      sys: sys == freezed
+          ? _value.sys
+          : sys // ignore: cast_nullable_to_non_nullable
+              as Sys,
+      asset: asset == freezed
+          ? _value.asset
+          : asset // ignore: cast_nullable_to_non_nullable
+              as Asset?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_EntryFieldImage implements _EntryFieldImage {
+  const _$_EntryFieldImage({required this.sys, this.asset});
+
+  factory _$_EntryFieldImage.fromJson(Map<String, dynamic> json) =>
+      _$$_EntryFieldImageFromJson(json);
+
+  @override
+  final Sys sys;
+  @override
+  final Asset? asset;
+
+  @override
+  String toString() {
+    return 'EntryFieldImage(sys: $sys, asset: $asset)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _EntryFieldImage &&
+            const DeepCollectionEquality().equals(other.sys, sys) &&
+            const DeepCollectionEquality().equals(other.asset, asset));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(sys),
+      const DeepCollectionEquality().hash(asset));
+
+  @JsonKey(ignore: true)
+  @override
+  _$EntryFieldImageCopyWith<_EntryFieldImage> get copyWith =>
+      __$EntryFieldImageCopyWithImpl<_EntryFieldImage>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_EntryFieldImageToJson(this);
+  }
+}
+
+abstract class _EntryFieldImage implements EntryFieldImage {
+  const factory _EntryFieldImage({required Sys sys, Asset? asset}) =
+      _$_EntryFieldImage;
+
+  factory _EntryFieldImage.fromJson(Map<String, dynamic> json) =
+      _$_EntryFieldImage.fromJson;
+
+  @override
+  Sys get sys;
+  @override
+  Asset? get asset;
+  @override
+  @JsonKey(ignore: true)
+  _$EntryFieldImageCopyWith<_EntryFieldImage> get copyWith =>
       throw _privateConstructorUsedError;
 }

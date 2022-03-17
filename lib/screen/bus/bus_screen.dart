@@ -17,7 +17,7 @@ class BusScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loading = useState(false);
-    final busBoxAsyncValue = ref.watch(busBoxProvider);
+    final busBoxAsyncValue = ref.watch(busBoxFutureProvider);
     final animationCtrl = useAnimationController(duration: const Duration(milliseconds: 300));
     animationCtrl.forward();
     return FadeTransition(
@@ -30,7 +30,7 @@ class BusScreen extends HookConsumerWidget {
             onPressed: () => busBoxAsyncValue.whenOrNull(
                   data: (data) async {
                     final result = await ref
-                        .read(busScreenProvider(data))
+                        .read(busScreenControllerProvider(data))
                         .fetchBusesFromContentful(SearchParameters(contentType: Bus.contentType));
                     result.match(
                       (err) => context.showErrorSnackBar(message: err),
@@ -51,12 +51,13 @@ class BusScreen extends HookConsumerWidget {
               ),
             ),
             child: busBoxAsyncValue.when(
-              data: (busBox) {
-                return ValueListenableBuilder(
-                    valueListenable: busBox.listenable(),
-                    builder: (context, Box<Bus> box, _) =>
-                        busGrid(box.values.toList(), ref.read(busScreenProvider(busBox))));
-              },
+              data: (busBox) => ValueListenableBuilder(
+                valueListenable: busBox.listenable(),
+                builder: (context, Box<Bus> box, _) => busGrid(
+                  box.values.toList(),
+                  ref.read(busScreenControllerProvider(busBox)),
+                ),
+              ),
               error: (error, _) => ErrorWidget(error),
               loading: () => const CircularProgressIndicator(),
             )),
@@ -157,9 +158,9 @@ class BusListItem extends HookConsumerWidget {
           color: Colors.white,
         ),
         label: const Text(""),
-        onPressed: () => ref.read(busBoxProvider).whenOrNull(
+        onPressed: () => ref.read(busBoxFutureProvider).whenOrNull(
           data: (busBox) async {
-            final result = await ref.read(busScreenProvider(busBox)).downloadBusPdf(bus);
+            final result = await ref.read(busScreenControllerProvider(busBox)).downloadBusPdf(bus);
             result.match(
               (err) => context.showErrorSnackBar(message: err),
               (downloaderCore) => null,
