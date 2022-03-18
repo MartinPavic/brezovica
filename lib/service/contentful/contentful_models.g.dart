@@ -38,7 +38,8 @@ Collection<T> _$CollectionFromJson<T>(
       json['skip'] as int,
       json['limit'] as int,
       (json['items'] as List<dynamic>).map(fromJsonT).toList(),
-      Option<Includes>.fromJson(json['includes']),
+      const OptionIncludesJsonConverter()
+          .fromJson(json['includes'] as Map<String, dynamic>?),
     );
 
 Map<String, dynamic> _$CollectionToJson<T>(
@@ -51,9 +52,7 @@ Map<String, dynamic> _$CollectionToJson<T>(
       'skip': instance.skip,
       'limit': instance.limit,
       'items': instance.items.map(toJsonT).toList(),
-      'includes': instance.includes.toJson(
-        (value) => value.toJson(),
-      ),
+      'includes': const OptionIncludesJsonConverter().toJson(instance.includes),
     };
 
 _$_Sys _$$_SysFromJson(Map<String, dynamic> json) => _$_Sys(
@@ -78,10 +77,10 @@ _$_Sys _$$_SysFromJson(Map<String, dynamic> json) => _$_Sys(
           : Option<int>.fromJson(json['revision']),
       createdAt: json['createdAt'] == null
           ? const None()
-          : Option<DateTime>.fromJson(json['createdAt']),
+          : Option<String>.fromJson(json['createdAt']),
       updatedAt: json['updatedAt'] == null
           ? const None()
-          : Option<DateTime>.fromJson(json['updatedAt']),
+          : Option<String>.fromJson(json['updatedAt']),
       locale: json['locale'] == null
           ? const None()
           : Option<String>.fromJson(json['locale']),
@@ -108,10 +107,10 @@ Map<String, dynamic> _$$_SysToJson(_$_Sys instance) => <String, dynamic>{
         (value) => value,
       ),
       'createdAt': instance.createdAt.toJson(
-        (value) => value.toIso8601String(),
+        (value) => value,
       ),
       'updatedAt': instance.updatedAt.toJson(
-        (value) => value.toIso8601String(),
+        (value) => value,
       ),
       'locale': instance.locale.toJson(
         (value) => value,
@@ -171,7 +170,7 @@ Map<String, dynamic> _$$_AssetToJson(_$_Asset instance) => <String, dynamic>{
 _$_Includes _$$_IncludesFromJson(Map<String, dynamic> json) => _$_Includes(
       assets: json['Asset'] == null
           ? const None()
-          : Option<List<Asset>>.fromJson(json['Asset']),
+          : const OptionListAssetConverter().fromJson(json['Asset'] as List),
       entries: json['Entry'] == null
           ? const None()
           : Option<List<Entry<dynamic>>>.fromJson(json['Entry']),
@@ -179,9 +178,7 @@ _$_Includes _$$_IncludesFromJson(Map<String, dynamic> json) => _$_Includes(
 
 Map<String, dynamic> _$$_IncludesToJson(_$_Includes instance) =>
     <String, dynamic>{
-      'Asset': instance.assets.toJson(
-        (value) => value,
-      ),
+      'Asset': const OptionListAssetConverter().toJson(instance.assets),
       'Entry': instance.entries.toJson(
         (value) => value
             .map((e) => e.toJson(
@@ -234,13 +231,12 @@ _$_EntryFieldImage _$$_EntryFieldImageFromJson(Map<String, dynamic> json) =>
       sys: Sys.fromJson(json['sys'] as Map<String, dynamic>),
       asset: json['asset'] == null
           ? const None()
-          : Option<Asset>.fromJson(json['asset']),
+          : const OptionAssetConverter()
+              .fromJson(json['asset'] as Map<String, dynamic>?),
     );
 
 Map<String, dynamic> _$$_EntryFieldImageToJson(_$_EntryFieldImage instance) =>
     <String, dynamic>{
       'sys': instance.sys,
-      'asset': instance.asset.toJson(
-        (value) => value,
-      ),
+      'asset': const OptionAssetConverter().toJson(instance.asset),
     };

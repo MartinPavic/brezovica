@@ -30,8 +30,8 @@ class _$SysTearOff {
       Option<Object> environment = const None(),
       Option<Object> contentType = const None(),
       Option<int> revision = const None(),
-      Option<DateTime> createdAt = const None(),
-      Option<DateTime> updatedAt = const None(),
+      Option<String> createdAt = const None(),
+      Option<String> updatedAt = const None(),
       Option<String> locale = const None()}) {
     return _Sys(
       type: type,
@@ -64,8 +64,8 @@ mixin _$Sys {
   Option<Object> get environment => throw _privateConstructorUsedError;
   Option<Object> get contentType => throw _privateConstructorUsedError;
   Option<int> get revision => throw _privateConstructorUsedError;
-  Option<DateTime> get createdAt => throw _privateConstructorUsedError;
-  Option<DateTime> get updatedAt => throw _privateConstructorUsedError;
+  Option<String> get createdAt => throw _privateConstructorUsedError;
+  Option<String> get updatedAt => throw _privateConstructorUsedError;
   Option<String> get locale => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -85,8 +85,8 @@ abstract class $SysCopyWith<$Res> {
       Option<Object> environment,
       Option<Object> contentType,
       Option<int> revision,
-      Option<DateTime> createdAt,
-      Option<DateTime> updatedAt,
+      Option<String> createdAt,
+      Option<String> updatedAt,
       Option<String> locale});
 }
 
@@ -143,11 +143,11 @@ class _$SysCopyWithImpl<$Res> implements $SysCopyWith<$Res> {
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as Option<DateTime>,
+              as Option<String>,
       updatedAt: updatedAt == freezed
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as Option<DateTime>,
+              as Option<String>,
       locale: locale == freezed
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
@@ -169,8 +169,8 @@ abstract class _$SysCopyWith<$Res> implements $SysCopyWith<$Res> {
       Option<Object> environment,
       Option<Object> contentType,
       Option<int> revision,
-      Option<DateTime> createdAt,
-      Option<DateTime> updatedAt,
+      Option<String> createdAt,
+      Option<String> updatedAt,
       Option<String> locale});
 }
 
@@ -228,11 +228,11 @@ class __$SysCopyWithImpl<$Res> extends _$SysCopyWithImpl<$Res>
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as Option<DateTime>,
+              as Option<String>,
       updatedAt: updatedAt == freezed
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as Option<DateTime>,
+              as Option<String>,
       locale: locale == freezed
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
@@ -280,10 +280,10 @@ class _$_Sys implements _Sys {
   final Option<int> revision;
   @JsonKey()
   @override
-  final Option<DateTime> createdAt;
+  final Option<String> createdAt;
   @JsonKey()
   @override
-  final Option<DateTime> updatedAt;
+  final Option<String> updatedAt;
   @JsonKey()
   @override
   final Option<String> locale;
@@ -346,8 +346,8 @@ abstract class _Sys implements Sys {
       Option<Object> environment,
       Option<Object> contentType,
       Option<int> revision,
-      Option<DateTime> createdAt,
-      Option<DateTime> updatedAt,
+      Option<String> createdAt,
+      Option<String> updatedAt,
       Option<String> locale}) = _$_Sys;
 
   factory _Sys.fromJson(Map<String, dynamic> json) = _$_Sys.fromJson;
@@ -367,9 +367,9 @@ abstract class _Sys implements Sys {
   @override
   Option<int> get revision;
   @override
-  Option<DateTime> get createdAt;
+  Option<String> get createdAt;
   @override
-  Option<DateTime> get updatedAt;
+  Option<String> get updatedAt;
   @override
   Option<String> get locale;
   @override
@@ -1117,6 +1117,7 @@ class __$IncludesCopyWithImpl<$Res> extends _$IncludesCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@OptionListAssetConverter()
 class _$_Includes implements _Includes {
   const _$_Includes(
       {@JsonKey(name: 'Asset') this.assets = const None(),
@@ -1568,6 +1569,7 @@ class __$EntryFieldImageCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@OptionAssetConverter()
 class _$_EntryFieldImage implements _EntryFieldImage {
   const _$_EntryFieldImage({required this.sys, this.asset = const None()});
 

@@ -21,12 +21,7 @@ class InfoScreenController {
                     (assets) => e.fields.copyWith(
                           avatar: e.fields.avatar.map(
                             (avatar) => avatar.copyWith(
-                              asset: Option.of(
-                                assets.firstWhere(
-                                  (asset) => asset.sys.id == e.sys.id,
-                                ),
-                              ),
-                            ),
+                                asset: assets.filter((t) => t.sys.id == avatar.sys.id).head),
                           ),
                         ),
                     () => e.fields),

@@ -14,7 +14,8 @@ _$_Post _$$_PostFromJson(Map<String, dynamic> json) => _$_Post(
           : Option<String>.fromJson(json['description']),
       avatar: json['avatar'] == null
           ? const None()
-          : Option<EntryFieldImage>.fromJson(json['avatar']),
+          : const OptionEntryFieldImageConverter()
+              .fromJson(json['avatar'] as Map<String, dynamic>?),
     );
 
 Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
@@ -23,7 +24,5 @@ Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
       'description': instance.description.toJson(
         (value) => value,
       ),
-      'avatar': instance.avatar.toJson(
-        (value) => value,
-      ),
+      'avatar': const OptionEntryFieldImageConverter().toJson(instance.avatar),
     };

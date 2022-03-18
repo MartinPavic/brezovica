@@ -29,14 +29,14 @@ class InfoScreen extends HookWidget {
           ),
         ),
         child: Consumer(
-          builder: (_, ref, __) {
+          builder: (ctx, ref, __) {
             final controller = ref.watch(
               getPostsFutureProvider(SearchParameters(contentType: Option.of(Post.contentType))),
             );
             return controller.when(
                 data: (posts) => postList(posts),
                 error: (error, _) {
-                  context.showErrorSnackBar(message: error.toString());
+                  //ctx.showErrorSnackBar(message: error.toString());
                   return Container();
                 },
                 loading: () => loadingList());
@@ -66,9 +66,7 @@ ListView postList(List<Post> postList) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PostScreen(
-                  post: postList[index],
-                ),
+                builder: (context) => PostScreen(post: post),
               ),
             ),
           },
@@ -92,7 +90,7 @@ ListView postList(List<Post> postList) {
                         () => null,
                       )),
                   title: Text(
-                    postList[index].title,
+                    post.title,
                     style: TextStyle(
                         color: Colors.blue[50],
                         fontSize: 32,

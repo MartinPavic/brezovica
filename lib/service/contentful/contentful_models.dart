@@ -14,8 +14,8 @@ class Sys with _$Sys {
       @Default(None()) Option<Object> environment,
       @Default(None()) Option<Object> contentType,
       @Default(None()) Option<int> revision,
-      @Default(None()) Option<DateTime> createdAt,
-      @Default(None()) Option<DateTime> updatedAt,
+      @Default(None()) Option<String> createdAt,
+      @Default(None()) Option<String> updatedAt,
       @Default(None()) Option<String> locale}) = _Sys;
   factory Sys.fromJson(Map<String, dynamic> json) => _$SysFromJson(json);
 }
@@ -35,6 +35,7 @@ class Entry<T> {
 }
 
 @JsonSerializable(explicitToJson: true, genericArgumentFactories: true)
+@OptionIncludesJsonConverter()
 class Collection<T> {
   final Sys sys;
   final int total;
@@ -47,6 +48,21 @@ class Collection<T> {
       _$CollectionFromJson(json, fromJsonT);
   Map<String, dynamic> toJson(Object Function(T value) toJsonT) =>
       _$CollectionToJson(this, toJsonT);
+}
+
+class OptionIncludesJsonConverter implements JsonConverter<Option<Includes>, Map<String, dynamic>?> {
+  const OptionIncludesJsonConverter();
+
+  @override
+  Option<Includes> fromJson(Map<String, dynamic>? json) {
+    return json == null ? const None() : Option.of(Includes.fromJson(json));
+  }
+
+  @override
+  Map<String, dynamic>? toJson(Option<Includes> object) {
+    return object.match((t) => t.toJson(), () => null);
+  }
+  
 }
 
 @freezed
@@ -81,11 +97,27 @@ class Asset with _$Asset {
 
 @freezed
 class Includes with _$Includes {
+  @OptionListAssetConverter()
   const factory Includes({
     @JsonKey(name: 'Asset') @Default(None()) Option<List<Asset>> assets,
     @JsonKey(name: 'Entry') @Default(None()) Option<List<Entry>> entries,
   }) = _Includes;
   factory Includes.fromJson(Map<String, dynamic> json) => _$IncludesFromJson(json);
+}
+
+class OptionListAssetConverter implements JsonConverter<Option<List<Asset>>, List> {
+  const OptionListAssetConverter();
+  
+  @override
+  Option<List<Asset>> fromJson(List json) {
+    return Option.of(json.map((e) => Asset.fromJson(e)).toList());
+  }
+
+  @override
+  List toJson(Option<List<Asset>> object) {
+    return object.match((t) => t.map((e) => e.toJson()).toList(), () => []);
+  }
+  
 }
 
 @freezed
@@ -109,9 +141,25 @@ class SearchParameters with _$SearchParameters {
 
 @freezed
 class EntryFieldImage with _$EntryFieldImage {
+  @OptionAssetConverter()
   const factory EntryFieldImage({
     required Sys sys,
     @Default(None()) Option<Asset> asset,
   }) = _EntryFieldImage;
   factory EntryFieldImage.fromJson(Map<String, dynamic> json) => _$EntryFieldImageFromJson(json);
+}
+
+class OptionAssetConverter implements JsonConverter<Option<Asset>, Map<String, dynamic>?> {
+  const OptionAssetConverter();
+  
+  @override
+  Option<Asset> fromJson(Map<String, dynamic>? json) {
+    return json == null ? const None() : Option.of(Asset.fromJson(json));
+  }
+
+  @override
+  Map<String, dynamic>? toJson(Option<Asset> object) {
+    return object.match((t) => t.toJson(), () => null);
+  }
+  
 }

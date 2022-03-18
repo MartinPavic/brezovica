@@ -153,6 +153,7 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@OptionEntryFieldImageConverter()
 class _$_Post with DiagnosticableTreeMixin implements _Post {
   const _$_Post(
       {required this.title,
