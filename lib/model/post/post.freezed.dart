@@ -25,8 +25,8 @@ class _$PostTearOff {
   _Post call(
       {required String title,
       required String text,
-      String? description,
-      EntryFieldImage? avatar}) {
+      Option<String> description = const None(),
+      Option<EntryFieldImage> avatar = const None()}) {
     return _Post(
       title: title,
       text: text,
@@ -47,8 +47,8 @@ const $Post = _$PostTearOff();
 mixin _$Post {
   String get title => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  EntryFieldImage? get avatar => throw _privateConstructorUsedError;
+  Option<String> get description => throw _privateConstructorUsedError;
+  Option<EntryFieldImage> get avatar => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -62,10 +62,8 @@ abstract class $PostCopyWith<$Res> {
   $Res call(
       {String title,
       String text,
-      String? description,
-      EntryFieldImage? avatar});
-
-  $EntryFieldImageCopyWith<$Res>? get avatar;
+      Option<String> description,
+      Option<EntryFieldImage> avatar});
 }
 
 /// @nodoc
@@ -95,23 +93,12 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Option<String>,
       avatar: avatar == freezed
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
-              as EntryFieldImage?,
+              as Option<EntryFieldImage>,
     ));
-  }
-
-  @override
-  $EntryFieldImageCopyWith<$Res>? get avatar {
-    if (_value.avatar == null) {
-      return null;
-    }
-
-    return $EntryFieldImageCopyWith<$Res>(_value.avatar!, (value) {
-      return _then(_value.copyWith(avatar: value));
-    });
   }
 }
 
@@ -123,11 +110,8 @@ abstract class _$PostCopyWith<$Res> implements $PostCopyWith<$Res> {
   $Res call(
       {String title,
       String text,
-      String? description,
-      EntryFieldImage? avatar});
-
-  @override
-  $EntryFieldImageCopyWith<$Res>? get avatar;
+      Option<String> description,
+      Option<EntryFieldImage> avatar});
 }
 
 /// @nodoc
@@ -158,11 +142,11 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Option<String>,
       avatar: avatar == freezed
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
-              as EntryFieldImage?,
+              as Option<EntryFieldImage>,
     ));
   }
 }
@@ -171,7 +155,10 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Post with DiagnosticableTreeMixin implements _Post {
   const _$_Post(
-      {required this.title, required this.text, this.description, this.avatar});
+      {required this.title,
+      required this.text,
+      this.description = const None(),
+      this.avatar = const None()});
 
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
@@ -179,10 +166,12 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
   final String title;
   @override
   final String text;
+  @JsonKey()
   @override
-  final String? description;
+  final Option<String> description;
+  @JsonKey()
   @override
-  final EntryFieldImage? avatar;
+  final Option<EntryFieldImage> avatar;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -235,8 +224,8 @@ abstract class _Post implements Post {
   const factory _Post(
       {required String title,
       required String text,
-      String? description,
-      EntryFieldImage? avatar}) = _$_Post;
+      Option<String> description,
+      Option<EntryFieldImage> avatar}) = _$_Post;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
@@ -245,9 +234,9 @@ abstract class _Post implements Post {
   @override
   String get text;
   @override
-  String? get description;
+  Option<String> get description;
   @override
-  EntryFieldImage? get avatar;
+  Option<EntryFieldImage> get avatar;
   @override
   @JsonKey(ignore: true)
   _$PostCopyWith<_Post> get copyWith => throw _privateConstructorUsedError;

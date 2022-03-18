@@ -9,15 +9,21 @@ part of 'post.dart';
 _$_Post _$$_PostFromJson(Map<String, dynamic> json) => _$_Post(
       title: json['title'] as String,
       text: json['text'] as String,
-      description: json['description'] as String?,
+      description: json['description'] == null
+          ? const None()
+          : Option<String>.fromJson(json['description']),
       avatar: json['avatar'] == null
-          ? null
-          : EntryFieldImage.fromJson(json['avatar'] as Map<String, dynamic>),
+          ? const None()
+          : Option<EntryFieldImage>.fromJson(json['avatar']),
     );
 
 Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
       'title': instance.title,
       'text': instance.text,
-      'description': instance.description,
-      'avatar': instance.avatar,
+      'description': instance.description.toJson(
+        (value) => value,
+      ),
+      'avatar': instance.avatar.toJson(
+        (value) => value,
+      ),
     };

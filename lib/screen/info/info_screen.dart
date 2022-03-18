@@ -5,6 +5,7 @@ import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:brezovica/service/contentful/contentful_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:brezovica/util/snackbar_mixin.dart';
 import 'package:shimmer/shimmer.dart';
@@ -30,7 +31,7 @@ class InfoScreen extends HookWidget {
         child: Consumer(
           builder: (_, ref, __) {
             final controller = ref.watch(
-              getPostsFutureProvider(SearchParameters(contentType: Post.contentType)),
+              getPostsFutureProvider(SearchParameters(contentType: Option.of(Post.contentType))),
             );
             return controller.when(
                 data: (posts) => postList(posts),
@@ -52,9 +53,7 @@ ListView postList(List<Post> postList) {
     scrollDirection: Axis.vertical,
     shrinkWrap: true,
     itemBuilder: (context, index) {
-      // final postAvatarId = postList[index].avatar!.sys.id!;
-      // ref.read(contentfulProvider).getAsset(postAvatarId).run()
-      //   .then((value) => print(value.fields.file.url));
+      final post = postList[index];
       return Card(
         color: Colors.green,
         margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
@@ -82,10 +81,16 @@ ListView postList(List<Post> postList) {
               Expanded(
                 flex: 5,
                 child: ListTile(
-                  leading: const CircleAvatar(
-                    foregroundColor: Colors.lightGreen,
-                    backgroundColor: Colors.lightGreen,
-                  ),
+                  leading: CircleAvatar(
+                      foregroundColor: Colors.lightGreen,
+                      backgroundColor: Colors.lightGreen,
+                      backgroundImage: post.avatar.match(
+                        (avatar) => avatar.asset.match(
+                          (asset) => Image.network('https:' + asset.fields.file.url).image,
+                          () => null,
+                        ),
+                        () => null,
+                      )),
                   title: Text(
                     postList[index].title,
                     style: TextStyle(

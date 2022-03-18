@@ -13,7 +13,7 @@ Entry<T> _$EntryFromJson<T>(
     Entry<T>(
       fromJsonT(json['fields']),
       Sys.fromJson(json['sys'] as Map<String, dynamic>),
-      json['metadata'],
+      Option<Object>.fromJson(json['metadata']),
     );
 
 Map<String, dynamic> _$EntryToJson<T>(
@@ -23,7 +23,9 @@ Map<String, dynamic> _$EntryToJson<T>(
     <String, dynamic>{
       'fields': toJsonT(instance.fields),
       'sys': instance.sys.toJson(),
-      'metadata': instance.metadata,
+      'metadata': instance.metadata.toJson(
+        (value) => value,
+      ),
     };
 
 Collection<T> _$CollectionFromJson<T>(
@@ -36,9 +38,7 @@ Collection<T> _$CollectionFromJson<T>(
       json['skip'] as int,
       json['limit'] as int,
       (json['items'] as List<dynamic>).map(fromJsonT).toList(),
-      json['includes'] == null
-          ? null
-          : Includes.fromJson(json['includes'] as Map<String, dynamic>),
+      Option<Includes>.fromJson(json['includes']),
     );
 
 Map<String, dynamic> _$CollectionToJson<T>(
@@ -51,34 +51,39 @@ Map<String, dynamic> _$CollectionToJson<T>(
       'skip': instance.skip,
       'limit': instance.limit,
       'items': instance.items.map(toJsonT).toList(),
-      'includes': instance.includes?.toJson(),
+      'includes': instance.includes.toJson(
+        (value) => value.toJson(),
+      ),
     };
 
 _$_Sys _$$_SysFromJson(Map<String, dynamic> json) => _$_Sys(
       type: json['type'] as String,
       linkType: json['linkType'] == null
-          ? None
+          ? const None()
           : Option<String>.fromJson(json['linkType']),
-      id: json['id'] == null ? None : Option<String>.fromJson(json['id']),
-      space:
-          json['space'] == null ? None : Option<Object>.fromJson(json['space']),
+      id: json['id'] == null
+          ? const None()
+          : Option<String>.fromJson(json['id']),
+      space: json['space'] == null
+          ? const None()
+          : Option<Object>.fromJson(json['space']),
       environment: json['environment'] == null
-          ? None
+          ? const None()
           : Option<Object>.fromJson(json['environment']),
       contentType: json['contentType'] == null
-          ? None
+          ? const None()
           : Option<Object>.fromJson(json['contentType']),
       revision: json['revision'] == null
-          ? None
+          ? const None()
           : Option<int>.fromJson(json['revision']),
       createdAt: json['createdAt'] == null
-          ? None
+          ? const None()
           : Option<DateTime>.fromJson(json['createdAt']),
       updatedAt: json['updatedAt'] == null
-          ? None
+          ? const None()
           : Option<DateTime>.fromJson(json['updatedAt']),
       locale: json['locale'] == null
-          ? None
+          ? const None()
           : Option<String>.fromJson(json['locale']),
     );
 
@@ -117,14 +122,18 @@ _$_AssetFields _$$_AssetFieldsFromJson(Map<String, dynamic> json) =>
     _$_AssetFields(
       title: json['title'] as String,
       file: FileFields.fromJson(json['file'] as Map<String, dynamic>),
-      description: json['description'] as String?,
+      description: json['description'] == null
+          ? const None()
+          : Option<String>.fromJson(json['description']),
     );
 
 Map<String, dynamic> _$$_AssetFieldsToJson(_$_AssetFields instance) =>
     <String, dynamic>{
       'title': instance.title,
       'file': instance.file,
-      'description': instance.description,
+      'description': instance.description.toJson(
+        (value) => value,
+      ),
     };
 
 _$_FileFields _$$_FileFieldsFromJson(Map<String, dynamic> json) =>
@@ -146,23 +155,26 @@ Map<String, dynamic> _$$_FileFieldsToJson(_$_FileFields instance) =>
 _$_Asset _$$_AssetFromJson(Map<String, dynamic> json) => _$_Asset(
       sys: Sys.fromJson(json['sys'] as Map<String, dynamic>),
       fields: AssetFields.fromJson(json['fields'] as Map<String, dynamic>),
-      metadata: json['metadata'],
+      metadata: json['metadata'] == null
+          ? const None()
+          : Option<Object>.fromJson(json['metadata']),
     );
 
 Map<String, dynamic> _$$_AssetToJson(_$_Asset instance) => <String, dynamic>{
       'sys': instance.sys,
       'fields': instance.fields,
-      'metadata': instance.metadata,
+      'metadata': instance.metadata.toJson(
+        (value) => value,
+      ),
     };
 
 _$_Includes _$$_IncludesFromJson(Map<String, dynamic> json) => _$_Includes(
       assets: json['Asset'] == null
-          ? None
+          ? const None()
           : Option<List<Asset>>.fromJson(json['Asset']),
-      entries: (json['Entry'] as List<dynamic>?)
-          ?.map((e) => Entry<dynamic>.fromJson(
-              e as Map<String, dynamic>, (value) => value))
-          .toList(),
+      entries: json['Entry'] == null
+          ? const None()
+          : Option<List<Entry<dynamic>>>.fromJson(json['Entry']),
     );
 
 Map<String, dynamic> _$$_IncludesToJson(_$_Includes instance) =>
@@ -170,41 +182,65 @@ Map<String, dynamic> _$$_IncludesToJson(_$_Includes instance) =>
       'Asset': instance.assets.toJson(
         (value) => value,
       ),
-      'Entry': instance.entries
-          ?.map((e) => e.toJson(
-                (value) => value,
-              ))
-          .toList(),
+      'Entry': instance.entries.toJson(
+        (value) => value
+            .map((e) => e.toJson(
+                  (value) => value,
+                ))
+            .toList(),
+      ),
     };
 
 _$_SearchParameters _$$_SearchParametersFromJson(Map<String, dynamic> json) =>
     _$_SearchParameters(
-      contentType: json['content_type'] as String?,
-      select: json['select'] as String?,
-      limit: json['limit'] as int?,
-      skip: json['skip'] as int?,
-      mimeTypeGroup: json['mimetype_group'] as String?,
+      contentType: json['content_type'] == null
+          ? const None()
+          : Option<String>.fromJson(json['content_type']),
+      select: json['select'] == null
+          ? const None()
+          : Option<String>.fromJson(json['select']),
+      limit: json['limit'] == null
+          ? const None()
+          : Option<int>.fromJson(json['limit']),
+      skip: json['skip'] == null
+          ? const None()
+          : Option<int>.fromJson(json['skip']),
+      mimeTypeGroup: json['mimetype_group'] == null
+          ? const None()
+          : Option<String>.fromJson(json['mimetype_group']),
     );
 
 Map<String, dynamic> _$$_SearchParametersToJson(_$_SearchParameters instance) =>
     <String, dynamic>{
-      'content_type': instance.contentType,
-      'select': instance.select,
-      'limit': instance.limit,
-      'skip': instance.skip,
-      'mimetype_group': instance.mimeTypeGroup,
+      'content_type': instance.contentType.toJson(
+        (value) => value,
+      ),
+      'select': instance.select.toJson(
+        (value) => value,
+      ),
+      'limit': instance.limit.toJson(
+        (value) => value,
+      ),
+      'skip': instance.skip.toJson(
+        (value) => value,
+      ),
+      'mimetype_group': instance.mimeTypeGroup.toJson(
+        (value) => value,
+      ),
     };
 
 _$_EntryFieldImage _$$_EntryFieldImageFromJson(Map<String, dynamic> json) =>
     _$_EntryFieldImage(
       sys: Sys.fromJson(json['sys'] as Map<String, dynamic>),
       asset: json['asset'] == null
-          ? null
-          : Asset.fromJson(json['asset'] as Map<String, dynamic>),
+          ? const None()
+          : Option<Asset>.fromJson(json['asset']),
     );
 
 Map<String, dynamic> _$$_EntryFieldImageToJson(_$_EntryFieldImage instance) =>
     <String, dynamic>{
       'sys': instance.sys,
-      'asset': instance.asset,
+      'asset': instance.asset.toJson(
+        (value) => value,
+      ),
     };

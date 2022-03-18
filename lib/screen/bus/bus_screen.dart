@@ -7,6 +7,7 @@ import 'package:brezovica/screen/pdf/pdf_screen.dart';
 import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:brezovica/util/snackbar_mixin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -31,7 +32,8 @@ class BusScreen extends HookConsumerWidget {
                   data: (data) async {
                     final result = await ref
                         .read(busScreenControllerProvider(data))
-                        .fetchBusesFromContentful(SearchParameters(contentType: Bus.contentType));
+                        .fetchBusesFromContentful(
+                            SearchParameters(contentType: Option.of(Bus.contentType)));
                     result.match(
                       (err) => context.showErrorSnackBar(message: err),
                       (busList) => showModalBottomSheet(

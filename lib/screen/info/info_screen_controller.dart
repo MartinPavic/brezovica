@@ -1,6 +1,7 @@
 import 'package:brezovica/model/post/post.dart';
 import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:brezovica/service/contentful/contentful_service.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class InfoScreenController {
@@ -14,7 +15,23 @@ class InfoScreenController {
           searchParameters,
           (json) => Post.fromJson(json as Map<String, dynamic>),
         )
-        .map((postsCollection) => postsCollection.items.map((e) => e.fields).toList())
+        .map((postsCollection) => postsCollection.items
+            .map((e) => postsCollection.includes.match(
+                (includes) => includes.assets.match(
+                    (assets) => e.fields.copyWith(
+                          avatar: e.fields.avatar.map(
+                            (avatar) => avatar.copyWith(
+                              asset: Option.of(
+                                assets.firstWhere(
+                                  (asset) => asset.sys.id == e.sys.id,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                    () => e.fields),
+                () => e.fields))
+            .toList())
         .run();
   }
 }
