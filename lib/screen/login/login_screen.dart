@@ -39,7 +39,10 @@ class _LoginScreenState extends AuthState<LoginScreen> implements ConsumerState<
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Prijavi se'),
+          title: const Text(
+            'Prijavi se',
+            style: TextStyle(color: Constants.mainColor),
+          ),
           centerTitle: true,
           backgroundColor: Constants.mainColor,
         ),
@@ -84,7 +87,10 @@ class _LoginScreenState extends AuthState<LoginScreen> implements ConsumerState<
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
                 },
-                child: const Text("Nastavi anonimno"))
+                child: const Text(
+                  "Nastavi anonimno",
+                  style: TextStyle(color: Constants.mainColor),
+                ))
           ],
         ));
   }

@@ -19,51 +19,48 @@ class BusScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final loading = useState(false);
     final busBoxAsyncValue = ref.watch(busBoxFutureProvider);
-    final animationCtrl = useAnimationController(duration: const Duration(milliseconds: 300));
-    animationCtrl.forward();
-    return FadeTransition(
-      opacity: Tween(begin: 0.5, end: 1.0).animate(animationCtrl),
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-            elevation: 10,
-            child: loading.value ? const CircularProgressIndicator() : const Icon(Icons.add),
-            backgroundColor: Constants.mainColor,
-            onPressed: () => busBoxAsyncValue.whenOrNull(
-                  data: (data) async {
-                    final result = await ref
-                        .read(busScreenControllerProvider(data))
-                        .fetchBusesFromContentful(
-                            SearchParameters(contentType: Option.of(Bus.contentType)));
-                    result.match(
-                      (err) => context.showErrorSnackBar(message: err),
-                      (busList) => showModalBottomSheet(
-                        context: context,
-                        builder: (_) => AddBusBottomSheet(busList: busList),
-                      ),
-                    );
-                  },
-                )),
-        body: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/bus_bg.jpeg'),
-                fit: BoxFit.cover,
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          elevation: 10,
+          child: loading.value ? const CircularProgressIndicator() : const Icon(Icons.add),
+          backgroundColor: Constants.mainColor,
+          onPressed: () => busBoxAsyncValue.whenOrNull(
+                data: (data) async {
+                  loading.value = true;
+                  final result = await ref
+                      .read(busScreenControllerProvider(data))
+                      .fetchBusesFromContentful(
+                          SearchParameters(contentType: Option.of(Bus.contentType)))
+                      .whenComplete(() => loading.value = false);
+                  result.match(
+                    (err) => context.showErrorSnackBar(message: err),
+                    (busList) => showModalBottomSheet(
+                      context: context,
+                      builder: (_) => AddBusBottomSheet(busList: busList),
+                    ),
+                  );
+                },
+              )),
+      body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/bus_bg.jpeg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: busBoxAsyncValue.when(
+            data: (busBox) => ValueListenableBuilder(
+              valueListenable: busBox.listenable(),
+              builder: (context, Box<Bus> box, _) => busGrid(
+                box.values.toList(),
+                ref.read(busScreenControllerProvider(busBox)),
               ),
             ),
-            child: busBoxAsyncValue.when(
-              data: (busBox) => ValueListenableBuilder(
-                valueListenable: busBox.listenable(),
-                builder: (context, Box<Bus> box, _) => busGrid(
-                  box.values.toList(),
-                  ref.read(busScreenControllerProvider(busBox)),
-                ),
-              ),
-              error: (error, _) => ErrorWidget(error),
-              loading: () => const CircularProgressIndicator(),
-            )),
-      ),
+            error: (error, _) => ErrorWidget(error),
+            loading: () => const CircularProgressIndicator(),
+          )),
     );
   }
 
@@ -145,6 +142,7 @@ class BusListItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final _loading = useState(false);
     return ListTile(
       title: Text(
         bus.number.toString(),
@@ -155,14 +153,20 @@ class BusListItem extends HookConsumerWidget {
         style: const TextStyle(color: Colors.white),
       ),
       trailing: TextButton.icon(
-        icon: const Icon(
-          Icons.download,
-          color: Colors.white,
-        ),
+        icon: _loading.value
+            ? const CircularProgressIndicator()
+            : const Icon(
+                Icons.download,
+                color: Colors.white,
+              ),
         label: const Text(""),
         onPressed: () => ref.read(busBoxFutureProvider).whenOrNull(
           data: (busBox) async {
-            final result = await ref.read(busScreenControllerProvider(busBox)).downloadBusPdf(bus);
+            _loading.value = true;
+            final result = await ref
+                .read(busScreenControllerProvider(busBox))
+                .downloadBusPdf(bus)
+                .whenComplete(() => _loading.value = false);
             result.match(
               (err) => context.showErrorSnackBar(message: err),
               (downloaderCore) => null,

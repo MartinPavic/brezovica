@@ -20,11 +20,3 @@ TaskEither<String, DownloaderCore> downloadFile(
     return await Flowder.download(url, options);
   }, (e, _) => e.toString());
 }
-
-String stripFileNameExtension(String fileName) {
-  return fileName.split('.')[0];
-}
-
-String getFileName(Uri fileUri) {
-  return stripFileNameExtension(fileUri.pathSegments.last);
-}

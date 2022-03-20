@@ -2,7 +2,6 @@ import 'package:brezovica/model/post/post.dart';
 import 'package:brezovica/screen/info/info_screen_controller.dart';
 import 'package:brezovica/screen/post/post_screen.dart';
 import 'package:brezovica/service/contentful/contentful_models.dart';
-import 'package:brezovica/service/contentful/contentful_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fpdart/fpdart.dart';
@@ -15,11 +14,8 @@ class InfoScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final animationCtrl = useAnimationController(duration: const Duration(milliseconds: 300));
-    animationCtrl.forward();
-    return FadeTransition(
-      opacity: Tween(begin: 0.5, end: 1.0).animate(animationCtrl),
-      child: Container(
+    return Scaffold(
+      body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
@@ -30,13 +26,15 @@ class InfoScreen extends HookWidget {
         ),
         child: Consumer(
           builder: (ctx, ref, __) {
-            final controller = ref.watch(
+            final postsFuture = ref.watch(
               getPostsFutureProvider(SearchParameters(contentType: Option.of(Post.contentType))),
             );
-            return controller.when(
+            return postsFuture.when(
                 data: (posts) => postList(posts),
                 error: (error, _) {
-                  //ctx.showErrorSnackBar(message: error.toString());
+                  WidgetsBinding.instance!.addPostFrameCallback(
+                    (_) => ctx.showErrorSnackBar(message: error.toString()),
+                  );
                   return Container();
                 },
                 loading: () => loadingList());
@@ -97,7 +95,7 @@ ListView postList(List<Post> postList) {
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.visible),
                   ),
-                  subtitle: const Text("podnaslov"),
+                  subtitle: post.description.match((t) => Text(t), () => null),
                 ),
               ),
               const Expanded(

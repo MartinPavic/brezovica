@@ -5,12 +5,12 @@ import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class InfoScreenController {
-  InfoScreenController(this.contentfulService);
+  InfoScreenController(this._contentfulService);
 
-  final ContentfulService contentfulService;
+  final ContentfulService _contentfulService;
 
   Future<List<Post>> getPosts(SearchParameters searchParameters) {
-    return contentfulService
+    return _contentfulService
         .getEntryCollection<Post>(
           searchParameters,
           (json) => Post.fromJson(json as Map<String, dynamic>),
@@ -21,7 +21,8 @@ class InfoScreenController {
                     (assets) => e.fields.copyWith(
                           avatar: e.fields.avatar.map(
                             (avatar) => avatar.copyWith(
-                                asset: assets.filter((t) => t.sys.id == avatar.sys.id).head),
+                              asset: assets.filter((t) => t.sys.id == avatar.sys.id).head,
+                            ),
                           ),
                         ),
                     () => e.fields),
@@ -37,7 +38,7 @@ final infoScreenControllerProvider = Provider.autoDispose<InfoScreenController>(
 });
 
 final getPostsFutureProvider =
-    FutureProvider.family<List<Post>, SearchParameters>((ref, searchParameters) {
+    FutureProvider.family<List<Post>, SearchParameters>((ref, searchParameters) async {
   final controller = ref.read(infoScreenControllerProvider);
-  return controller.getPosts(searchParameters);
+  return await controller.getPosts(searchParameters);
 });
