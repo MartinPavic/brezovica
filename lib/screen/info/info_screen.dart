@@ -8,6 +8,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:brezovica/util/snackbar_mixin.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class InfoScreen extends HookWidget {
   const InfoScreen({Key? key}) : super(key: key);
@@ -26,11 +27,17 @@ class InfoScreen extends HookWidget {
         ),
         child: Consumer(
           builder: (ctx, ref, __) {
-            final postsFuture = ref.watch(
-              getPostsFutureProvider(SearchParameters(contentType: Option.of(Post.contentType))),
-            );
-            return postsFuture.when(
-                data: (posts) => postList(posts),
+            final postsFutureProvider =
+                getPostsFutureProvider(SearchParameters(contentType: Option.of(Post.contentType)));
+            final postsAsyncValue = ref.watch(postsFutureProvider);
+            return postsAsyncValue.when(
+                data: (posts) => RefreshIndicator(
+                      onRefresh: () {
+                        ref.refresh(postsFutureProvider);
+                        return ref.read(postsFutureProvider.future);
+                      },
+                      child: postList(posts),
+                    ),
                 error: (error, _) {
                   WidgetsBinding.instance!.addPostFrameCallback(
                     (_) => ctx.showErrorSnackBar(message: error.toString()),
@@ -82,7 +89,7 @@ ListView postList(List<Post> postList) {
                       backgroundColor: Colors.lightGreen,
                       backgroundImage: post.avatar.match(
                         (avatar) => avatar.asset.match(
-                          (asset) => Image.network('https:' + asset.fields.file.url).image,
+                          (asset) => CachedNetworkImageProvider('https:' + asset.fields.file.url),
                           () => null,
                         ),
                         () => null,

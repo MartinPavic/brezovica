@@ -19,14 +19,17 @@ class BusScreenController {
   final Box<Bus> busBox;
 
   Future<Either<String, List<Bus>>> fetchBusesFromContentful(SearchParameters searchParameters) {
-    return TaskEither.fromTask(_contentfulService
-        .getEntryCollection(searchParameters, (json) => Bus.fromJson(json as Map<String, dynamic>))
-        .map((collection) => collection.items.map((entry) => entry.fields).toList()))
+    return TaskEither.fromTask(
+            _contentfulService
+                .getEntryCollection(
+                    searchParameters, (json) => Bus.fromJson(json as Map<String, dynamic>))
+                .map((collection) => collection.items.map((entry) => entry.fields).toList()))
         .mapLeft((l) => l.toString())
         .run();
   }
 
-  Future<Either<String, DownloaderCore>> downloadBusPdf(Bus bus) {
+  Future<Either<String, DownloaderCore>> downloadBusPdf(
+      Bus bus, Function(int, int) progressCallback) {
     return getDownloadDir().flatMap(
       (downloadDir) {
         final file = File(downloadDir.path + '/${bus.number.toString()}.pdf');
@@ -39,7 +42,7 @@ class BusScreenController {
             ),
           ),
           progress: ProgressImplementation(),
-          progressCallback: (count, total) => print('${(count / total) * 100}'),
+          progressCallback: progressCallback,
           deleteOnCancel: true,
         );
         return downloadFile(bus.pdfUrl, options);

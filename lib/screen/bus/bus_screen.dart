@@ -143,6 +143,7 @@ class BusListItem extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _loading = useState(false);
+    final _downloadProgress = useState(0.0);
     return ListTile(
       title: Text(
         bus.number.toString(),
@@ -154,7 +155,9 @@ class BusListItem extends HookConsumerWidget {
       ),
       trailing: TextButton.icon(
         icon: _loading.value
-            ? const CircularProgressIndicator()
+            ? CircularProgressIndicator(
+                value: _downloadProgress.value,
+              )
             : const Icon(
                 Icons.download,
                 color: Colors.white,
@@ -165,7 +168,8 @@ class BusListItem extends HookConsumerWidget {
             _loading.value = true;
             final result = await ref
                 .read(busScreenControllerProvider(busBox))
-                .downloadBusPdf(bus)
+                .downloadBusPdf(
+                    bus, (count, total) => _downloadProgress.value = (count / total) * 100)
                 .whenComplete(() => _loading.value = false);
             result.match(
               (err) => context.showErrorSnackBar(message: err),
