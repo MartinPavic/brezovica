@@ -3,15 +3,17 @@ import 'dart:io';
 
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/service/contentful/contentful_models.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 
 class ContentfulService {
-  static const String _accessToken = 'K_TBUAwGk9xjGj_x2sN0wJdSC1wDDtmCmDXB-JuDOJc';
+  static final String _accessToken = dotenv.env['CONTENTFUL_ACCESS_TOKEN']!;
+
   final Uri _baseUri = Uri.parse(Constants.contentfulUrl +
-      '/spaces/${Constants.contentfulSpaceId}' +
-      '/environments/${Constants.contentfulEnvironmentId}');
+      '/spaces/${dotenv.env['CONTENTFUL_SPACE_ID']!}' +
+      '/environments/${dotenv.env['CONTENTFUL_ENVIRNOMENT_ID']!}');
 
   Task<Collection<Entry<T>>> getEntryCollection<T>(
       SearchParameters searchParameters, T Function(Object?) parseT) {

@@ -2,18 +2,18 @@ import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/home/home_screen.dart';
 import 'package:brezovica/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await dotenv.load();
   await Hive.initFlutter();
   await Supabase.initialize(
-    url: 'https://sxocarroegfdvntghfwj.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MDc4MTI4NSwiZXhwIjoxOTU2MzU3Mjg1fQ.O8BmrftOWqfdMyROPhQ54ZNTCzy53Ylgx3_UWb_Jtl8',
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
     debug: true,
   );
 

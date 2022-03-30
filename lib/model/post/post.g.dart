@@ -12,10 +12,10 @@ _$_Post _$$_PostFromJson(Map<String, dynamic> json) => _$_Post(
       description: json['description'] == null
           ? const None()
           : Option<String>.fromJson(json['description']),
-      avatar: json['avatar'] == null
+      image: json['image'] == null
           ? const None()
           : const OptionEntryFieldImageConverter()
-              .fromJson(json['avatar'] as Map<String, dynamic>?),
+              .fromJson(json['image'] as Map<String, dynamic>?),
     );
 
 Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
@@ -24,5 +24,5 @@ Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
       'description': instance.description.toJson(
         (value) => value,
       ),
-      'avatar': const OptionEntryFieldImageConverter().toJson(instance.avatar),
+      'image': const OptionEntryFieldImageConverter().toJson(instance.image),
     };

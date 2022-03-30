@@ -16,7 +16,7 @@ class Post with _$Post {
       {required String title,
       required String text,
       @Default(None()) Option<String> description,
-      @Default(None()) Option<EntryFieldImage> avatar}) = _Post;
+      @Default(None()) Option<EntryFieldImage> image}) = _Post;
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
       
 }

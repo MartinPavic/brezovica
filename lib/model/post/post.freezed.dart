@@ -26,12 +26,12 @@ class _$PostTearOff {
       {required String title,
       required String text,
       Option<String> description = const None(),
-      Option<EntryFieldImage> avatar = const None()}) {
+      Option<EntryFieldImage> image = const None()}) {
     return _Post(
       title: title,
       text: text,
       description: description,
-      avatar: avatar,
+      image: image,
     );
   }
 
@@ -48,7 +48,7 @@ mixin _$Post {
   String get title => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   Option<String> get description => throw _privateConstructorUsedError;
-  Option<EntryFieldImage> get avatar => throw _privateConstructorUsedError;
+  Option<EntryFieldImage> get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -63,7 +63,7 @@ abstract class $PostCopyWith<$Res> {
       {String title,
       String text,
       Option<String> description,
-      Option<EntryFieldImage> avatar});
+      Option<EntryFieldImage> image});
 }
 
 /// @nodoc
@@ -79,7 +79,7 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
     Object? title = freezed,
     Object? text = freezed,
     Object? description = freezed,
-    Object? avatar = freezed,
+    Object? image = freezed,
   }) {
     return _then(_value.copyWith(
       title: title == freezed
@@ -94,9 +94,9 @@ class _$PostCopyWithImpl<$Res> implements $PostCopyWith<$Res> {
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as Option<String>,
-      avatar: avatar == freezed
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as Option<EntryFieldImage>,
     ));
   }
@@ -111,7 +111,7 @@ abstract class _$PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       {String title,
       String text,
       Option<String> description,
-      Option<EntryFieldImage> avatar});
+      Option<EntryFieldImage> image});
 }
 
 /// @nodoc
@@ -128,7 +128,7 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
     Object? title = freezed,
     Object? text = freezed,
     Object? description = freezed,
-    Object? avatar = freezed,
+    Object? image = freezed,
   }) {
     return _then(_Post(
       title: title == freezed
@@ -143,9 +143,9 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as Option<String>,
-      avatar: avatar == freezed
-          ? _value.avatar
-          : avatar // ignore: cast_nullable_to_non_nullable
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as Option<EntryFieldImage>,
     ));
   }
@@ -159,7 +159,7 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
       {required this.title,
       required this.text,
       this.description = const None(),
-      this.avatar = const None()});
+      this.image = const None()});
 
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
@@ -172,11 +172,11 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
   final Option<String> description;
   @JsonKey()
   @override
-  final Option<EntryFieldImage> avatar;
+  final Option<EntryFieldImage> image;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Post(title: $title, text: $text, description: $description, avatar: $avatar)';
+    return 'Post(title: $title, text: $text, description: $description, image: $image)';
   }
 
   @override
@@ -187,7 +187,7 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('text', text))
       ..add(DiagnosticsProperty('description', description))
-      ..add(DiagnosticsProperty('avatar', avatar));
+      ..add(DiagnosticsProperty('image', image));
   }
 
   @override
@@ -199,7 +199,7 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
             const DeepCollectionEquality().equals(other.text, text) &&
             const DeepCollectionEquality()
                 .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.avatar, avatar));
+            const DeepCollectionEquality().equals(other.image, image));
   }
 
   @override
@@ -208,7 +208,7 @@ class _$_Post with DiagnosticableTreeMixin implements _Post {
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(text),
       const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(avatar));
+      const DeepCollectionEquality().hash(image));
 
   @JsonKey(ignore: true)
   @override
@@ -226,7 +226,7 @@ abstract class _Post implements Post {
       {required String title,
       required String text,
       Option<String> description,
-      Option<EntryFieldImage> avatar}) = _$_Post;
+      Option<EntryFieldImage> image}) = _$_Post;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
@@ -237,7 +237,7 @@ abstract class _Post implements Post {
   @override
   Option<String> get description;
   @override
-  Option<EntryFieldImage> get avatar;
+  Option<EntryFieldImage> get image;
   @override
   @JsonKey(ignore: true)
   _$PostCopyWith<_Post> get copyWith => throw _privateConstructorUsedError;

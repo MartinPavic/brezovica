@@ -19,9 +19,9 @@ class InfoScreenController {
             .map((e) => postsCollection.includes.match(
                 (includes) => includes.assets.match(
                     (assets) => e.fields.copyWith(
-                          avatar: e.fields.avatar.map(
-                            (avatar) => avatar.copyWith(
-                              asset: assets.filter((t) => t.sys.id == avatar.sys.id).head,
+                          image: e.fields.image.map(
+                            (image) => image.copyWith(
+                              asset: assets.filter((t) => t.sys.id == image.sys.id).head,
                             ),
                           ),
                         ),
