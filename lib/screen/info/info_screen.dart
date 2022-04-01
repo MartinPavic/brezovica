@@ -108,27 +108,30 @@ class PostList extends StatelessWidget {
             ),
             child: SizedBox(
               height: 200,
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                  child: post.image.match(
-                      (avatar) => avatar.asset.match(
-                          (asset) => Hero(
-                                tag: post.title,
+              child: Stack(alignment: Alignment.bottomCenter, children: [
+                post.image.match(
+                    (image) => image.asset.match(
+                        (asset) => Hero(
+                              tag: post.title,
+                              child: Container(
+                                clipBehavior: Clip.hardEdge,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
                                 child: CachedNetworkImage(
                                   imageUrl: 'https:' + asset.fields.file.url,
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                          () => const SizedBox()),
-                      () => const SizedBox()),
-                ),
+                            ),
+                        () => const SizedBox()),
+                    () => const SizedBox()),
                 Text(
                   post.title,
-                  style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                  ),
                 )
               ]),
             ),
@@ -138,17 +141,3 @@ class PostList extends StatelessWidget {
     );
   }
 }
-// ListTile(
-//                     leading: CircleAvatar(
-//                         foregroundColor: Colors.lightGreen,
-//                         backgroundColor: Colors.lightGreen,
-//                         backgroundImage: ),
-//                     title: Text(
-//                       post.title,
-//                       style: TextStyle(
-//                           color: Colors.blue[50],
-//                           fontSize: 32,
-//                           fontWeight: FontWeight.bold,
-//                           overflow: TextOverflow.visible),
-//                     ),
-//                     subtitle: post.description.match((t) => Text(t), () => null),

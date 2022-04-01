@@ -41,7 +41,7 @@ class _LoginScreenState extends AuthState<LoginScreen> implements ConsumerState<
         appBar: AppBar(
           title: const Text(
             'Prijavi se',
-            style: TextStyle(color: Constants.mainColor),
+            style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
           backgroundColor: Constants.mainColor,

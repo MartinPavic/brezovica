@@ -4,6 +4,8 @@
    <application
         android:label="Brezovica"
         android:icon="@mipmap/launcher_icon">
+        <!-- <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyA8m1qcj0WNTVMZhHU1B51M9JQwtL2yRRU"/> -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

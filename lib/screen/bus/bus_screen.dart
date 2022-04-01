@@ -15,6 +15,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 class BusScreen extends HookConsumerWidget {
   const BusScreen({Key? key}) : super(key: key);
 
+
+  // TODO napravit onako screen da u sredini piše koji je iduci bus, i ono da si mos skinut neki raspored busa i tako to
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loading = useState(false);

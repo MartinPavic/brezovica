@@ -12,27 +12,10 @@ class PostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        // appBar: AppBar(
-        //   leading: TextButton.icon(
-        //     onPressed: () => Navigator.pop(context),
-        //     icon: const Icon(
-        //       Icons.arrow_back,
-        //       color: Constants.mainColor,
-        //     ),
-        //     label: const Text(''),
-        //   ),
-        //   backgroundColor: Colors.white,
-        //   elevation: 0,
-        //   centerTitle: true,
-        //   title: Text(
-        //     post.title,
-        //     style: const TextStyle(
-        //         fontSize: 36, fontWeight: FontWeight.bold, color: Constants.mainColor),
-        //   ),
-        // ),
-        body: Column(
+    return Scaffold(
+      backgroundColor: Constants.mainColor,
+      body: Stack(children: [
+        Column(
           children: [
             Flexible(
               child: post.image.match(
@@ -48,10 +31,24 @@ class PostScreen extends StatelessWidget {
                       () => const SizedBox()),
                   () => const SizedBox()),
             ),
-            Flexible(child: Markdown(data: post.text))
+            Flexible(
+                child: Markdown(
+              data: post.text,
+              styleSheet: MarkdownStyleSheet(p: TextStyle(color: Colors.white)),
+            ))
           ],
         ),
-      ),
+        SafeArea(
+          child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 42,
+              color: Colors.white,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
+      ]),
     );
   }
 }
