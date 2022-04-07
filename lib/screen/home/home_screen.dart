@@ -3,6 +3,7 @@ import 'package:brezovica/screen/about/about_screen.dart';
 import 'package:brezovica/screen/bus/bus_screen.dart';
 import 'package:brezovica/screen/feedback/feedback_screen.dart';
 import 'package:brezovica/screen/info/info_screen.dart';
+import 'package:brezovica/screen/map/map_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -16,7 +17,7 @@ class HomeScreen extends StatefulHookWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   static final List<Widget> _widgetOptions = [
-    const BusScreen(),
+    const MapScreen(),
     const InfoScreen(),
     const FeedbackScreen(),
     const AboutScreen(),
@@ -41,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               backgroundColor: Constants.mainColor,
-              activeIcon: Icon(Icons.directions_bus_filled),
-              icon: Icon(Icons.directions_bus_outlined),
+              activeIcon: Icon(Icons.map),
+              icon: Icon(Icons.map_outlined),
               label: 'Bus'),
           BottomNavigationBarItem(
               backgroundColor: Constants.mainColor,
