@@ -1,5 +1,7 @@
 import 'package:brezovica/util/snackbar_mixin.dart';
+import 'package:brezovica/widgets/signed_out_dialog.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart' as riverpod;
@@ -14,9 +16,8 @@ class SupabaseAuthService {
       () async {
         final response = await _auth.signIn(
           email: email,
-          options: AuthOptions(
-              redirectTo:
-                  kIsWeb ? null : 'com.example.brezovica://login-callback/'),
+          options:
+              AuthOptions(redirectTo: kIsWeb ? null : 'com.example.brezovica://login-callback/'),
         );
 
         if (response.error != null) throw response.error!;
@@ -46,13 +47,6 @@ final supabaseAuthProvider = riverpod.Provider.autoDispose<SupabaseAuthService>(
 
 class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
   @override
-  void onUnauthenticated() {
-    if (mounted) {
-      // Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
-    }
-  }
-
-  @override
   void onAuthenticated(Session session) {
     if (mounted) {
       Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
@@ -66,16 +60,7 @@ class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
   void onErrorAuthenticating(String message) {
     context.showErrorSnackBar(message: message);
   }
-}
 
-class AuthRequiredState<T extends StatefulWidget>
-    extends SupabaseAuthRequiredState<T> {
   @override
-  void onUnauthenticated() {
-    /// Users will be sent back to the LoginPage if they sign out.
-    if (mounted) {
-      /// Users will be sent back to the LoginPage if they sign out.
-      Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
-    }
-  }
+  void onUnauthenticated() {}
 }

@@ -4,12 +4,20 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 import 'package:brezovica/util/snackbar_mixin.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class FeedbackScreen extends HookWidget {
+
+class FeedbackScreen extends StatefulHookWidget {
   const FeedbackScreen({Key? key}) : super(key: key);
 
   @override
+  _FeedbackScreenState createState() => _FeedbackScreenState();
+}
+
+class _FeedbackScreenState extends SupabaseAuthRequiredState<FeedbackScreen> {
+  @override
   Widget build(BuildContext context) {
+    final _authenticated = useState(false);
     final _nameController = useTextEditingController();
     final _nameValid = useState(false);
     final _textAreaController = useTextEditingController();
@@ -23,6 +31,7 @@ class FeedbackScreen extends HookWidget {
       });
       return null;
     }, [_nameController, _textAreaController]);
+    
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -35,10 +44,7 @@ class FeedbackScreen extends HookWidget {
               const Text(
                 "Pišite nam",
                 style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Constants.mainColor
-                ),
+                    fontSize: 20, fontWeight: FontWeight.bold, color: Constants.mainColor),
               ),
               const SizedBox(
                 height: 20,
@@ -107,5 +113,12 @@ class FeedbackScreen extends HookWidget {
       );
     }
     return unit;
+  }
+
+  @override
+  void onUnauthenticated() {
+    if (mounted) {
+
+    }
   }
 }
