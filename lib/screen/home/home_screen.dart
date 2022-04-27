@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(bottom: 24, top: 8, left: 8, right: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
@@ -109,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 alignment: MainAxisAlignment.center,
                 children: [
                   HomeMenuButton(
+                    '/map',
                     Icon(
                       Icons.map,
                       color: Colors.white,
@@ -119,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   HomeMenuButton(
+                    '/zet',
                     Icon(
                       Icons.directions_bus,
                       color: Colors.white,
@@ -129,6 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   HomeMenuButton(
+                    '/about',
                     Icon(
                       Icons.info,
                       color: Colors.white,
@@ -149,7 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeMenuButton extends StatelessWidget {
-  const HomeMenuButton(this.icon, this.label, {Key? key}) : super(key: key);
+  const HomeMenuButton(this.page, this.icon, this.label, {Key? key}) : super(key: key);
+  final String page;
   final Icon icon;
   final Text label;
   @override
@@ -169,7 +173,7 @@ class HomeMenuButton extends StatelessWidget {
         ],
       ),
       child: TextButton.icon(
-        onPressed: () {},
+        onPressed: () => Navigator.pushNamed(context, page),
         icon: icon,
         label: label,
       ),

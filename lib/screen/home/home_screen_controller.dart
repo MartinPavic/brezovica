@@ -10,12 +10,12 @@ class HomeScreenController {
 
   final ContentfulService _contentfulService;
 
-  Future<Option<Post>> getLatestPost() {
+  Future<Option<Post>> getLatestPost() async {
     final searchParameters = SearchParameters(
       contentType: Option.of(Post.contentType),
       limit: Option.of(1),
     );
-    return _contentfulService
+    final post = await _contentfulService
         .getEntryCollection<Post>(
           searchParameters,
           (json) => Post.fromJson(json as Map<String, dynamic>),
@@ -34,6 +34,7 @@ class HomeScreenController {
                 () => e.fields))
             .head)
         .run();
+        return post;
   }
 }
 

@@ -21,12 +21,7 @@ class InfoScreen extends HookWidget {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/breza_bg.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
+        color: Constants.mainColor,
         child: Consumer(
           builder: (ctx, ref, __) {
             final postsFutureProvider =
