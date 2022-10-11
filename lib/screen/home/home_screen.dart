@@ -18,32 +18,19 @@ class HomeScreen extends StatefulHookWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static final List<Widget> _widgetOptions = [
-    const MapScreen(),
-    const InfoScreen(),
-    const FeedbackScreen(),
-    const AboutScreen(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.cyan,
-        splashColor: Colors.white,
-        elevation: 10,
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const FeedbackScreen(),
-          ),
+      floatingActionButton: const HomeMenuButton(
+        '/feedback',
+        Icon(
+          Icons.note_alt,
+          color: Colors.white,
         ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(16),
-          ),
+        Text(
+          "Report",
+          style: TextStyle(color: Colors.white),
         ),
-        icon: const Icon(Icons.note_alt),
-        label: const Text("Report"),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: Constants.mainColor,

@@ -1,6 +1,8 @@
 import 'package:brezovica/model/bus/bus.dart';
+import 'package:brezovica/screen/feedback/feedback_screen_2.dart';
 import 'package:brezovica/screen/home/home_screen.dart';
 import 'package:brezovica/screen/login/login_screen.dart';
+import 'package:brezovica/screen/map/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -35,6 +37,8 @@ class MyApp extends HookConsumerWidget {
       routes: <String, WidgetBuilder>{
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
+        '/map': (context) => const MapScreen(),
+        '/feedback': (context) => const FeedbackScreen(),
       },
     );
   }
