@@ -32,10 +32,13 @@ class PostScreen extends StatelessWidget {
                   () => const SizedBox()),
             ),
             Flexible(
-                child: Markdown(
-              data: post.text,
-              styleSheet: MarkdownStyleSheet(p: TextStyle(color: Colors.white)),
-            ))
+              child: Markdown(
+                data: post.text,
+                styleSheet: MarkdownStyleSheet(
+                  p: const TextStyle(color: Colors.white),
+                ),
+              ),
+            )
           ],
         ),
         SafeArea(

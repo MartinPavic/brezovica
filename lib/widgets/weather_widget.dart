@@ -22,7 +22,9 @@ class WeatherWidget extends HookConsumerWidget {
           text: TextSpan(
             text: "${weather.temperature.toString()} \u2103\n",
             style: TextStyle(color: Colors.white, fontSize: 40),
-            children: <TextSpan>[TextSpan(text: "${weather.description}", style: TextStyle(fontSize: 16))],
+            children: <TextSpan>[
+              TextSpan(text: "${weather.description}", style: TextStyle(fontSize: 16))
+            ],
           ),
         ),
       ),

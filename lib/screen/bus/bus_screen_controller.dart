@@ -9,7 +9,6 @@ import 'package:fpdart/fpdart.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class BusScreenController {
   BusScreenController(this._contentfulService, this.busBox);
@@ -20,12 +19,15 @@ class BusScreenController {
 
   Future<Either<String, List<Bus>>> fetchBusesFromContentful(SearchParameters searchParameters) {
     return TaskEither.fromTask(
-            _contentfulService
-                .getEntryCollection(
-                    searchParameters, (json) => Bus.fromJson(json as Map<String, dynamic>))
-                .map((collection) => collection.items.map((entry) => entry.fields).toList()))
-        .mapLeft((l) => l.toString())
-        .run();
+      _contentfulService
+          .getEntryCollection(
+            searchParameters,
+            (json) => Bus.fromJson(json as Map<String, dynamic>),
+          )
+          .map(
+            (collection) => collection.items.map((entry) => entry.fields).toList(),
+          ),
+    ).mapLeft((l) => l.toString()).run();
   }
 
   Future<Either<String, DownloaderCore>> downloadBusPdf(
@@ -53,10 +55,6 @@ class BusScreenController {
   List<Bus> getBuses() {
     return busBox.values.toList();
   }
-
-  SfPdfViewer showPdf(File pdfFile) {
-    return SfPdfViewer.file(pdfFile);
-  }
 }
 
 final busBoxFutureProvider = FutureProvider<Box<Bus>>(((ref) async {
@@ -70,3 +68,12 @@ final busScreenControllerProvider = Provider.family<BusScreenController, Box<Bus
   final contentfulService = ref.read(contentfulProvider);
   return BusScreenController(contentfulService, busBox);
 });
+
+final fetchBusesFromContentfulProvider = FutureProvider<List<Bus>>(((ref) async {
+  final box = await ref.watch(busBoxFutureProvider.future);
+  final result = await ref
+      .read(busScreenControllerProvider(box))
+      .fetchBusesFromContentful(SearchParameters(contentType: Option.of(Bus.contentType)));
+  final buses = result.match((l) => List<Bus>.empty(), (r) => r);
+  return buses;
+}));

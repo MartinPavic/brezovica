@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:brezovica/constants.dart';
 import 'package:brezovica/model/bus/bus.dart';
 import 'package:brezovica/screen/bus/bus_screen_controller.dart';
-import 'package:brezovica/screen/pdf/pdf_screen.dart';
 import 'package:brezovica/service/contentful/contentful_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,7 +13,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class BusScreen extends HookConsumerWidget {
   const BusScreen({Key? key}) : super(key: key);
-
 
   // TODO napravit onako screen da u sredini piše koji je iduci bus, i ono da si mos skinut neki raspored busa i tako to
   @override
@@ -85,19 +83,19 @@ class BusScreen extends HookConsumerWidget {
           ),
           child: InkWell(
             onTap: () {
-              final viewer = controller.showPdf(File(busList[index].fileUrl!));
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WillPopScope(
-                    onWillPop: () async {
-                      Navigator.pop(context);
-                      return false;
-                    },
-                    child: PdfScreen(viewer),
-                  ),
-                ),
-              );
+              // final viewer = controller.showPdf(File(busList[index].fileUrl!));
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => WillPopScope(
+              //       onWillPop: () async {
+              //         Navigator.pop(context);
+              //         return false;
+              //       },
+              //       child: PdfScreen(viewer),
+              //     ),
+              //   ),
+              // );
             },
             customBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),

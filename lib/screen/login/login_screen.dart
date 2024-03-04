@@ -64,6 +64,7 @@ class _LoginScreenState extends AuthState<LoginScreen> implements ConsumerState<
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
+                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelStyle: const TextStyle(color: Colors.white),
                         labelText: 'Email',

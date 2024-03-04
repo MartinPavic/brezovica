@@ -4,6 +4,7 @@ import 'package:brezovica/screen/feedback/feedback_screen.dart';
 import 'package:brezovica/screen/home/home_screen_controller.dart';
 import 'package:brezovica/screen/info/info_screen.dart';
 import 'package:brezovica/screen/map/map_screen.dart';
+import 'package:brezovica/util/snackbar_mixin.dart';
 import 'package:brezovica/widgets/post_card.dart';
 import 'package:brezovica/widgets/weather_widget.dart';
 import 'package:flutter/material.dart';
@@ -21,36 +22,36 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: const HomeMenuButton(
-        '/feedback',
-        Icon(
-          Icons.note_alt,
-          color: Colors.white,
-        ),
-        Text(
-          "Report",
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: Constants.mainColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 24, top: 8, left: 8, right: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      "Trenutno vrijeme u brezovici: ",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                  children: [
+                    const Flexible(
+                      flex: 2,
+                      child: Text(
+                        "Trenutno vrijeme u brezovici: ",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 8.0, top: 8.0),
-                      child: WeatherWidget(),
+                    Flexible(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: WeatherWidget(),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -71,10 +72,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   return latestPostAsyncValue.when(
                     data: (post) => post.match(
                       (post) => PostCard(post),
-                      () => const SizedBox(),
+                      () => const CircularProgressIndicator(),
                     ),
-                    error: (err, _) => const SizedBox(),
-                    loading: () => const SizedBox(),
+                    error: (err, _) {
+                      context.showErrorSnackBar(message: err.toString());
+                      return ErrorWidget(err);
+                    },
+                    loading: () => const CircularProgressIndicator(),
                   );
                 },
               ),
@@ -92,41 +96,43 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.white,
                     ),
                   )),
-              const ButtonBar(
-                alignment: MainAxisAlignment.center,
-                children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: const [
                   HomeMenuButton(
                     '/map',
                     Icon(
                       Icons.map,
                       color: Colors.white,
                     ),
-                    Text(
-                      "Karta",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    Size(64, 64),
                   ),
                   HomeMenuButton(
-                    '/zet',
+                    '/feedback',
                     Icon(
-                      Icons.directions_bus,
+                      Icons.note_alt,
                       color: Colors.white,
                     ),
-                    Text(
-                      "Zet",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    Size(180, 180),
                   ),
+                  // HomeMenuButton(
+                  //   '/zet',
+                  //   Icon(
+                  //     Icons.directions_bus,
+                  //     color: Colors.white,
+                  //   ),
+                  //   Text(
+                  //     "Zet",
+                  //     style: TextStyle(color: Colors.white),
+                  //   ),
+                  // ),
                   HomeMenuButton(
                     '/about',
                     Icon(
                       Icons.info,
                       color: Colors.white,
                     ),
-                    Text(
-                      "O nama",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    Size(64, 64),
                   )
                 ],
               )
@@ -139,30 +145,29 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeMenuButton extends StatelessWidget {
-  const HomeMenuButton(this.page, this.icon, this.label, {Key? key}) : super(key: key);
+  const HomeMenuButton(this.page, this.icon, this.size, {Key? key}) : super(key: key);
   final String page;
   final Icon icon;
-  final Text label;
+  final Size size;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 64,
-      width: 100,
-      margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-      decoration: const BoxDecoration(
-        color: Constants.mainColor,
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.white,
-            blurRadius: 10,
-          ),
-        ],
-      ),
-      child: TextButton.icon(
-        onPressed: () => Navigator.pushNamed(context, page),
-        icon: icon,
-        label: label,
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, page),
+      child: Container(
+        height: size.height,
+        width: size.width,
+        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Constants.mainColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white,
+              blurRadius: 10,
+            ),
+          ],
+        ),
+        child: icon,
       ),
     );
   }

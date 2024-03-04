@@ -1,4 +1,6 @@
 import 'package:brezovica/model/bus/bus.dart';
+import 'package:brezovica/screen/about/about_screen.dart';
+import 'package:brezovica/screen/bus/bus_screen.dart';
 import 'package:brezovica/screen/feedback/feedback_screen_2.dart';
 import 'package:brezovica/screen/home/home_screen.dart';
 import 'package:brezovica/screen/login/login_screen.dart';
@@ -39,6 +41,8 @@ class MyApp extends HookConsumerWidget {
         '/home': (context) => const HomeScreen(),
         '/map': (context) => const MapScreen(),
         '/feedback': (context) => const FeedbackScreen(),
+        '/about': (context) => const AboutScreen(),
+        '/zet': (context) => const BusScreen()
       },
     );
   }

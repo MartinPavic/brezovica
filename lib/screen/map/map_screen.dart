@@ -11,7 +11,7 @@ enum TileType { landscape, transport }
 
 class MapScreen extends HookConsumerWidget {
   const MapScreen({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tileType = useState(TileType.landscape);
@@ -63,9 +63,6 @@ class MapScreen extends HookConsumerWidget {
             subdomains: ['a', 'b', 'c'],
             overrideTilesWhenUrlChanges: true,
             //retinaMode: true,
-            attributionBuilder: (_) {
-              return const Text("© OpenStreetMap contributors");
-            },
           ),
           MarkerLayerOptions(
             markers: [
@@ -73,10 +70,7 @@ class MapScreen extends HookConsumerWidget {
                 width: 80.0,
                 height: 80.0,
                 point: currentPosition.when(
-                    data: (position) {
-                      print(position);
-                      return LatLng(position!.latitude, position.longitude);
-                    },
+                    data: (position) => LatLng(position!.latitude, position.longitude),
                     error: (_, __) => Constants.brezovicaLatLng,
                     loading: () => Constants.brezovicaLatLng),
                 builder: (ctx) => const FlutterLogo(),
